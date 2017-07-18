@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.10.0/css/themes/default.min.css"/>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.10.0/css/themes/bootstrap.min.css"/>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pretty-checkbox/2.2.1/pretty.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/angular-block-ui/0.2.2/angular-block-ui.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/ng-notify/0.8.0/ng-notify.min.css">
 
     <link rel="stylesheet" href="app/style.css"/>
 
@@ -63,7 +65,7 @@
                         <strong>{{viewName}}</strong>
                     </div>
                     <div class="com-md-8">
-                        &nbsp;
+                        &nbsp;<!--<span ng-class="{ 'text-error' : message.type == 'error', 'text-sucess' : message.type == 'success'}">{{message.text}}</span>-->
                     </div>
                 </div>
             </div>
@@ -105,11 +107,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ngclipboard/1.1.1/ngclipboard.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
 <script src="modules_bower/angular-inputmask/src/green.inputmask4angular.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-block-ui/0.2.2/angular-block-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ng-notify/0.8.0/ng-notify.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
 
 <script src="modules_manual/wyd_angular/wydInit.js"></script>
 <script src="modules_manual/wyd_angular/wydCommon.js"></script>
+<script src="modules_manual/wyd_angular/wydNotifyByNgNotify.js"></script>
 <script src="app/appService.js"></script>
 <script src="app/index.js"></script>
 

@@ -37,6 +37,8 @@ function rootController($log, $rootScope, $scope, $window, sessionService) {
     sessionService.getOrderPurposes();
     sessionService.getAgents();
 
+    $rootScope.message = {};
+
 }
 appControllers.controller('rootController', rootController);
 
@@ -61,7 +63,7 @@ homeController.resolve = {
 };
 appControllers.controller('homeController', homeController);
 
-function signUpController($log, $rootScope, $scope, _session, sessionService, $uibModal) {
+function signUpController($log, $rootScope, $scope, _session, wydNotifyService, sessionService, $uibModal) {
     var cmpId = 'signUpController', cmpName = 'Sign Up';
     $log.info(cmpId + ' started ...');
 
@@ -70,9 +72,6 @@ function signUpController($log, $rootScope, $scope, _session, sessionService, $u
     var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
 
     var dnationality = {name: '-', dial_code: '-', code: '-', nationality: '<Select Nationality>'};
-
-    vm.beneficiaryLabel = 'Add';
-    vm.beneficiary = {id: '-'};
 
     vm.countries = sessionService.countries;
     vm.malasiyaStates = sessionService.malasiyaStates;
@@ -231,11 +230,11 @@ function signUpController($log, $rootScope, $scope, _session, sessionService, $u
 
         sessionService.signUp(reqCus).then(function (res) {
             $log.info(res);
-            if (res.status === 200) {
-                reset();
-            } else {
-
-            }
+            wydNotifyService.showSuccess('Successfully signed up...');
+            reset();
+        }, function (res) {
+            $log.info(res);
+            wydNotifyService.showError(res.data.description);
         });
 
         $log.info("saving finished...");
@@ -243,6 +242,9 @@ function signUpController($log, $rootScope, $scope, _session, sessionService, $u
 
     function init() {
         $log.info("init started...");
+
+        vm.beneficiaryLabel = 'Add';
+        vm.beneficiary = {id: '-'};
 
         vm.accountType = 'personal';
         vm.idType = 'passport';
@@ -275,7 +277,7 @@ function signUpController($log, $rootScope, $scope, _session, sessionService, $u
 
     $log.info(cmpId + 'finished...');
 }
-signUpController.$inject = ['$log', '$rootScope', '$scope', '_session', 'sessionService', '$uibModal'];
+signUpController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'sessionService', '$uibModal'];
 signUpController.resolve = {
     '_session': ['sessionService', function (sessionService) {
         return sessionService.getCurrentSession();
@@ -652,6 +654,8 @@ var dependents = ['ngRoute', 'ngSanitize', 'ngMessages'];
 dependents.push('ngStorage');
 dependents.push('ngclipboard');
 dependents.push('green.inputmask4angular');
+dependents.push('blockUI');
+dependents.push('ngNotify');
 dependents.push('ui.bootstrap');
 dependents.push('app.filters');
 dependents.push('app.directives');

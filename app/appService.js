@@ -314,7 +314,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         $http(req).then(function (res, status) {
             deferred.resolve(res);
         }, function (res, status) {
-            deferred.reject({res: res, status: status});
+            deferred.reject(res);
         });
         return deferred.promise;
     };
@@ -408,6 +408,11 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         });
         return deferred.promise;
     };
+
+    if(window.location.hostname == 'maxmoney.com') {
+        apiBasePath = 'https://api.maxmoney.com/v1';
+    }
+    console.log('Current Api End Point : ' + apiBasePath);
 
     return service;
 }

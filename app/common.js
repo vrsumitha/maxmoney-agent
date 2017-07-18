@@ -34,22 +34,3 @@ function generalHttpInterceptor($log, $rootScope, $q, $window) {
 }
 appServices.factory('generalHttpInterceptor', generalHttpInterceptor);
 
-
-appDirectives.directive('inputMaskModel', function ($parse) {
-    return {
-        require: 'ngModel',
-        link: function (scope, element, attrs, modelCtrl) {
-            ctrl.$validators.integer = function(modelValue, viewValue) {
-                console.log('modelValue : ' + modelValue);
-                console.log('viewValue  : ' + viewValue);
-                if (ctrl.$isEmpty(modelValue)) {
-                    return true;
-                }
-                // if (INTEGER_REGEXP.test(viewValue)) {
-                //     return true;
-                // }
-                return false;
-            };
-        }
-    };
-});

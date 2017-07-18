@@ -1,4 +1,4 @@
-appServices.factory('wydNotifyService', function ($log, $timeout, ngNotify, sweet) {
+appServices.factory('wydNotifyService', function ($log, $timeout, ngNotify) {
 
     ngNotify.config({
         theme: 'pure',
@@ -9,8 +9,6 @@ appServices.factory('wydNotifyService', function ($log, $timeout, ngNotify, swee
     });
 
     return {
-        sweet: sweet,
-
         showInfo: function (message, clear) {
             if (clear) {
                 ngNotify.dismiss();
