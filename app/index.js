@@ -102,7 +102,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         $log.info("reset started...");
 
         vm.form.$setPristine();
-        vm.beneficiary = {id: '-'};
+        vm.beneficiary = {id: 'NA'};
         vm.beneficiaryLabel = 'Add';
 
         $log.info("reset started...");
@@ -175,7 +175,8 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         }
 
         value = vm.dob;
-        reqCus.dob = moment(value).format('DD-MM-YYYY');
+        //reqCus.dob = moment(value).format('DD-MM-YYYY');
+        reqCus.dob = value;
 
         if (vm.accountType != 'personal') {
             value = vm.companyType;
@@ -223,7 +224,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
 
         reqCus.country = 'Malaysia';
 
-        if (vm.beneficiary.id != '-') {
+        if (vm.beneficiary.id != 'NA') {
             reqCus.beneficiaryId = vm.beneficiary.id;
         }
         $log.info(reqCus);
@@ -244,7 +245,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         $log.info("init started...");
 
         vm.beneficiaryLabel = 'Add';
-        vm.beneficiary = {id: '-'};
+        vm.beneficiary = {id:  'NA'};
 
         vm.accountType = 'personal';
         vm.idType = 'passport';

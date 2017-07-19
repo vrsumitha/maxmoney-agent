@@ -8,7 +8,7 @@
         </div>
         <div class="col-md-4">
             <button type="button" class="btn btn-default pull-right"
-                    ng-disabled="vm.beneficiary.id != '-'"
+                    ng-disabled="vm.beneficiary.id != 'NA'"
                     ng-click="vm.addOrEditBeneficiary()">
                 Add Beneficiary
             </button>
@@ -32,9 +32,11 @@
                     <span ng-message="email">This must be valid email</span>
                     <span ng-message="available">This is not available</span>
                 </div>
+                <!--
                 <span ng-show="vm.form.emailId.$dirty && vm.form.emailId.$valid" class="help-line text-warning">
                     It must be valid email to receive activation info
                 </span>
+                -->
             </div>
         </div>
         <div class="col-md-4">
@@ -55,9 +57,11 @@
                     <span ng-message="required">This is required.</span>
                     <span ng-message="minlength, maxlength">This should be exactly 9 digits</span>
                 </div>
+                <!--
                 <span ng-show="vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid" class="help-line text-warning">
                     It must be valid number to receive activation info
                 </span>
+                -->
             </div>
         </div>
         <div class="col-md-4">
@@ -133,20 +137,35 @@
                 <label for="idNoPassport" class="control-label">Passport Number <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="idNoPassport" placeholder="Passport Number" aria-describedby="idNoPassportHelpBlock"
                        name="idNoPassport" ng-model="vm.idNoPassport"
-                       ng-required="vm.idType == 'passport'" ng-minlength="5" ng-maxlength="15">
+                       ng-required="vm.idType == 'passport'" ng-minlength="6" ng-maxlength="15">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.idNoPassport.$dirty && vm.form.idNoPassport.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.idNoPassport.$dirty && vm.form.idNoPassport.$valid"></span>
                 <div id="idNoPassportHelpBlock" class="help-inline" ng-messages="vm.form.idNoPassport.$error" ng-if="vm.form.idNoPassport.$dirty">
                     <span ng-message="required">This is required.</span>
-                    <span ng-message="minlength, maxlength">This should be minimum 5 and maximum 15 characters long</span>
+                    <span ng-message="minlength, maxlength">This should be minimum 6 and maximum 15 characters long</span>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.dob.$dirty && vm.form.dob.$invalid), 'has-success' : (vm.form.dob.$dirty && vm.form.dob.$valid) }">
+                <label for="dob" class="control-label">DOB (dd/mm/yyyy) <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="dob" aria-describedby="dobHelpBlock"
+                           name="dob" ng-model="vm.dob"
+                           required>
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.dob.$dirty && vm.form.dob.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.dob.$dirty && vm.form.dob.$valid"></span>
+                <div id="dobHelpBlock" class="help-inline" ng-messages="vm.form.dob.$error" ng-if="vm.form.dob.$dirty">
+                    <span ng-message="required">This is required.</span>
+                </div>
+            </div>
+            <!--
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.dob.$dirty && vm.form.dob.$invalid), 'has-success' : (vm.form.dob.$dirty && vm.form.dob.$valid) }">
                 <label for="dob" class="control-label">DOB (dd/mm/yyyy) <span class="text-danger">*</span></label>
@@ -167,6 +186,7 @@
                     <span ng-message="min">This should be below 100 years.</span>
                 </div>
             </div>
+            -->
         </div>
         <div class="col-md-4">
             <div class="form-group has-feedback">
@@ -353,7 +373,7 @@
                     ng-class="{'btn-primary' : vm.form.$pristine, 'btn-success' : (vm.form.$dirty && vm.form.$valid), 'btn-danger' : (vm.form.$dirty && vm.form.$invalid) }"
                     ng-disabled="!(vm.form.$dirty && vm.form.$valid)"
                     ng-click="vm.save()">
-                Sign Up
+                Next
             </button>
         </div>
     </div>
