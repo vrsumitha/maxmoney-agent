@@ -245,7 +245,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         $log.info("init started...");
 
         vm.beneficiaryLabel = 'Add';
-        vm.beneficiary = {id:  'NA'};
+        vm.beneficiary = {id: 'NA'};
 
         vm.accountType = 'personal';
         vm.idType = 'passport';
