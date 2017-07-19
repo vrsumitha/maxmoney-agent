@@ -472,7 +472,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
         if (!flag) {
             reqBen.name = reqBen.name.toUpperCase();
 
-            if ($scope.payBy == 'BD') {
+            if (vm.payBy == 'BD') {
                 reqBnk.acctName = reqBnk.acctName.toUpperCase();
                 reqBnk.branch = reqBnk.branch.toUpperCase();
             }
@@ -493,7 +493,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
             $log.info(res);
             vm.resModel = res.data;
             vm.model.id = vm.resModel.id;
-            if (vm.payBy == 'BT') {
+            if (vm.payBy == 'BD') {
                 createBeneficiaryBankAccount(reqBnk);
             } else {
                 $uibModalInstance.close(vm.resModel);
@@ -506,6 +506,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
         $log.info(reqBnk);
         sessionService.createBeneficiaryBankAccount(vm.model.id, reqBnk).then(function (res) {
             $log.info(res);
+            vm.resModel = res.data;
             $uibModalInstance.close(vm.resModel);
         });
     }
@@ -515,7 +516,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
         $log.info(reqBen);
         sessionService.updateBeneficiary(vm.model.id, reqBen).then(function (res) {
             $log.info(res);
-            if ($scope.payBy == 'BT') {
+            if (vm.payBy == 'BD') {
                 deleteAndUpdateBeneficiaryBankAccount(reqBnk);
             } else {
                 $uibModalInstance.close(vm.resModel);
