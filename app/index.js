@@ -57,25 +57,17 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
 
     $scope.$on('session:countries', function (event, data) {
         vm.countries = sessionService.countries;
-        if (vm.countries && vm.countries.length > 0) {
-            vm.countries.unshift(dnationality);
-        }
+        // if (vm.countries && vm.countries.length > 0) {
+        //     vm.countries.unshift(dnationality);
+        // }
     });
 
-    $scope.$on('session:countries', function (event, data) {
+    $scope.$on('session:malasiyaStates', function (event, data) {
         vm.malasiyaStates = sessionService.malasiyaStates;
-        if (vm.malasiyaStates && vm.malasiyaStates.length > 0) {
-            vm.malasiyaStates.unshift(vm.state);
-        }
+        // if (vm.malasiyaStates && vm.malasiyaStates.length > 0) {
+        //     vm.malasiyaStates.unshift(vm.state);
+        // }
     });
-
-    // function onIdTypeChange() {
-    //     if(vm.idType == 'nric') {
-    //         vm.idNoLabel = 'NRIC Number';
-    //     } else {
-    //         vm.idNoLabel = 'Passport Number';
-    //     }
-    // }
 
     function reset() {
         $log.info("reset started...");
@@ -233,15 +225,15 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         vm.dobMax = moment().subtract(16, 'years').format('YYYY-MM-DD');
         vm.dobMin = moment().subtract(100, 'years').format('YYYY-MM-DD');
 
-        vm.nationality = dnationality;
-        if (vm.countries && vm.countries.length > 0) {
-            vm.countries.unshift(dnationality);
-        }
+        //vm.nationality = dnationality;
+        // if (vm.countries && vm.countries.length > 0) {
+        //     vm.countries.unshift(dnationality);
+        // }
 
-        vm.state = '<Select State>';
-        if (vm.malasiyaStates && vm.malasiyaStates.length > 0) {
-            vm.malasiyaStates.unshift(vm.state);
-        }
+        // vm.state = '<Select State>';
+        // if (vm.malasiyaStates && vm.malasiyaStates.length > 0) {
+        //     vm.malasiyaStates.unshift(vm.state);
+        // }
 
         $log.info("init finished...");
     }
