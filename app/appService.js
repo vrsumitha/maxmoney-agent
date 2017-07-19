@@ -234,7 +234,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
             url: path,
             params: params
         };
-        //$log.info(req);
+        $log.info(req);
         var deferred = $q.defer();
         $http(req).then(function (res, status) {
             deferred.resolve(res);

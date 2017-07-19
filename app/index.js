@@ -42,7 +42,7 @@ function rootController($log, $rootScope, $scope, $window, sessionService) {
 }
 appControllers.controller('rootController', rootController);
 
-function signUpController($log, $rootScope, $scope, _session, wydNotifyService, sessionService, $uibModal) {
+function signUpController($log, $rootScope, $scope, _session, wydNotifyService, $sessionStorage, sessionService, $uibModal, $location) {
     var cmpId = 'signUpController', cmpName = 'Sign Up';
     $log.info(cmpId + ' started ...');
 
@@ -80,7 +80,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
     }
 
     function addOrEditBeneficiary() {
-        var bnyModel = vm.beneficiary.id == '-' ? null : vm.beneficiary;
+        var bnyModel = vm.beneficiary.id == 'NA' ? null : vm.beneficiary;
         var modalInstance = $uibModal.open({
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -100,7 +100,8 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         modalInstance.result.then(function (result) {
             $log.info('beneficiary created successfully...');
             vm.beneficiary = result;
-            vm.beneficiaryLabel = 'Edit'
+            vm.beneficiaryLabel = 'Edit';
+            $sessionStorage.currentBeneficiary = vm.beneficiary;
             //loadBeneficiaries();
         }, function () {
             $log.info('canceled beneficiary creation...');
@@ -202,8 +203,11 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
 
         sessionService.signUp(reqCus).then(function (res) {
             $log.info(res);
+            sessionService.currentCustomer = res.data;
+            $sessionStorage.currentCustomer = res.data;
             wydNotifyService.showSuccess('Successfully signed up...');
-            reset();
+            $location.path('/cdd');
+            //reset();
         }, function (res) {
             $log.info(res);
             wydNotifyService.showError(res.data.description);
@@ -242,6 +246,18 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         uiState: uiState,
         addOrEditBeneficiary: addOrEditBeneficiary,
         save: save,
+        savex: function(){
+            console.log($sessionStorage.currentCustomer);
+            sessionService.currentCustomer = $sessionStorage.currentCustomer;
+            sessionService.currentCustomer.idType = 'NRIC';
+            console.log(sessionService.currentCustomer);
+            $location.path('/cdd');
+        },
+        editx: function(){
+            console.log($sessionStorage.currentBeneficiary);
+            vm.beneficiary = $sessionStorage.currentBeneficiary;
+            addOrEditBeneficiary();
+        },
         reset: reset
     });
 
@@ -249,7 +265,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
 
     $log.info(cmpId + 'finished...');
 }
-signUpController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'sessionService', '$uibModal'];
+signUpController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', '$sessionStorage', 'sessionService', '$uibModal', '$location'];
 signUpController.resolve = {
     '_session': ['sessionService', function (sessionService) {
         return sessionService.getCurrentSession();
@@ -257,7 +273,7 @@ signUpController.resolve = {
 };
 appControllers.controller('signUpController', signUpController);
 
-function cddController($log, $rootScope, $scope, _session) {
+function cddController($log, $rootScope, $scope, _session, wydNotifyService, $sessionStorage, sessionService) {
     var cmpId = 'cddController', cmpName = 'CDD';
     $log.info(cmpId + ' started ...');
 
@@ -267,7 +283,8 @@ function cddController($log, $rootScope, $scope, _session) {
 
     function init() {
         $log.info("init started...");
-
+        vm.customer = sessionService.currentCustomer;
+        console.log(vm.customer);
         $log.info("init finished...");
     }
 
@@ -279,7 +296,7 @@ function cddController($log, $rootScope, $scope, _session) {
 
     $log.info(cmpId + 'finished...');
 }
-cddController.$inject = ['$log', '$rootScope', '$scope', '_session'];
+cddController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', '$sessionStorage', 'sessionService'];
 cddController.resolve = {
     '_session': ['sessionService', function (sessionService) {
         return sessionService.getCurrentSession();
@@ -305,6 +322,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
     vm.isCountryInitialized = false;
 
     if (model) {
+        vm.model = model;
         vm.title = 'Edit Beneficiary';
         if (model.bankAccounts) {
             model.bankAccount = model.bankAccounts[1];
@@ -340,8 +358,8 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
                 onCountryChange();
             }
         }
+        vm.model = model;
     }
-    vm.model = model;
     console.log(vm.model);
 
     $scope.$on('session:relationships', function (event, data) {
@@ -486,7 +504,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
     function createBeneficiaryBankAccount(reqBnk) {
         $log.info('create beneficiary bank account...');
         $log.info(reqBnk);
-        sessionService.createBeneficiaryBankAccount($scope.model.id, reqBnk).then(function (res) {
+        sessionService.createBeneficiaryBankAccount(vm.model.id, reqBnk).then(function (res) {
             $log.info(res);
             $uibModalInstance.close(vm.resModel);
         });
@@ -495,7 +513,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
     function updateBeneficiary(reqBen, reqBnk) {
         $log.info('update beneficiary...');
         $log.info(reqBen);
-        sessionService.updateBeneficiary($scope.model.id, reqBen).then(function (res) {
+        sessionService.updateBeneficiary(vm.model.id, reqBen).then(function (res) {
             $log.info(res);
             if ($scope.payBy == 'BT') {
                 deleteAndUpdateBeneficiaryBankAccount(reqBnk);
@@ -507,7 +525,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
 
     function deleteAndUpdateBeneficiaryBankAccount(reqBnk) {
         $log.info('delete beneficiary bank account...');
-        sessionService.deleteBeneficiaryBankAccount($scope.model.id, {index: 1}).then(function (res) {
+        sessionService.deleteBeneficiaryBankAccount(vm.model.id, {index: 1}).then(function (res) {
             $log.info(res);
             createBeneficiaryBankAccount(reqBnk);
         });

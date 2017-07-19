@@ -1,1 +1,95 @@
-<p>{{viewName}} coming soon...</p>
+<form name="vm.form">
+    <div class="row">
+        <div class="col-md-4">
+            &nbsp;
+        </div>
+        <div class="col-md-4">
+            &nbsp;
+        </div>
+        <div class="col-md-4">
+            &nbsp;
+        </div>
+    </div>
+
+    <div class="row" ng-show="vm.customer.idType == 'Passport'">
+        <div class="col-md-4">
+            <div class="form-group has-feedback"
+             ng-class="{ 'has-error' : (vm.form.passportFront.$dirty && vm.form.passportFront.$invalid), 'has-success' : (vm.form.passportFront.$dirty && vm.form.passportFront.$valid) }">
+            <label for="passportFront" class="control-label">Passport Image <span class="text-danger">*</span></label>
+            <input type="file" class="form-control" id="passportFront" placeholder="" aria-describedby="passportFrontHelpBlock"
+                   name="passportFront" ng-model="vm.passportFront"
+                   required accept="image/*">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.passportFront.$dirty && vm.form.passportFront.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.passportFront.$dirty && vm.form.passportFront.$valid"></span>
+            <div id="passportFrontHelpBlock" class="help-inline" ng-messages="vm.form.passportFront.$error"
+                 ng-if="vm.form.passportFront.$dirty">
+                <span ng-message="required">This is required.</span>
+            </div>
+        </div>
+        </div>
+        <div class="col-md-4">
+           &nbsp;
+        </div>
+    </div>
+
+    <div class="row" ng-show="vm.customer.idType != 'Passport'">
+        <div class="col-md-4">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.nricFront.$dirty && vm.form.nricFront.$invalid), 'has-success' : (vm.form.nricFront.$dirty && vm.form.nricFront.$valid) }">
+                <label for="nricFront" class="control-label">NRIC Front <span class="text-danger">*</span></label>
+                <input type="file" class="form-control" id="nricFront" placeholder="" aria-describedby="nricFrontHelpBlock"
+                       name="nricFront" ng-model="vm.nricFront"
+                       required>
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.nricFront.$dirty && vm.form.nricFront.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.nricFront.$dirty && vm.form.nricFront.$valid"></span>
+                <div id="nricFrontHelpBlock" class="help-inline" ng-messages="vm.form.nricFront.$error"
+                     ng-if="vm.form.nricFront.$dirty">
+                    <span ng-message="required">This is required.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-show="vm.customer.idType != 'Passport'">
+        <div class="col-md-4">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.nricBack.$dirty && vm.form.nricBack.$invalid), 'has-success' : (vm.form.nricBack.$dirty && vm.form.nricBack.$valid) }">
+                <label for="nricBack" class="control-label">NRIC Back <span class="text-danger">*</span></label>
+                <input type="file" class="form-control" id="nricBack" placeholder="" aria-describedby="nricBackHelpBlock"
+                       name="nricBack" ng-model="vm.nricBack"
+                       required>
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.nricBack.$dirty && vm.form.nricBack.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.nricBack.$dirty && vm.form.nricBack.$valid"></span>
+                <div id="nricBackHelpBlock" class="help-inline" ng-messages="vm.form.nricBack.$error"
+                     ng-if="vm.form.nricBack.$dirty">
+                    <span ng-message="required">This is required.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4  text-right">
+            <button type="reset" class="btn btn-default"
+                    xng-click="vm.reset()">
+                Reset
+            </button>
+            &nbsp;&nbsp;&nbsp;
+            <button type="submit" class="btn "
+                    ng-class="{'btn-primary' : vm.form.$pristine, 'btn-success' : (vm.form.$dirty && vm.form.$valid), 'btn-danger' : (vm.form.$dirty && vm.form.$invalid) }"
+                    ng-disabled="!(vm.form.$dirty && vm.form.$valid)"
+                    ng-click="vm.save()">
+                Save
+            </button>
+        </div>
+    </div>
+    <!--
+    <br/>
+    <pre>{{vm.customer | json}}</pre>
+    -->
+</form>

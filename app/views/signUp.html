@@ -1,17 +1,23 @@
 <form name="vm.form">
     <div class="row">
         <div class="col-md-4">
-            <strong>Beneficiary Id : {{vm.beneficiary.id}}</strong>
+            <strong>Beneficiary Id : </strong>{{vm.beneficiary.id}}
         </div>
         <div class="col-md-4">
             &nbsp;
         </div>
         <div class="col-md-4">
             <button type="button" class="btn btn-default pull-right"
-                    ng-disabled="vm.beneficiary.id != 'NA'"
                     ng-click="vm.addOrEditBeneficiary()">
-                Add Beneficiary
+                {{vm.beneficiaryLabel}} Beneficiary
             </button>
+            <!--
+            &nbsp;&nbsp;&nbsp;
+            <button type="submit" class="btn btn-primary"
+                    ng-click="vm.editx()">
+                EditX
+            </button>
+            -->
         </div>
     </div>
 
@@ -153,7 +159,7 @@
         <div class="col-md-4">
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.dob.$dirty && vm.form.dob.$invalid), 'has-success' : (vm.form.dob.$dirty && vm.form.dob.$valid) }">
-                <label for="dob" class="control-label">DOB (dd/mm/yyyy) <span class="text-danger">*</span></label>
+                <label for="dob" class="control-label">DOB (dd-mm-yyyy) <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="dob" aria-describedby="dobHelpBlock"
                            name="dob" ng-model="vm.dob"
                            required>
@@ -374,6 +380,13 @@
                     ng-click="vm.save()">
                 Next
             </button>
+            <!--
+            &nbsp;&nbsp;&nbsp;
+            <button type="submit" class="btn btn-primary"
+                    ng-click="vm.savex()">
+                NextX
+            </button>
+            -->
         </div>
     </div>
     <!--
