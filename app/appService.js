@@ -134,15 +134,6 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
-    // function processAgents(agents) {
-    //     var countries = [];
-    //     _.forEach(agents.agents, function (item) {
-    //         countries.push(item.country);
-    //     });
-    //     service.countries = countries;
-    //     console.log(service.countries);
-    // }
-
     service.getAgents = function () {
         var path = apiBasePath + '/agents?provider=mremit';
         var req = {
@@ -412,7 +403,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
     if(window.location.hostname == 'maxmoney.com') {
         apiBasePath = 'https://api.maxmoney.com/v1';
     }
-    console.log('Current Api End Point : ' + apiBasePath);
+    console.log('Backend URL : ' + apiBasePath);
 
     return service;
 }

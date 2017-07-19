@@ -720,26 +720,9 @@ app.config(appConfig);
 function appInit($log, $rootScope, $location, $sessionStorage) {
     $log.info('Initialization started...');
 
-    // $rootScope.$on("$routeChangeStart", function (event, next, current) {
-    //     $log.info('Location : ', $location.path());
-    //     var curLocPath = $location.path();
-    //     $log.info('Before Current Location : ', curLocPath);
-    // });
-    //
-    // $rootScope.$on("$routeChangeSuccess", function (event, next, current) {
-    //    $log.info('Location : ', $location.path());
-    //    var curLocPath = $location.path();
-    //    $log.info('After Current Location : ', curLocPath);
-    // });
-
     var path = '/sign-up';
     $location.path(path);
 
     $log.info('Initialization finished...');
 }
 app.run(['$log', '$rootScope', '$location', '$sessionStorage', appInit]);
-
-// if(window.location.hostname == 'maxmoney.com') {
-//     app.maxApiUrlPrefix = 'https://api.maxmoney.com/v1';
-// }
-// console.log('Current Api End Point : ' + app.maxApiUrlPrefix);
