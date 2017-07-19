@@ -231,7 +231,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         $http(req).then(function (res, status) {
             deferred.resolve(res);
         }, function (res, status) {
-            deferred.reject({res: res, status: status});
+            deferred.reject(res);
         });
         return deferred.promise;
     };
@@ -248,7 +248,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         $http(req).then(function (res, status) {
             deferred.resolve(res);
         }, function (res, status) {
-            deferred.reject({res: res, status: status});
+            deferred.reject(res);
         });
         return deferred.promise;
     };
@@ -264,7 +264,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         $http(req).then(function (res, status) {
             deferred.resolve(res);
         }, function (res, status) {
-            deferred.reject({res: res, status: status});
+            deferred.reject(res);
         });
         return deferred.promise;
     };
@@ -281,7 +281,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         $http(req).then(function (res, status) {
             deferred.resolve(res);
         }, function (res, status) {
-            deferred.reject({res: res, status: status});
+            deferred.reject(res);
         });
         return deferred.promise;
     };
@@ -297,7 +297,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         $http(req).then(function (res, status) {
             deferred.resolve(res);
         }, function (res, status) {
-            deferred.reject({res: res, status: status});
+            deferred.reject(res);
         });
         return deferred.promise;
     };
