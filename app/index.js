@@ -219,6 +219,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         sessionService.signUp(reqCus).then(function (res) {
             $log.info(res);
             sessionService.currentCustomer = res.data;
+            $sessionStorage.$reset();
             $sessionStorage.currentCustomer = res.data;
             wydNotifyService.showSuccess('Successfully signed up...');
             $location.path('/cdd');
@@ -266,7 +267,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         savex: function () {
             console.log($sessionStorage.currentCustomer);
             sessionService.currentCustomer = $sessionStorage.currentCustomer;
-            sessionService.currentCustomer.idType = 'NRIC';
+           // sessionService.currentCustomer.idType = 'NRIC';
             console.log(sessionService.currentCustomer);
             $location.path('/cdd');
         },
@@ -290,13 +291,19 @@ signUpController.resolve = {
 };
 appControllers.controller('signUpController', signUpController);
 
-function cddController($log, $rootScope, $scope, _session, wydNotifyService, $sessionStorage, sessionService) {
+function cddController($log, $rootScope, $scope, _session, wydNotifyService, $sessionStorage, sessionService, Upload) {
     var cmpId = 'cddController', cmpName = 'CDD';
     $log.info(cmpId + ' started ...');
 
     $rootScope.viewName = cmpName;
 
     var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
+
+    function save() {
+        $log.info('saving started...');
+
+        $log.info("saving finished...");
+    }
 
     function init() {
         $log.info("init started...");
@@ -306,14 +313,15 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, $se
     }
 
     angular.extend(this, {
-        uiState: uiState
+        uiState: uiState,
+        save: save
     });
 
     init();
 
     $log.info(cmpId + 'finished...');
 }
-cddController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', '$sessionStorage', 'sessionService'];
+cddController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', '$sessionStorage', 'sessionService', 'Upload'];
 cddController.resolve = {
     '_session': ['sessionService', function (sessionService) {
         return sessionService.getCurrentSession();
@@ -577,6 +585,7 @@ dependents.push('green.inputmask4angular');
 dependents.push('blockUI');
 dependents.push('ngNotify');
 dependents.push('ui.bootstrap');
+dependents.push('ngFileUpload');
 dependents.push('app.filters');
 dependents.push('app.directives');
 dependents.push('app.services');

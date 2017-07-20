@@ -1,4 +1,4 @@
-<form name="vm.form">
+<form name="vm.form" >
     <div class="row">
         <div class="col-md-4">
             &nbsp;
@@ -17,8 +17,8 @@
              ng-class="{ 'has-error' : (vm.form.passportFront.$dirty && vm.form.passportFront.$invalid), 'has-success' : (vm.form.passportFront.$dirty && vm.form.passportFront.$valid) }">
             <label for="passportFront" class="control-label">Passport Image <span class="text-danger">*</span></label>
             <input type="file" class="form-control" id="passportFront" placeholder="" aria-describedby="passportFrontHelpBlock"
-                   name="passportFront" ng-model="vm.passportFront"
-                   required accept="image/*">
+                   name="passportFront" ng-model="vm.passportFront" ngf-select
+                   required accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFile">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.passportFront.$dirty && vm.form.passportFront.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -40,8 +40,7 @@
                  ng-class="{ 'has-error' : (vm.form.nricFront.$dirty && vm.form.nricFront.$invalid), 'has-success' : (vm.form.nricFront.$dirty && vm.form.nricFront.$valid) }">
                 <label for="nricFront" class="control-label">NRIC Front <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="nricFront" placeholder="" aria-describedby="nricFrontHelpBlock"
-                       name="nricFront" ng-model="vm.nricFront"
-                       required>
+                       name="nricFront" ng-model="vm.nricFront">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.nricFront.$dirty && vm.form.nricFront.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -60,8 +59,7 @@
                  ng-class="{ 'has-error' : (vm.form.nricBack.$dirty && vm.form.nricBack.$invalid), 'has-success' : (vm.form.nricBack.$dirty && vm.form.nricBack.$valid) }">
                 <label for="nricBack" class="control-label">NRIC Back <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="nricBack" placeholder="" aria-describedby="nricBackHelpBlock"
-                       name="nricBack" ng-model="vm.nricBack"
-                       required>
+                       name="nricBack" ng-model="vm.nricBack">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.nricBack.$dirty && vm.form.nricBack.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -82,7 +80,7 @@
             &nbsp;&nbsp;&nbsp;
             <button type="submit" class="btn "
                     ng-class="{'btn-primary' : vm.form.$pristine, 'btn-success' : (vm.form.$dirty && vm.form.$valid), 'btn-danger' : (vm.form.$dirty && vm.form.$invalid) }"
-                    ng-disabled="!(vm.form.$dirty && vm.form.$valid)"
+                    ng-disabled="(vm.form.$dirty && vm.form.$valid)"
                     ng-click="vm.save()">
                 Save
             </button>

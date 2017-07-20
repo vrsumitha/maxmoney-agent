@@ -1,28 +1,6 @@
 <form name="vm.form">
     <div class="row">
         <div class="col-md-4">
-            <strong>Beneficiary Id : </strong>{{vm.beneficiary.id}}
-        </div>
-        <div class="col-md-4">
-            &nbsp;
-        </div>
-        <div class="col-md-4">
-            <button type="button" class="btn btn-default pull-right"
-                    ng-click="vm.addOrEditBeneficiary()">
-                {{vm.beneficiaryLabel}} Beneficiary
-            </button>
-            <!--
-            &nbsp;&nbsp;&nbsp;
-            <button type="submit" class="btn btn-primary"
-                    ng-click="vm.editx()">
-                EditX
-            </button>
-            -->
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4">
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.emailId.$dirty && vm.form.emailId.$invalid), 'has-success' : (vm.form.emailId.$dirty && vm.form.emailId.$valid) }">
                 <label for="emailId">Email Id <span class="text-danger">*</span></label>
@@ -203,7 +181,7 @@
                     <select class="form-control" id="nationality" aria-describedby="nationalityHelpBlock"
                             ng-options="item as item.nationality for item in vm.countries"
                             name="nationality" ng-model="vm.nationality" ng-change="vm.onNationalityChange()"
-                            ng-disabled ="vm.idType == 'nric'">
+                            xng-disabled ="vm.idType == 'nric'">
                     </select>
                     <div id="nationalityHelpBlock" class="help-inline" ng-messages="vm.form.nationality.$error"
                          ng-if="vm.form.nationality.$dirty">
@@ -367,7 +345,20 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-4">
+            <button type="button" class="btn btn-default"
+                    ng-click="vm.addOrEditBeneficiary()">
+                {{vm.beneficiaryLabel}} Beneficiary
+            </button>
+            <!--
+            &nbsp;&nbsp;&nbsp;
+            <button type="submit" class="btn btn-primary"
+                    ng-click="vm.editx()">
+                EditX
+            </button>
+            -->
+        </div>
+        <div class="col-md-4">
             <br/>&nbsp;<strong>Note : <span class="text-danger">*</span> indicates mandatory fields</strong>
         </div>
         <div class="col-md-4 text-right">
