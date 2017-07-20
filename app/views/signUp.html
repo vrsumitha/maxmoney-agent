@@ -50,10 +50,10 @@
                  ng-class="{ 'has-error' : (vm.form.mobileNo.$dirty && vm.form.mobileNo.$invalid), 'has-success' : (vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid) }">
                 <label for="mobileNo">Mobile Number <span class="text-danger">*</span></label>
                 <div class="input-group">
-                    <div class="input-group-addon">+60</div>
+                    <div class="input-group-addon">{{vm.dialCode}}</div>
                     <input type="text" class="form-control" id="mobileNo" placeholder="Mobile Number" aria-describedby="mobileNoHelpBlock"
                            name="mobileNo" ng-model="vm.mobileNo"
-                           required ng-minlength="9" ng-maxlength="9" input-mask="'mask'" mask-option="{'mask':'999999999'}" input-mask-model>
+                           required ng-minlength="10" ng-maxlength="10" input-mask="'mask'" mask-option="{'mask':'9999999999'}" input-mask-model>
                 </div>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                   ng-if="vm.form.mobileNo.$dirty && vm.form.mobileNo.$invalid"></span>
@@ -61,7 +61,7 @@
                   ng-if="vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid"></span>
                 <div id="mobileNoHelpBlock" class="help-inline" ng-messages="vm.form.mobileNo.$error" ng-if="vm.form.mobileNo.$dirty">
                     <span ng-message="required">This is required.</span>
-                    <span ng-message="minlength, maxlength">This should be exactly 9 digits</span>
+                    <span ng-message="minlength, maxlength">This should be exactly 10 digits</span>
                 </div>
                 <!--
                 <span ng-show="vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid" class="help-line text-warning">
@@ -112,7 +112,8 @@
                  ng-class="{ 'has-error' : (vm.form.idType.$dirty && vm.form.idType.$invalid), 'has-success' : (vm.form.idType.$dirty && vm.form.idType.$valid) }">
                 <label for="idType">ID Type <span class="text-danger">*</span></label>
                 <select class="form-control" id="idType" aria-describedby="idTypeHelpBlock" placeholder="Country"
-                        name="idType" ng-model="vm.idType">
+                        name="idType" ng-model="vm.idType"
+                        ng-change="vm.onIdTypeChange()">
                     <option value="nric">NRIC</option>
                     <option value="passport">Passport</option>
                 </select>
@@ -201,7 +202,8 @@
                     <label for="nationality">Nationality <span class="text-danger">*</span></label>
                     <select class="form-control" id="nationality" aria-describedby="nationalityHelpBlock"
                             ng-options="item as item.nationality for item in vm.countries"
-                            name="nationality" ng-model="vm.nationality">
+                            name="nationality" ng-model="vm.nationality" ng-change="vm.onNationalityChange()"
+                            ng-disabled ="vm.idType == 'nric'">
                     </select>
                     <div id="nationalityHelpBlock" class="help-inline" ng-messages="vm.form.nationality.$error"
                          ng-if="vm.form.nationality.$dirty">

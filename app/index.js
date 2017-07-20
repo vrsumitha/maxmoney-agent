@@ -69,16 +69,6 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         // }
     });
 
-    function reset() {
-        $log.info("reset started...");
-
-        vm.form.$setPristine();
-        vm.beneficiary = {id: 'NA'};
-        vm.beneficiaryLabel = 'Add';
-
-        $log.info("reset started...");
-    }
-
     function addOrEditBeneficiary() {
         var bnyModel = vm.beneficiary.id == 'NA' ? null : vm.beneficiary;
         var modalInstance = $uibModal.open({
@@ -106,6 +96,31 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         }, function () {
             $log.info('canceled beneficiary creation...');
         });
+    }
+
+    function onNationalityChange() {
+        vm.dialCode = vm.nationality.dial_code;
+    }
+
+    function onIdTypeChange() {
+        if (vm.idType == 'nric') {
+            vm.nationality = _.find(vm.countries, function (item) {
+                return item.code == 'MY';
+            });
+            if(vm.nationality) {
+                onNationalityChange();
+            }
+        }
+    }
+
+    function reset() {
+        $log.info("reset started...");
+
+        vm.form.$setPristine();
+        vm.beneficiary = {id: 'NA'};
+        vm.beneficiaryLabel = 'Add';
+
+        $log.info("reset started...");
     }
 
     function save() {
@@ -221,7 +236,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
 
         vm.beneficiaryLabel = 'Add';
         vm.beneficiary = {id: 'NA'};
-
+        vm.dialCode = '-';
         vm.accountType = 'personal';
         vm.idType = 'passport';
         //onIdTypeChange();
@@ -245,15 +260,17 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
     angular.extend(this, {
         uiState: uiState,
         addOrEditBeneficiary: addOrEditBeneficiary,
+        onNationalityChange: onNationalityChange,
+        onIdTypeChange: onIdTypeChange,
         save: save,
-        savex: function(){
+        savex: function () {
             console.log($sessionStorage.currentCustomer);
             sessionService.currentCustomer = $sessionStorage.currentCustomer;
             sessionService.currentCustomer.idType = 'NRIC';
             console.log(sessionService.currentCustomer);
             $location.path('/cdd');
         },
-        editx: function(){
+        editx: function () {
             console.log($sessionStorage.currentBeneficiary);
             vm.beneficiary = $sessionStorage.currentBeneficiary;
             addOrEditBeneficiary();
@@ -570,13 +587,13 @@ function appConfig($routeProvider, $locationProvider) {
     $routeProvider.when('/', {
         redirectTo: '/home'
     });
-/*
-    $routeProvider.when('/home', {
-        templateUrl: 'app/views/home.html',
-        controller: 'homeController as vm',
-        resolve: homeController.resolve
-    });
-*/
+    /*
+     $routeProvider.when('/home', {
+     templateUrl: 'app/views/home.html',
+     controller: 'homeController as vm',
+     resolve: homeController.resolve
+     });
+     */
     $routeProvider.when('/sign-up', {
         templateUrl: 'app/views/signUp.html',
         controller: 'signUpController as vm',
@@ -588,25 +605,25 @@ function appConfig($routeProvider, $locationProvider) {
         controller: 'cddController as vm',
         resolve: cddController.resolve
     });
-/*
-    $routeProvider.when('/customer-to-user', {
-        templateUrl: 'app/views/customerToUser.html',
-        controller: 'customerToUserController as vm',
-        resolve: customerToUserController.resolve
-    });
+    /*
+     $routeProvider.when('/customer-to-user', {
+     templateUrl: 'app/views/customerToUser.html',
+     controller: 'customerToUserController as vm',
+     resolve: customerToUserController.resolve
+     });
 
-    $routeProvider.when('/beneficiaries', {
-        templateUrl: 'app/views/beneficiaryList.html',
-        controller: 'beneficiaryListController as vm',
-        resolve: beneficiaryListController.resolve
-    });
+     $routeProvider.when('/beneficiaries', {
+     templateUrl: 'app/views/beneficiaryList.html',
+     controller: 'beneficiaryListController as vm',
+     resolve: beneficiaryListController.resolve
+     });
 
-    $routeProvider.when('/beneficiaries/beneficiary', {
-        templateUrl: 'app/views/beneficiaryAddOrEdit.html',
-        controller: 'beneficiaryAddOrEditController as vm',
-        resolve: beneficiaryAddOrEditController.resolve
-    });
-*/
+     $routeProvider.when('/beneficiaries/beneficiary', {
+     templateUrl: 'app/views/beneficiaryAddOrEdit.html',
+     controller: 'beneficiaryAddOrEditController as vm',
+     resolve: beneficiaryAddOrEditController.resolve
+     });
+     */
     $routeProvider.when('/not-found', {
         template: '<p>Not Found</p>'
     });
@@ -628,7 +645,6 @@ function appInit($log, $rootScope, $location, $sessionStorage) {
     $log.info('Initialization finished...');
 }
 app.run(['$log', '$rootScope', '$location', '$sessionStorage', appInit]);
-
 
 
 /*
