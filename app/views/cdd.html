@@ -13,21 +13,21 @@
 
     <div class="row" ng-show="vm.customer.idType == 'Passport'">
         <div class="col-md-4">
-            <div class="form-group has-feedback"
-             ng-class="{ 'has-error' : (vm.form.passportFront.$dirty && vm.form.passportFront.$invalid), 'has-success' : (vm.form.passportFront.$dirty && vm.form.passportFront.$valid) }">
-            <label for="passportFront" class="control-label">Passport Image <span class="text-danger">*</span></label>
-            <input type="file" class="form-control" id="passportFront" placeholder="" aria-describedby="passportFrontHelpBlock"
-                   name="passportFront" ng-model="vm.passportFront" ngf-select
-                   required accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFile">
+            <div><img ng-show="vm.form.passportFront.$valid" ngf-thumbnail="vm.passportFront" class="img-thumbnail"></div>
+            <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.passportFront.$dirty && vm.form.passportFront.$invalid), 'has-success' : (vm.form.passportFront.$dirty && vm.form.passportFront.$valid) }">
+                <label for="passportFront" class="control-label">Passport Image <span class="text-danger">*</span></label>
+                <input type="file" class="form-control" id="passportFront" placeholder="" aria-describedby="passportFrontHelpBlock"
+                       name="passportFront" ng-model="vm.passportFront" ngf-select
+                       required accept="image/*" ngf-max-size="2MB" ngf-model-invalid="passportFrontError">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.passportFront.$dirty && vm.form.passportFront.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.passportFront.$dirty && vm.form.passportFront.$valid"></span>
-            <div id="passportFrontHelpBlock" class="help-inline" ng-messages="vm.form.passportFront.$error"
-                 ng-if="vm.form.passportFront.$dirty">
-                <span ng-message="required">This is required.</span>
+                <div id="passportFrontHelpBlock" class="help-inline" ng-messages="vm.form.passportFront.$error" ng-if="vm.form.passportFront.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="maxsize">File too large {{passportFrontError.size / 1000000|number:1}}MB: max 2M</span>
+                </div>
             </div>
-        </div>
         </div>
         <div class="col-md-4">
            &nbsp;
@@ -80,7 +80,7 @@
             &nbsp;&nbsp;&nbsp;
             <button type="submit" class="btn "
                     ng-class="{'btn-primary' : vm.form.$pristine, 'btn-success' : (vm.form.$dirty && vm.form.$valid), 'btn-danger' : (vm.form.$dirty && vm.form.$invalid) }"
-                    ng-disabled="(vm.form.$dirty && vm.form.$valid)"
+                    xng-disabled="(vm.form.$dirty && vm.form.$valid)"
                     ng-click="vm.save()">
                 Save
             </button>

@@ -1,13 +1,31 @@
-appDirectives.directive('inputMaskModel', function ($parse) {
+appDirectives.directive('inputMaskNumber', function ($parse) {
     return {
         require: 'ngModel',
         link: function (scope, element, attrs, modelCtrl) {
-            modelCtrl.$validators.integer = function (modelValue, viewValue) {
+            modelCtrl.$validators.number = function (modelValue, viewValue) {
                 //console.log('mv : ' + modelValue + ' vv : ' +viewValue);
                 if (modelCtrl.$isEmpty(modelValue)) {
                     return true;
                 }
                 if (viewValue.indexOf('_') == -1) {
+                    return true;
+                }
+                return false;
+            };
+        }
+    };
+});
+
+appDirectives.directive('inputMaskDate', function ($parse) {
+    return {
+        require: 'ngModel',
+        link: function (scope, element, attrs, modelCtrl) {
+            modelCtrl.$validators.date = function (modelValue, viewValue) {
+                //console.log('mv : ' + modelValue + ' vv : ' +viewValue);
+                if (modelCtrl.$isEmpty(modelValue)) {
+                    return true;
+                }
+                if (viewValue.length == 8) {
                     return true;
                 }
                 return false;
@@ -162,8 +180,8 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         }
 
         value = vm.dob;
-        //reqCus.dob = moment(value).format('DD-MM-YYYY');
-        reqCus.dob = value;
+        reqCus.dob = moment(value, 'DDMMYYYY').format('DD-MM-YYYY');
+        //reqCus.dob = value;
 
         if (vm.accountType != 'personal') {
             value = vm.companyType;
@@ -267,7 +285,6 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         savex: function () {
             console.log($sessionStorage.currentCustomer);
             sessionService.currentCustomer = $sessionStorage.currentCustomer;
-           // sessionService.currentCustomer.idType = 'NRIC';
             console.log(sessionService.currentCustomer);
             $location.path('/cdd');
         },
@@ -301,6 +318,20 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, $se
 
     function save() {
         $log.info('saving started...');
+
+        console.log(vm.passportFront);
+
+        Upload.upload({
+            url : sessionService.getApiBasePath() + '/' + vm.customer.idNo,
+            data : { front : vm.passportFront }
+        }).then(function (res) {
+            console.log('Success ' + res.config.data.file.name + 'uploaded. Response: ' + res.data);
+        }, function (res) {
+            console.log('Error Status: ' + res.status);
+        }, function (evt) {
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('Progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+        });
 
         $log.info("saving finished...");
     }
@@ -766,3 +797,4 @@ app.run(['$log', '$rootScope', '$location', '$sessionStorage', appInit]);
  };
  appControllers.controller('beneficiaryListController', beneficiaryListController);
  */
+

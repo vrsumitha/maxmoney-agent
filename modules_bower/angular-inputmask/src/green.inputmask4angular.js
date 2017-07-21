@@ -70,6 +70,7 @@ angular.module('green.inputmask4angular', []).directive("inputMask", [ "$timeout
                 if (maskType) {
                     if (angular.isObject(maskType)) {
                         var maskOption = extendOption(maskType);
+                        //console.log(maskOption);
                         $timeout(function () {
                             elm.inputmask(maskOption);
                         });
@@ -77,6 +78,7 @@ angular.module('green.inputmask4angular', []).directive("inputMask", [ "$timeout
                         var maskOption = scope.$eval(attrs.maskOption);
                         if (maskOption) {
                             maskOption = extendOption(maskOption);
+                            //console.log(maskOption);
                             $timeout(function () {
                                 elm.inputmask(maskType, maskOption);
                             });

@@ -10,6 +10,10 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         agentDetail: {},
         beneficiaries: []
     };
+    
+    service.getApiBasePath = function () {
+      return apiBasePath;
+    };
 
     function addOrUpdateCache(propName, objectx) {
         //var objectsLst = service[propName]

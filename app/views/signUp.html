@@ -31,7 +31,7 @@
                     <div class="input-group-addon">{{vm.dialCode}}</div>
                     <input type="text" class="form-control" id="mobileNo" placeholder="Mobile Number" aria-describedby="mobileNoHelpBlock"
                            name="mobileNo" ng-model="vm.mobileNo"
-                           required ng-minlength="10" ng-maxlength="10" input-mask="'mask'" mask-option="{'mask':'9999999999'}" input-mask-model>
+                           required ng-minlength="10" ng-maxlength="10" input-mask="'mask'" mask-option="{'mask':'9999999999'}" input-mask-number>
                 </div>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                   ng-if="vm.form.mobileNo.$dirty && vm.form.mobileNo.$invalid"></span>
@@ -107,7 +107,7 @@
                 <label for="idNoNric" class="control-label">NRIC Number <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="idNoNric" placeholder="NRIC Number" aria-describedby="idNoNricHelpBlock"
                        name="idNoNric" ng-model="vm.idNoNric"
-                       ng-required="vm.idType == 'nric'" ng-minlength="12" ng-maxlength="12" input-mask="'mask'" mask-option="{'mask':'999999999999'}" input-mask-model>
+                       ng-required="vm.idType == 'nric'" ng-minlength="12" ng-maxlength="12" input-mask="'mask'" mask-option="{'mask':'999999999999'}" input-mask-number>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.idNoNric.$dirty && vm.form.idNoNric.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -139,15 +139,16 @@
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.dob.$dirty && vm.form.dob.$invalid), 'has-success' : (vm.form.dob.$dirty && vm.form.dob.$valid) }">
                 <label for="dob" class="control-label">DOB (dd-mm-yyyy) <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="dob" aria-describedby="dobHelpBlock"
+                    <input type="text" class="form-control" id="dob" placeholder="Date Of Birth" aria-describedby="dobHelpBlock"
                            name="dob" ng-model="vm.dob"
-                           required>
+                           required input-mask="{'alias' : 'dd-mm-yyyy'}" xmask-option="{'mask':'99-99-9999'}" input-mask-date>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.dob.$dirty && vm.form.dob.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.dob.$dirty && vm.form.dob.$valid"></span>
                 <div id="dobHelpBlock" class="help-inline" ng-messages="vm.form.dob.$error" ng-if="vm.form.dob.$dirty">
                     <span ng-message="required">This is required.</span>
+                    <span ng-message="date">This should be valid date.</span>
                 </div>
             </div>
             <!--
@@ -312,7 +313,7 @@
             <div class="form-group has-feedback">
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : (vm.form.state.$dirty && vm.form.state.$invalid), 'has-success' : (vm.form.state.$dirty && vm.form.state.$valid) }">
-                    <label for="nationality">Choose State <span class="text-danger">*</span></label>
+                    <label for="nationality">State <span class="text-danger">*</span></label>
                     <select class="form-control" id="state" aria-describedby="stateHelpBlock"
                             ng-options="item as item for item in vm.malasiyaStates"
                             name="state" ng-model="vm.state">
@@ -330,7 +331,7 @@
                 <label for="postalCode" class="control-label">Postal Code <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="postalCode" placeholder="Postal Code" aria-describedby="postalCodeHelpBlock"
                        name="postalCode" ng-model="vm.postalCode"
-                       required ng-minlength="5" ng-maxlength="5" input-mask="'mask'" mask-option="{'mask':'99999'}" input-mask-model>
+                       required ng-minlength="5" ng-maxlength="5" input-mask="'mask'" mask-option="{'mask':'99999'}" input-mask-number>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.postalCode.$dirty && vm.form.postalCode.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -373,13 +374,13 @@
                     ng-click="vm.save()">
                 Next
             </button>
-            <!--
+            <!---->
             &nbsp;&nbsp;&nbsp;
             <button type="submit" class="btn btn-primary"
                     ng-click="vm.savex()">
                 NextX
             </button>
-            -->
+            <!---->
         </div>
     </div>
     <!--
