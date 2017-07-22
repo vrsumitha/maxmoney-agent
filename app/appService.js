@@ -420,6 +420,8 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
     console.log('Backend URL : ' + apiBasePath);
     if (window.location.hostname == 'localhost') {
         $rootScope.appMode = 'local';
+    } else {
+        $rootScope.appMode = 'prod';
     }
     console.log('Application Mode : ' + $rootScope.appMode);
 

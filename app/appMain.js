@@ -109,10 +109,13 @@ app.config(appConfig);
 function appInit($log, $rootScope, $location, $sessionStorage) {
     $log.info('Initialization started...');
 
+    $rootScope.appMode = 'local';
+
     var path = '/sign-up';
     if($rootScope.appMode == 'local') {
         path = '/cdd';
     }
+    $log.info('Startup Path : ' + path);
     $location.path(path);
 
     $log.info('Initialization finished...');
