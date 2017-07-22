@@ -110,7 +110,9 @@ function appInit($log, $rootScope, $location, $sessionStorage) {
     $log.info('Initialization started...');
 
     var path = '/sign-up';
-    path = '/cdd';
+    if($rootScope.appMode == 'local') {
+        path = '/cdd';
+    }
     $location.path(path);
 
     $log.info('Initialization finished...');
