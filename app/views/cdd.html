@@ -81,15 +81,14 @@
                 <label for="nricFront" class="control-label">NRIC Front <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="nricFront" placeholder="" aria-describedby="nricFrontHelpBlock"
                        name="nricFront" ng-model="vm.nricFront" ngf-select
-                       required accept="image/*" ngf-max-size="2MB" ngf-model-invalid="nricFrontError">
+                       required accept="image/*" ngf-max-size="1MB" ngf-model-invalid="vm.nricFrontError">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.nricFront.$dirty && vm.form.nricFront.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.nricFront.$dirty && vm.form.nricFront.$valid"></span>
-                <div id="nricFrontHelpBlock" class="help-inline" ng-messages="vm.form.nricFront.$error"
-                     ng-if="vm.form.nricFront.$dirty">
-                    <span ng-message="required">This is required.</span>
-                    <span ngf-message="max-size">File too large {{nricFrontError.size / 1000000|number:1}}MB: max 2MB</span>
+                <div id="nricFrontHelpBlock" class="help-inline" ng-if="vm.form.nricFront.$dirty">
+                    <span ng-show="vm.form.nricFront.$error.required">This is required.</span>
+                    <span ng-show="vm.form.nricFront.$error.maxSize">File too large {{vm.nricFrontError.size / 1000000 | number:1}}MB: max 2MB</span>
                 </div>
             </div>
         </div>
@@ -97,7 +96,7 @@
             <div><img ng-src="{{vm.nricFrontImage}}" class="img-thumbnail"></div>
         </div>
         <div class="col-md-4">
-            &nbsp;
+            <pre>{{vm.form.nricFront | json}}</pre>
         </div>
     </div>
 
@@ -115,10 +114,9 @@
                       ng-if="vm.form.nricBack.$dirty && vm.form.nricBack.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.nricBack.$dirty && vm.form.nricBack.$valid"></span>
-                <div id="nricBackHelpBlock" class="help-inline" ng-messages="vm.form.nricBack.$error"
-                     ng-if="vm.form.nricBack.$dirty">
+                <div id="nricBackHelpBlock" class="help-inline" ng-messages="vm.form.nricBack.$error" ng-if="vm.form.nricBack.$dirty">
                     <span ng-message="required">This is required.</span>
-                    <span ngf-message="max-size">File too large {{nricBackError.size / 1000000|number:1}}MB: max 2MB</span>
+                    <span ngf-message="maxSize">File too large {{nricBackError.size / 1000000|number:1}}MB: max 2MB</span>
                 </div>
             </div>
         </div>

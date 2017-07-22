@@ -489,7 +489,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
         vm.customers = storageService.getCustomers();
         vm.customer = sessionService.currentCustomer;
         if (!vm.customer) {
-            vm.customer = vm.customers[0];
+            vm.customer = vm.customers[vm.customers.length-1];
             vm.name = vm.customer.customerName;
             //loadImage();
         }
