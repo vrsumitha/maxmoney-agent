@@ -53,7 +53,7 @@
                       ng-if="vm.form.passportFront.$dirty && vm.form.passportFront.$valid"></span>
                 <div id="passportFrontHelpBlock" class="help-inline" ng-messages="vm.form.passportFront.$error" ng-if="vm.form.passportFront.$dirty">
                     <span ng-message="required">This is required.</span>
-                    <span ngf-message="max-size">File too large {{passportFrontError.size / 1000000|number:1}}MB: max 2MB</span>
+                    <span ng-message="max-size">File too large {{passportFrontError.size / 1000000|number:1}}MB: max 2MB</span>
                 </div>
             </div>
             <!--
@@ -89,7 +89,6 @@
                 <div id="nricFrontHelpBlock" class="help-inline" ng-messages="vm.form.nricFront.$error"
                      ng-if="vm.form.nricFront.$dirty">
                     <span ng-message="required">This is required.</span>
-                    <span ng-message="maxsize">File too large {{passportFrontError.size / 1000000|number:1}}MB: max 2M</span>
                     <span ngf-message="max-size">File too large {{nricFrontError.size / 1000000|number:1}}MB: max 2MB</span>
                 </div>
             </div>
