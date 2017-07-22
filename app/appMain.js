@@ -109,7 +109,12 @@ app.config(appConfig);
 function appInit($log, $rootScope, $location, $sessionStorage) {
     $log.info('Initialization started...');
 
-    $rootScope.appMode = 'local';
+    if (window.location.hostname == 'localhost') {
+        $rootScope.appMode = 'local';
+    } else {
+        $rootScope.appMode = 'prod';
+    }
+    console.log('Application Mode : ' + $rootScope.appMode);
 
     var path = '/sign-up';
     if($rootScope.appMode == 'local') {
