@@ -372,7 +372,14 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
         $log.info('saving started...');
 
         var path = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
-        var reqData = {'front': vm.passportFront, 'idType': vm.customer.idType};
+        var reqData = {'idType': vm.customer.idType};
+        if (vm.customer.idType == 'Passport') {
+            reqData['front'] = vm.passportFront;
+        }
+        if (vm.customer.idType == 'NRIC') {
+            reqData['front'] = vm.nricFront;
+            reqData['back'] = vm.nricBack;
+        }
         $log.info(reqData);
         Upload.upload({
             url: path,
@@ -382,14 +389,15 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
             data: reqData
         }).then(function (res) {
             console.log(res);
-            console.log('Success ' + res.config.data.front.name + 'uploaded. Response: ' + res.data);
+            //console.log('Success ' + res.config.data.front.name + 'uploaded');
         }, function (res) {
             console.log(res);
             console.log('Error Status: ' + res.status);
         }, function (evt) {
             console.log(evt);
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            console.log('Progress: ' + progressPercentage + '% ' + evt.config.data.front.name);
+            //console.log('Progress: ' + progressPercentage + '% ' + evt.config.data.front.name);
+            console.log('Progress: ' + progressPercentage + '% ');
         });
 
         // var reqData = { 'customerName' : vm.name};
@@ -422,20 +430,58 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
         $log.info('saving finished...');
     }
 
-    function loadImage () {
-        var path = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo + '/images/PassportFront.jpg';
-        var req = {
-            method: 'GET',
-            url: path,
-            headers: {'api-key': $rootScope.sessionId}
-        };
-        //$log.info(req);
-        $http(req).then(function (res) {
-            $log.info(res);
-            vm.passportFrontImage = res.data;
-        }, function (res) {
-            $log.error(res);
-        });
+    function loadImage() {
+        var basePath = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
+        if (vm.customer.idType == 'Passport') {
+            var path = basePath + 'images/' + vm.customer.images.Front;
+            var req = {
+                method: 'GET',
+                url: path,
+                headers: {'api-key': $rootScope.sessionId}
+            };
+            //$log.info(req);
+            $http(req).then(function (res) {
+                $log.info(res);
+                if (res.status === 200) {
+                    vm.passportFrontImage = res.data;
+                }
+            }, function (res) {
+                $log.error(res);
+            });
+        }
+        if (vm.customer.idType == 'NRIC') {
+            var path = basePath + 'images/' + vm.customer.images.Front;
+            var req = {
+                method: 'GET',
+                url: path,
+                headers: {'api-key': $rootScope.sessionId}
+            };
+            //$log.info(req);
+            $http(req).then(function (res) {
+                $log.info(res);
+                if (res.status === 200) {
+                    vm.nricFrontImage = res.data;
+                }
+            }, function (res) {
+                $log.error(res);
+            });
+
+            var path = basePath + 'images/' + vm.customer.images.Back;
+            req = {
+                method: 'GET',
+                url: path,
+                headers: {'api-key': $rootScope.sessionId}
+            };
+            //$log.info(req);
+            $http(req).then(function (res) {
+                $log.info(res);
+                if (res.status === 200) {
+                    vm.nricBackImage = res.data;
+                }
+            }, function (res) {
+                $log.error(res);
+            });
+        }
     }
 
     function init() {
@@ -445,7 +491,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
         if (!vm.customer) {
             vm.customer = vm.customers[0];
             vm.name = vm.customer.customerName;
-            loadImage();
+            //loadImage();
         }
         //console.log(vm.customer);
         $log.info("init finished...");
