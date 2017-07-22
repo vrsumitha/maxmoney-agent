@@ -374,13 +374,19 @@
                     ng-click="vm.save()">
                 Next
             </button>
-            <!---->
+            <!--
             &nbsp;&nbsp;&nbsp;
             <a type="submit" class="btn btn-primary" href="#!/cdd"
                ng-show="appMode == 'local'">
                 NextX
             </a>
-            <!---->
+
+            &nbsp;&nbsp;&nbsp;
+            <a type="submit" class="btn btn-primary" ng-click="vm.onGoToTest()"
+               ng-show="appMode == 'local'">
+                test
+            </a>
+            -->
         </div>
     </div>
     <!--

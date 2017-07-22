@@ -375,6 +375,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
         var reqData = {'idType': vm.customer.idType};
         if (vm.customer.idType == 'Passport') {
             reqData['front'] = vm.passportFront;
+            reqData['back'] = vm.passportBack;
         }
         if (vm.customer.idType == 'NRIC') {
             reqData['front'] = vm.nricFront;
