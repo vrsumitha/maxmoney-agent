@@ -6,7 +6,7 @@ function generalHttpInterceptor($log, $rootScope, $q, $window) {
             //     //$log.info('sessionId = ' + $rootScope.sessionId);
             // }
             //console.log($rootScope.sessionId);
-            $log.info(config);
+            //$log.info(config);
             return config;
         },
 
@@ -91,9 +91,9 @@ function rootController($log, $rootScope, $scope, $window, sessionService) {
     sessionService.getOrderPurposes();
     sessionService.getAgents();
 
-    var params = { userId : 'sa@maxmoney.com', password : 'MaxMoney@2016'};
+    var params = {userId: 'sa@maxmoney.com', password: 'MaxMoney@2016'};
     //params = { userId : 'vteial@gmail.com', password : 'D123456*'};
-    sessionService.signIn(params).then(function(res) {
+    sessionService.signIn(params).then(function (res) {
         sessionService.getCurrentSessionX().then(function (res) {
             $log.info('Current Session Id : ' + $rootScope.sessionId);
             $log.info('Current User Id    : ' + res.username);
@@ -169,7 +169,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
             vm.nationality = _.find(vm.countries, function (item) {
                 return item.code == 'MY';
             });
-            if(vm.nationality) {
+            if (vm.nationality) {
                 onNationalityChange();
             }
         }
@@ -348,11 +348,11 @@ appControllers.controller('signUpController', signUpController);
 appDirectives.directive('fileModel', ['$parse', function ($parse) {
     return {
         restrict: 'A',
-        link: function(scope, element, attrs) {
+        link: function (scope, element, attrs) {
             var model = $parse(attrs.fileModel);
             var modelSetter = model.assign;
-            element.bind('change', function(){
-                scope.$apply(function(){
+            element.bind('change', function () {
+                scope.$apply(function () {
                     modelSetter(scope, element[0].files[0]);
                 });
             });
@@ -371,52 +371,83 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
     function save() {
         $log.info('saving started...');
 
-        console.log(vm.passportFront);
-
-        var path = sessionService.getApiBasePath() + '/' + vm.customer.idNo;
-        //path = sessionService.getApiBasePath() + '/100002';
-
+        var path = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
+        var reqData = {'front': vm.passportFront, 'idType': vm.customer.idType};
+        $log.info(reqData);
         Upload.upload({
             url: path,
             method: 'PUT',
             headers: {'api-key': $rootScope.sessionId},
             transformRequest: angular.identity,
-            data : { front : vm.passportFront }
+            data: reqData
         }).then(function (res) {
-            console.log('Success ' + res.config.data.file.name + 'uploaded. Response: ' + res.data);
+            console.log(res);
+            console.log('Success ' + res.config.data.front.name + 'uploaded. Response: ' + res.data);
         }, function (res) {
+            console.log(res);
             console.log('Error Status: ' + res.status);
         }, function (evt) {
+            console.log(evt);
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            console.log('Progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+            console.log('Progress: ' + progressPercentage + '% ' + evt.config.data.front.name);
         });
 
-        /*
-        console.log(vm.passportFrontX);
+        // var reqData = { 'customerName' : vm.name};
+        // var req = {
+        //     method: 'PUT',
+        //     url: path,
+        //     headers: { 'api-key' : $rootScope.sessionId},
+        //     params: reqData
+        // };
 
-        var formData = new FormData();
-        formData.append('front', vm.passportFrontX);
-        $http.put(path, formData, {
-            transformRequest: angular.identity,
-            headers: {'api-key': $rootScope.sessionId, 'Content-Type': undefined}
-        }).then(function(res){
-            console.log(res);
-        }, function(res){
-            console.log(res);
+        //console.log(vm.passportFrontX);
+        // var reqData = new FormData();
+        // reqData.append('front', vm.passportFrontX);
+        // reqData.append('customerName', vm.name);
+        // var req = {
+        //     method: 'PUT',
+        //     url: path,
+        //     headers: { 'api-key' : $rootScope.sessionId, 'Content-Type': undefined},
+        //     transformRequest: angular.identity,
+        //     data: reqData
+        // };
+
+        // $log.info(req);
+        // $http(req).then(function (res) {
+        //     console.log(res);
+        // }, function (res) {
+        //     console.log(res);
+        // });
+
+        $log.info('saving finished...');
+    }
+
+    function loadImage () {
+        var path = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo + '/images/PassportFront.jpg';
+        var req = {
+            method: 'GET',
+            url: path,
+            headers: {'api-key': $rootScope.sessionId}
+        };
+        //$log.info(req);
+        $http(req).then(function (res) {
+            $log.info(res);
+            vm.passportFrontImage = res.data;
+        }, function (res) {
+            $log.error(res);
         });
-        */
-
-        $log.info("saving finished...");
     }
 
     function init() {
         $log.info("init started...");
         vm.customers = storageService.getCustomers();
         vm.customer = sessionService.currentCustomer;
-        if(!vm.customer) {
+        if (!vm.customer) {
             vm.customer = vm.customers[0];
+            vm.name = vm.customer.customerName;
+            loadImage();
         }
-        console.log(vm.customer);
+        //console.log(vm.customer);
         $log.info("init finished...");
     }
 

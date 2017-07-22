@@ -1,3 +1,4 @@
+
 <form name="vm.form" >
     <div class="row">
         <div class="col-md-4">
@@ -13,22 +14,39 @@
             </div>
         </div>
         <div class="col-md-4">
-            &nbsp;
+            <!--
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.name.$dirty && vm.form.name.$invalid), 'has-success' : (vm.form.name.$dirty && vm.form.name.$valid) }">
+                <label for="name" class="control-label">Full Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="name" placeholder="Full Name" aria-describedby="nameHelpBlock"
+                       name="name" ng-model="vm.name"
+                       ng-minlength="5" ng-maxlength="30" ng-pattern="/^[a-zA-Z\s]*$/">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.name.$dirty && vm.form.name.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.name.$dirty && vm.form.name.$valid"></span>
+                <div id="nameHelpBlock" class="help-inline" ng-messages="vm.form.name.$error"
+                     ng-if="vm.form.name.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="pattern">This should contains alphabets only</span>
+                    <span ng-message="minlength, maxlength">This should have minimum 5 and maximum 30 characters long</span>
+                </div>
+            </div>
+            -->&nbsp;
         </div>
         <div class="col-md-4">
             &nbsp;
         </div>
     </div>
 
-    <div class="row" ng-show="vm.customer.idType == 'Passport'">
+    <div class="row" ng-if="vm.customer.idType == 'Passport'">
         <div class="col-md-4">
-
             <div><img ng-show="vm.form.passportFront.$valid" ngf-thumbnail="vm.passportFront" class="img-thumbnail"></div>
             <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.passportFront.$dirty && vm.form.passportFront.$invalid), 'has-success' : (vm.form.passportFront.$dirty && vm.form.passportFront.$valid) }">
                 <label for="passportFront" class="control-label">Passport Front <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="passportFront" placeholder="" aria-describedby="passportFrontHelpBlock"
-                       name="passportFront" ng-model="vm.passportFront" ngf-select
-                       required accept="image/*" ngf-max-size="2MB" ngf-model-invalid="passportFrontError">
+                       name="passportFront" ng-model="vm.passportFront" accept="image/*" ngf-select
+                       ng-required="vm.customer.idType == 'Passport'" ngf-max-size="2MB" ngf-model-invalid="passportFrontError">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.passportFront.$dirty && vm.form.passportFront.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -38,17 +56,20 @@
                     <span ng-message="maxsize">File too large {{passportFrontError.size / 1000000|number:1}}MB: max 2M</span>
                 </div>
             </div>
-
+            <!--
             <div class="form-group">
                 <label for="passportFrontX">Passport Front <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="passportFrontX" placeholder=""
                        name="passportFront" xng-model="vm.passportFrontX"
-                       required accept="image/*" file-model="vm.passportFrontX">
+                       accept="image/*" file-model="vm.passportFrontX">
             </div>
-
+            -->
         </div>
         <div class="col-md-4">
-           &nbsp;
+            <div><img ng-src="{{vm.passportFrontImage}}" class="img-thumbnail"></div>
+        </div>
+        <div class="col-md-4">
+            &nbsp;
         </div>
     </div>
 
@@ -89,6 +110,7 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-4  text-right">
             <button type="reset" class="btn btn-default"
@@ -104,6 +126,7 @@
             </button>
         </div>
     </div>
+
     <!---->
     <br/>
     <pre>{{vm.customer | json}}</pre>
