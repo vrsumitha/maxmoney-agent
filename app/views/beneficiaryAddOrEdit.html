@@ -33,7 +33,7 @@
                 <div class="col-md-6">
                     <div class="form-group has-feedback"
                          ng-class="{ 'has-error' : (vm.form.name.$dirty && vm.form.name.$invalid), 'has-success' : (vm.form.name.$dirty && vm.form.name.$valid) }">
-                        <label for="name">&nbsp;&nbsp;&nbsp;&nbsp;Full Name <span class="text-danger">*</span></label>
+                        <label for="name">Full Name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="name" placeholder="Full Name" aria-describedby="nameHelpBlock"
                                name="name" ng-model="vm.model.name"
                                required ng-minlength="5" ng-maxlength="30" ng-pattern="/^[a-zA-Z\s]*$/">
@@ -52,7 +52,7 @@
                 <div class="col-md-6">
                     <div class="form-group has-feedback"
                          ng-class="{ 'has-error' : (vm.form.email.$dirty && vm.form.email.$invalid), 'has-success' : (vm.form.email.$dirty && vm.form.email.$valid) }">
-                        <label for="email">&nbsp;&nbsp;&nbsp;&nbsp;Recipient's Email</label>
+                        <label for="email">Recipient's Email</label>
                         <input type="email" class="form-control" id="email" placeholder="Email Id" aria-describedby="emailHelpBlock"
                                name="email" ng-model="vm.model.email">
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
@@ -72,7 +72,7 @@
                 <div class="col-md-12">
                     <div class="form-group has-feedback"
                          ng-class="{ 'has-error' : (vm.form.address.$dirty && vm.form.address.$invalid), 'has-success' : (vm.form.address.$dirty && vm.form.address.$valid) }">
-                        <label for="address">&nbsp;&nbsp;&nbsp;&nbsp;Address </label>
+                        <label for="address">Address </label>
                         <input type="text" class="form-control" id="address" placeholder=" Address" aria-describedby="addressHelpBlock"
                                name="address" ng-model="vm.model.address"
                                ng-minlength="5" ng-maxlength="100">
@@ -92,7 +92,7 @@
                 <div class="col-md-6">
                     <div class="form-group has-feedback"
                          ng-class="{ 'has-error' : (vm.form.country.$dirty && vm.form.country.$invalid), 'has-success' : (vm.form.country.$dirty && vm.form.country.$valid) }">
-                        <label for="country">&nbsp;&nbsp;&nbsp;&nbsp;Country <span class="text-danger">*</span></label>
+                        <label for="country">Country <span class="text-danger">*</span></label>
                         <select class="form-control" id="country" aria-describedby="countryHelpBlock"
                                 name="country"  ng-model="vm.model.agentCountry" ng-change="vm.onCountryChange()"
                                 ng-options="item as item.country for item in vm.agentCountries"
@@ -107,7 +107,7 @@
                 <div class="col-md-6">
                     <div class="form-group has-feedback"
                          ng-class="{ 'has-error' : (vm.form.dialingNumber.$dirty && vm.form.dialingNumber.$invalid), 'has-success' : (vm.form.dialingNumber.$dirty && vm.form.dialingNumber.$valid) }">
-                        <label for="dialingNumber">&nbsp;&nbsp;&nbsp;&nbsp;Phone Number <span class="text-danger">*</span></label>
+                        <label for="dialingNumber">Phone Number <span class="text-danger">*</span></label>
                         <div class="input-group">
                             <span class="input-group-addon">{{vm.model.dialingCode}}</span>
                             <input type="text" class="form-control" id="dialingNumber" placeholder="Phone Number" aria-describedby="dialingNumberHelpBlock"
@@ -131,7 +131,7 @@
                 <div class="col-md-6">
                     <div class="form-group has-feedback"
                          ng-class="{ 'has-error' : (vm.form.orderPurpose.$dirty && vm.form.orderPurpose.$invalid), 'has-success' : (vm.form.orderPurpose.$dirty && vm.form.orderPurpose.$valid) }">
-                        <label for="orderPurpose">&nbsp;&nbsp;&nbsp;&nbsp;Purpose <span class="text-danger">*</span></label>
+                        <label for="orderPurpose">Purpose <span class="text-danger">*</span></label>
                         <select class="form-control" id="orderPurpose" aria-describedby="orderPurposeHelpBlock"
                                 name="orderPurpose" ng-model="vm.model.orderPurpose"
                                  ng-options="item for item in vm.orderPurposes" required>
@@ -145,7 +145,7 @@
                 <div class="col-md-6">
                     <div class="form-group has-feedback"
                          ng-class="{ 'has-error' : (vm.form.relationship.$dirty && vm.form.relationship.$invalid), 'has-success' : (vm.form.relationship.$dirty && vm.form.relationship.$valid) }">
-                        <label for="relationship">&nbsp;&nbsp;&nbsp;&nbsp;Relationship <span class="text-danger">*</span></label>
+                        <label for="relationship">Relationship <span class="text-danger">*</span></label>
                         <select class="form-control" id="relationship" aria-describedby="relationshipHelpBlock"
                                 name="relationship" ng-model="vm.model.relationship"
                                 ng-options="item for item in vm.relationships" required>
@@ -165,7 +165,7 @@
                 <div class="col-md-6">
                     <div class="form-group has-feedback"
                          ng-class="{ 'has-error' : (vm.form.bankName.$dirty && vm.form.bankName.$invalid), 'has-success' : (vm.form.bankName.$dirty && vm.form.bankName.$valid) }">
-                        <label for="bankName">&nbsp;&nbsp;&nbsp;&nbsp;Bank Name <span class="text-danger">*</span></label>
+                        <label for="bankName">Bank Name <span class="text-danger">*</span></label>
                         <select class="form-control"id="bankName" aria-describedby="bankNameHelpBlock"
                                  name="bankName" ng-model="vm.model.bankAccount.payoutAgent" ng-change="onPayoutAgentChange()"
                                  ng-options="bank.name for bank in vm.payoutAgentBanks"
@@ -180,7 +180,7 @@
                 <div class="col-md-6">
                     <div class="form-group has-feedback"
                          ng-class="{ 'has-error' : (vm.form.bankBranch.$dirty && vm.form.bankBranch.$invalid), 'has-success' : (vm.form.bankBranch.$dirty && vm.form.bankBranch.$valid) }">
-                        <label for="bankBranch">&nbsp;&nbsp;&nbsp;&nbsp;Bank Branch <span class="text-danger">*</span></label>
+                        <label for="bankBranch">Bank Branch <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="bankBranch" placeholder="Bank Branch"
                                 name="bankBranch" ng-model="vm.model.bankAccount.branch"
                                 ng-required="vm.payBy == 'BD'" ng-minlength="5" ng-maxlength="30">
@@ -200,7 +200,7 @@
                 <div class="col-md-6">
                     <div class="form-group has-feedback"
                          ng-class="{ 'has-error' : (vm.form.bankAccountNumber.$dirty && vm.form.bankAccountNumber.$invalid), 'has-success' : (vm.form.bankAccountNumber.$dirty && vm.form.bankAccountNumber.$valid) }">
-                        <label for="bankAccountNumber">&nbsp;&nbsp;&nbsp;&nbsp;Account Number <span class="text-danger">*</span></label>
+                        <label for="bankAccountNumber">Account Number <span class="text-danger">*</span></label>
                         <input class="form-control" type="text" name="bankAccountNumber" id="bankAccountNumber" placeholder=""
                                ng-model="vm.model.bankAccount.acctNo"
                                ng-required="vm.payBy == 'BD'" ng-minlength="5" ng-maxlength="30">
@@ -219,7 +219,7 @@
                 <div class="col-md-6">
                     <div class="form-group has-feedback"
                          ng-class="{ 'has-error' : (vm.form.bankAccountName.$dirty && vm.form.bankAccountName.$invalid), 'has-success' : (vm.form.bankAccountName.$dirty && vm.form.bankAccountName.$valid) }">
-                        <label for="bankAccountName">&nbsp;&nbsp;&nbsp;&nbsp;Account Holder Name <span class="text-danger">*</span></label>
+                        <label for="bankAccountName">Account Holder Name <span class="text-danger">*</span></label>
                         <input class="form-control" type="text" name="bankAccountName" id="bankAccountName" placeholder=""
                                ng-model="vm.model.bankAccount.acctName"
                                ng-required="vm.payBy == 'BD'" ng-minlength="5" ng-maxlength="30">

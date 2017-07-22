@@ -10,9 +10,9 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         agentDetail: {},
         beneficiaries: []
     };
-    
+
     service.getApiBasePath = function () {
-      return apiBasePath;
+        return apiBasePath;
     };
 
     function addOrUpdateCache(propName, objectx) {
@@ -36,20 +36,15 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         //$log.info(req);
         $log.debug('fetching countries started...');
         var deferred = $q.defer();
-        $http(req).then(function (res, status) {
+        $http(req).then(function (res) {
             $log.debug(res);
-            //$log.debug(status);
             service.countries = res.data;
-            // _.forEach(service.countries, function (item) {
-            //    item.nationality = item.name;
-            // });
             $rootScope.$broadcast('session:countries', 'Session countries updated...');
             deferred.resolve(res);
             $log.debug('fetching countries finished with success.');
-        }, function (res, status) {
+        }, function (res) {
             $log.debug(res);
-            $log.debug(status);
-            deferred.reject({res: res, status: status});
+            deferred.reject(res);
             $log.debug('fetching countries finished with failure.');
         });
         return deferred.promise;
@@ -64,17 +59,15 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         //$log.info(req);
         $log.debug('fetching malasiyaStates started...');
         var deferred = $q.defer();
-        $http(req).then(function (res, status) {
+        $http(req).then(function (res) {
             $log.debug(res);
-            //$log.debug(status);
             service.malasiyaStates = res.data;
             $rootScope.$broadcast('session:malasiyaStates', 'Session malasiyaStates updated...');
             deferred.resolve(res);
             $log.debug('fetching malasiyaStates finished with success.');
-        }, function (res, status) {
+        }, function (res) {
             $log.debug(res);
-            $log.debug(status);
-            deferred.reject({res: res, status: status});
+            deferred.reject(res);
             $log.debug('fetching malasiyaStates finished with failure.');
         });
         return deferred.promise;
@@ -97,17 +90,15 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         //$log.info(req);
         $log.debug('fetching order purposes started...');
         var deferred = $q.defer();
-        $http(req).then(function (res, status) {
+        $http(req).then(function (res) {
             $log.debug(res);
-            //$log.debug(status);
             processOrderPurposes(res.data);
             $rootScope.$broadcast('session:orderPurposes', 'Session order purposes updated...');
             deferred.resolve(res);
             $log.debug('fetching order purposes finished with success.');
-        }, function (res, status) {
+        }, function (res) {
             $log.debug(res);
-            $log.debug(status);
-            deferred.reject({res: res, status: status});
+            deferred.reject(res);
             $log.debug('fetching order purposes finished with failure.');
         });
         return deferred.promise;
@@ -122,17 +113,15 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         //$log.info(req);
         $log.debug('fetching relationships started...');
         var deferred = $q.defer();
-        $http(req).then(function (res, status) {
+        $http(req).then(function (res) {
             $log.debug(res);
-            //$log.debug(status);
             service.relationships = res.data;
             $rootScope.$broadcast('session:relationships', 'Session relationships updated...');
             deferred.resolve(res);
             $log.debug('fetching relationships finished with success.');
-        }, function (res, status) {
+        }, function (res) {
             $log.debug(res);
-            $log.debug(status);
-            deferred.reject({res: res, status: status});
+            deferred.reject(res);
             $log.debug('fetching relationships with failure.');
         });
         return deferred.promise;
@@ -147,18 +136,16 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         //$log.info(req);
         $log.debug('fetching agents started...');
         var deferred = $q.defer();
-        $http(req).then(function (res, status) {
+        $http(req).then(function (res) {
             $log.debug(res);
-            //$log.debug(status);
             // processAgents(res);
             service.agentDetail = res.data;
             $rootScope.$broadcast('session:agents', 'Session agents updated...');
             deferred.resolve(res);
             $log.debug('fetching agents finished with success.');
-        }, function (res, status) {
+        }, function (res) {
             $log.debug(res);
-            $log.debug(status);
-            deferred.reject({res: res, status: status});
+            deferred.reject(res);
             $log.debug('fetching agents finished with failure.');
         });
         return deferred.promise;
@@ -174,15 +161,13 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         //$log.info(req);
         $log.debug('fetching payout agents info started...');
         var deferred = $q.defer();
-        $http(req).then(function (res, status) {
+        $http(req).then(function (res) {
             $log.debug(res);
-            //$log.debug(status);
             deferred.resolve(res.data);
             $log.debug('fetching payout agents info finished with success.');
-        }, function (res, status) {
+        }, function (res) {
             $log.debug(res);
-            $log.debug(status);
-            deferred.reject({res: res, status: status});
+            deferred.reject(res);
             $log.debug('fetching payout agents info finished with failure.');
         });
         return deferred.promise;
@@ -197,18 +182,16 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         //$log.info(req);
         $log.debug('fetching current beneficiaries started...');
         var deferred = $q.defer();
-        $http(req).success(function (res, status) {
+        $http(req).success(function (res) {
             $log.debug(res);
-            //$log.debug(status);
             service.beneficiaries = res;
             service.getAgents();
             $rootScope.$broadcast('session:beneficiaries', 'Session beneficiaries updated...');
             deferred.resolve(res);
             $log.debug('fetching current beneficiaries finished with success.');
-        }).error(function (res, status) {
+        }).error(function (res) {
             $log.debug(res);
-            $log.debug(status);
-            deferred.reject({res: res, status: status});
+            deferred.reject(res);
             $log.debug('fetching current beneficiaries finished with failure.');
         });
         return deferred.promise;
@@ -223,9 +206,9 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         };
         //$log.info(req);
         var deferred = $q.defer();
-        $http(req).then(function (res, status) {
+        $http(req).then(function (res) {
             deferred.resolve(res);
-        }, function (res, status) {
+        }, function (res) {
             deferred.reject(res);
         });
         return deferred.promise;
@@ -240,9 +223,9 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         };
         $log.info(req);
         var deferred = $q.defer();
-        $http(req).then(function (res, status) {
+        $http(req).then(function (res) {
             deferred.resolve(res);
-        }, function (res, status) {
+        }, function (res) {
             deferred.reject(res);
         });
         return deferred.promise;
@@ -256,9 +239,9 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         };
         //$log.info(req);
         var deferred = $q.defer();
-        $http(req).then(function (res, status) {
+        $http(req).then(function (res) {
             deferred.resolve(res);
-        }, function (res, status) {
+        }, function (res) {
             deferred.reject(res);
         });
         return deferred.promise;
@@ -273,9 +256,9 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         };
         //$log.info(req);
         var deferred = $q.defer();
-        $http(req).then(function (res, status) {
+        $http(req).then(function (res) {
             deferred.resolve(res);
-        }, function (res, status) {
+        }, function (res) {
             deferred.reject(res);
         });
         return deferred.promise;
@@ -289,9 +272,9 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         };
         //$log.info(req);
         var deferred = $q.defer();
-        $http(req).then(function (res, status) {
+        $http(req).then(function (res) {
             deferred.resolve(res);
-        }, function (res, status) {
+        }, function (res) {
             deferred.reject(res);
         });
         return deferred.promise;
@@ -306,24 +289,24 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         };
         //$log.info(req);
         var deferred = $q.defer();
-        $http(req).then(function (res, status) {
+        $http(req).then(function (res) {
             deferred.resolve(res);
-        }, function (res, status) {
+        }, function (res) {
             deferred.reject(res);
         });
         return deferred.promise;
     };
 
-    service.signIn = function(params) {
+    service.signIn = function (params) {
         var reqData = {'username': params.userId, 'password': params.password};
         var path = apiBasePath + '/sessions/current';
         var req = {
             method: 'POST',
             url: path,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            transformRequest: function(obj) {
+            transformRequest: function (obj) {
                 var str = [];
-                for(var p in obj) {
+                for (var p in obj) {
                     str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
                 }
                 return str.join("&");
@@ -356,18 +339,15 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         //$log.info(req);
         $log.debug('fetching current user started...');
         var deferred = $q.defer();
-        $http(req).then(function (res, status) {
-            console.log(res);
-            //$log.debug(res);
-            //$log.debug(status);
+        $http(req).then(function (res) {
+            $log.debug(res);
             _.assign(service.currentUser, res);
             $rootScope.$broadcast('session:currentUser', 'Session current user updated...');
             deferred.resolve(res);
             $log.debug('fetching current user finished with success.');
-        }, function (res, status) {
+        }, function (res) {
             $log.debug(res);
-            $log.debug(status);
-            deferred.reject({res: res, status: status});
+            deferred.reject(res);
             $log.debug('fetching current user finished with failure.');
         });
         return deferred.promise;
@@ -384,7 +364,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         $log.debug('fetching current session started...');
         var deferred = $q.defer();
         $http(req).then(function (res) {
-            //$log.info(res);
+            //$log.debug(res);
             $log.debug('fetching current session finished with success.');
             deferred.resolve(res.data);
         }, function (res) {
@@ -395,14 +375,14 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
-    service.getCurrentSession = function() {
+    service.getCurrentSession = function () {
         $log.info('fetching current session started...');
         var deferred = $q.defer();
-        $http.get('app/session.json').then(function(res, status){
+        $http.get('app/session.json').then(function (res) {
             deferred.resolve(res.data);
             $log.info('fetching current session finished with success...');
-        }, function(res, status){
-            deferred.reject({res: res, status: status});
+        }, function (res) {
+            deferred.reject(res);
             $log.info('fetching current session finished with failure...');
         });
         return deferred.promise;
@@ -418,13 +398,13 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         $log.debug('signout current session started...');
         var deferred = $q.defer();
         $http(req).then(function (res) {
-            // $log.info(res);
+            // $log.debug(res);
             $rootScope.sessionId = null;
             $sessionStorage.$reset();
             deferred.resolve(res.data);
             $log.debug('signOut current session finished with success.');
-        }, function (res, status) {
-            // $log.info(res);
+        }, function (res) {
+            $log.error(res);
             $rootScope.sessionId = null;
             $sessionStorage.$reset();
             deferred.reject(res.data);
@@ -434,11 +414,11 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
     };
 
     console.log('Frontend Hostname : ' + window.location.hostname);
-    if(window.location.hostname == 'maxmoney.com') {
+    if (window.location.hostname == 'maxmoney.com') {
         apiBasePath = 'https://api.maxmoney.com/v1';
     }
     console.log('Backend URL : ' + apiBasePath);
-    if(window.location.hostname == 'localhost') {
+    if (window.location.hostname == 'localhost') {
         $rootScope.appMode = 'local';
     }
     console.log('Application Mode : ' + $rootScope.appMode);

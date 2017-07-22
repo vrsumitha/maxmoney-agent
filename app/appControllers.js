@@ -1,109 +1,3 @@
-function generalHttpInterceptor($log, $rootScope, $q, $window) {
-    return {
-        'request': function (config) {
-            // if($rootScope.sessionId) {
-            //     config.headers['api-key'] = $rootScope.sessionId;
-            //     //$log.info('sessionId = ' + $rootScope.sessionId);
-            // }
-            //console.log($rootScope.sessionId);
-            //$log.info(config);
-            return config;
-        },
-
-        'requestError': function (rejection) {
-            //console.log(rejection);
-            $log.error(rejection);
-            return rejection;
-        },
-
-        'response': function (response) {
-            //console.log(response);
-            //$log.info(response);
-            return response;
-        },
-
-        'responseError': function (rejection) {
-            //console.log(rejection);
-            $log.error(rejection);
-            // if (rejection.status == 401 && rejection.data.code == 91) {
-            //     $rootScope.$emit('session:invalid', 'Invalid session...');
-            // }
-            return rejection;
-        }
-    };
-}
-appServices.factory('generalHttpInterceptor', generalHttpInterceptor);
-
-appDirectives.directive('inputMaskNumber', function ($parse) {
-    return {
-        require: 'ngModel',
-        link: function (scope, element, attrs, modelCtrl) {
-            modelCtrl.$validators.number = function (modelValue, viewValue) {
-                //console.log('mv : ' + modelValue + ' vv : ' +viewValue);
-                if (modelCtrl.$isEmpty(modelValue)) {
-                    return true;
-                }
-                if (viewValue.indexOf('_') == -1) {
-                    return true;
-                }
-                return false;
-            };
-        }
-    };
-});
-
-appDirectives.directive('inputMaskDate', function ($parse) {
-    return {
-        require: 'ngModel',
-        link: function (scope, element, attrs, modelCtrl) {
-            modelCtrl.$validators.date = function (modelValue, viewValue) {
-                //console.log('mv : ' + modelValue + ' vv : ' +viewValue);
-                if (modelCtrl.$isEmpty(modelValue)) {
-                    return true;
-                }
-                if (viewValue.length == 8) {
-                    return true;
-                }
-                return false;
-            };
-        }
-    };
-});
-
-function rootController($log, $rootScope, $scope, $window, sessionService) {
-    $log.debug('rootController...');
-
-    $scope.lodash = _;
-
-    $scope.historyBack = function () {
-        $window.history.back();
-    };
-
-    $scope.viewSource = function () {
-        var s = 'view-source:' + $rootScope.currentViewSrcUrl;
-        $log.info(s);
-        $window.open(s);
-    };
-
-    sessionService.getCountries();
-    sessionService.getMalasiyaStates();
-    sessionService.getRelationships();
-    sessionService.getOrderPurposes();
-    sessionService.getAgents();
-
-    var params = {userId: 'sa@maxmoney.com', password: 'MaxMoney@2016'};
-    //params = { userId : 'vteial@gmail.com', password : 'D123456*'};
-    sessionService.signIn(params).then(function (res) {
-        sessionService.getCurrentSessionX().then(function (res) {
-            $log.info('Current Session Id : ' + $rootScope.sessionId);
-            $log.info('Current User Id    : ' + res.username);
-            $log.info('Current User Role  : ' + res.role);
-        });
-    });
-
-}
-appControllers.controller('rootController', rootController);
-
 function signUpController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $uibModal, $location) {
     var cmpId = 'signUpController', cmpName = 'Sign Up';
     $log.info(cmpId + ' started ...');
@@ -325,11 +219,6 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         onNationalityChange: onNationalityChange,
         onIdTypeChange: onIdTypeChange,
         save: save,
-        editx: function () {
-            console.log($sessionStorage.currentBeneficiary);
-            vm.beneficiary = $sessionStorage.currentBeneficiary;
-            addOrEditBeneficiary();
-        },
         reset: reset
     });
 
@@ -345,21 +234,6 @@ signUpController.resolve = {
 };
 appControllers.controller('signUpController', signUpController);
 
-appDirectives.directive('fileModel', ['$parse', function ($parse) {
-    return {
-        restrict: 'A',
-        link: function (scope, element, attrs) {
-            var model = $parse(attrs.fileModel);
-            var modelSetter = model.assign;
-            element.bind('change', function () {
-                scope.$apply(function () {
-                    modelSetter(scope, element[0].files[0]);
-                });
-            });
-        }
-    };
-}]);
-
 function cddController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $http, Upload) {
     var cmpId = 'cddController', cmpName = 'CDD';
     $log.info(cmpId + ' started ...');
@@ -374,12 +248,28 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
         var path = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
         var reqData = {'idType': vm.customer.idType};
         if (vm.customer.idType == 'Passport') {
-            reqData['front'] = vm.passportFront;
-            reqData['back'] = vm.passportBack;
+            if(!vm.passportFront && !vm.passportBack) {
+                wydNotifyService.showWarning('There is nothing to update...');
+                return;
+            }
+            if(vm.passportFront) {
+                reqData['front'] = vm.passportFront;
+            }
+            if(vm.passportBack) {
+                reqData['back'] = vm.passportBack;
+            }
         }
         if (vm.customer.idType == 'NRIC') {
-            reqData['front'] = vm.nricFront;
-            reqData['back'] = vm.nricBack;
+            if(!vm.nricFront && !vm.nricFront) {
+                wydNotifyService.showWarning('There is nothing to update...');
+                return;
+            }
+            if(vm.nricFront) {
+                reqData['front'] = vm.nricFront;
+            }
+            if(vm.nricBack) {
+                reqData['back'] = vm.nricBack;
+            }
         }
         $log.info(reqData);
         Upload.upload({
@@ -389,16 +279,23 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
             transformRequest: angular.identity,
             data: reqData
         }).then(function (res) {
-            console.log(res);
-            //console.log('Success ' + res.config.data.front.name + 'uploaded');
+            $log.debug(res);
+            wydNotifyService.showSuccess('Successfully updated...');
         }, function (res) {
-            console.log(res);
-            console.log('Error Status: ' + res.status);
+            $log.debug(res);
+            $log.error('Error Status: ' + res.status);
         }, function (evt) {
-            console.log(evt);
-            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            //console.log('Progress: ' + progressPercentage + '% ' + evt.config.data.front.name);
-            console.log('Progress: ' + progressPercentage + '% ');
+            $log.debug(evt);
+            var pp = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+            if (vm.customer.idType == 'Passport') {
+                vm.passportFront.progress = pp;
+                vm.passportBack.progress = pp;
+            }
+            if (vm.customer.idType == 'NRIC') {
+                vm.nricFront.progress = pp;
+                vm.nricBack.progress = pp;
+            }
+            $log.info('Progress: ' + pp + '% ');
         });
 
         // var reqData = { 'customerName' : vm.name};
@@ -490,7 +387,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
         vm.customers = storageService.getCustomers();
         vm.customer = sessionService.currentCustomer;
         if (!vm.customer) {
-            vm.customer = vm.customers[vm.customers.length-1];
+            vm.customer = vm.customers[vm.customers.length - 1];
             vm.name = vm.customer.customerName;
             //loadImage();
         }
@@ -571,7 +468,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
         }
         vm.model = model;
     }
-    console.log(vm.model);
+    $log.debug(vm.model);
 
     $scope.$on('session:relationships', function (event, data) {
         vm.relationships = sessionService.relationships;
@@ -763,206 +660,3 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
 }
 beneficiaryAddOrEditController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$uibModalInstance', 'model', 'country'];
 appControllers.controller('beneficiaryAddOrEditController', beneficiaryAddOrEditController);
-
-var dependents = ['ngRoute', 'ngSanitize', 'ngMessages'];
-dependents.push('ngStorage');
-dependents.push('ngclipboard');
-dependents.push('green.inputmask4angular');
-dependents.push('blockUI');
-dependents.push('ngNotify');
-//dependents.push('selector');
-dependents.push('ui.bootstrap');
-dependents.push('ngFileUpload');
-dependents.push('app.filters');
-dependents.push('app.directives');
-dependents.push('app.services');
-dependents.push('app.controllers');
-var app = angular.module('app', dependents), lodash = _, jquery = $;
-
-app.config(function ($logProvider) {
-    $logProvider.debugEnabled(true);
-});
-
-app.config(function ($httpProvider) {
-    // $httpProvider.defaults.useXDomain = true;
-    // $httpProvider.defaults.withCredentials = true;
-    // delete $httpProvider.defaults.headers.common['X-Requested-With'];
-    $httpProvider.interceptors.push('generalHttpInterceptor');
-});
-
-function appConfig($routeProvider, $locationProvider) {
-    $routeProvider.when('/', {
-        redirectTo: '/home'
-    });
-    /*
-     $routeProvider.when('/home', {
-     templateUrl: 'app/views/home.html',
-     controller: 'homeController as vm',
-     resolve: homeController.resolve
-     });
-     */
-    $routeProvider.when('/sign-up', {
-        templateUrl: 'app/views/signUp.html',
-        controller: 'signUpController as vm',
-        resolve: signUpController.resolve
-    });
-
-    $routeProvider.when('/cdd', {
-        templateUrl: 'app/views/cdd.html',
-        controller: 'cddController as vm',
-        resolve: cddController.resolve
-    });
-    /*
-     $routeProvider.when('/customer-to-user', {
-     templateUrl: 'app/views/customerToUser.html',
-     controller: 'customerToUserController as vm',
-     resolve: customerToUserController.resolve
-     });
-
-     $routeProvider.when('/beneficiaries', {
-     templateUrl: 'app/views/beneficiaryList.html',
-     controller: 'beneficiaryListController as vm',
-     resolve: beneficiaryListController.resolve
-     });
-
-     $routeProvider.when('/beneficiaries/beneficiary', {
-     templateUrl: 'app/views/beneficiaryAddOrEdit.html',
-     controller: 'beneficiaryAddOrEditController as vm',
-     resolve: beneficiaryAddOrEditController.resolve
-     });
-     */
-    $routeProvider.when('/not-found', {
-        template: '<p>Not Found</p>'
-    });
-
-    $routeProvider.otherwise({
-        redirectTo: '/not-found'
-    });
-
-    //$locationProvider.hashPrefix('');
-};
-app.config(appConfig);
-
-function appInit($log, $rootScope, $location, $sessionStorage) {
-    $log.info('Initialization started...');
-
-    var path = '/sign-up';
-    path = '/cdd';
-    $location.path(path);
-
-    $log.info('Initialization finished...');
-}
-app.run(['$log', '$rootScope', '$location', '$sessionStorage', appInit]);
-
-
-/*
- function homeController($log, $rootScope, $scope, _session) {
- var cmpId = 'homeController', cmpName = 'Home';
- $log.info(cmpId + ' started ...');
-
- $rootScope.viewName = cmpName;
-
- var vm = this;
- vm.isReady = false;
-
- vm.session = _session;
-
- $log.info(cmpId + 'finished...');
- }
- homeController.$inject = ['$log', '$rootScope', '$scope', '_session'];
- homeController.resolve = {
- '_session': ['sessionService', function (sessionService) {
- return sessionService.getCurrentSession();
- }]
- };
- appControllers.controller('homeController', homeController);
-
- function customerToUserController($log, $rootScope, $scope, _session) {
- var cmpId = 'customerToUserController', cmpName = 'Customer To User';
- $log.info(cmpId + ' started ...');
-
- $rootScope.viewName = cmpName;
-
- var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
-
- function init() {
- $log.info("init started...");
-
- $log.info("init finished...");
- }
-
- angular.extend(this, {
- uiState: uiState
- });
-
- init();
-
- $log.info(cmpId + 'finished...');
- }
- customerToUserController.$inject = ['$log', '$rootScope', '$scope', '_session'];
- customerToUserController.resolve = {
- '_session': ['sessionService', function (sessionService) {
- return sessionService.getCurrentSession();
- }]
- };
- appControllers.controller('customerToUserController', customerToUserController);
-
- function beneficiaryListController($log, $rootScope, _session, $uibModal) {
- var cmpId = 'beneficiaryListController', cmpName = 'Beneficiaries';
- $log.info(cmpId + ' started ...');
-
- $rootScope.viewName = cmpName;
-
- var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
-
- function addBeneficiary() {
-
- var modalInstance = $uibModal.open({
- ariaLabelledBy: 'modal-title',
- ariaDescribedBy: 'modal-body',
- templateUrl: 'app/bootstrap/beneficiaryAddOrEdit.html',
- controller: 'beneficiaryAddOrEditController',
- controllerAs: 'vm',
- size: 'lg',
- resolve: {
- model: function () {
- return null;
- },
- country: function () {
- return null;
- }
- }
- });
- modalInstance.result.then(function (result) {
- $log.info('beneficiary created successfully...');
- //loadBeneficiaries();
- }, function () {
- $log.info('canceled beneficiary creation...');
- });
-
- }
-
- function init() {
- $log.info("init started...");
-
- $log.info("init finished...");
- }
-
- angular.extend(this, {
- uiState: uiState,
- addBeneficiary: addBeneficiary
- });
-
- init();
-
- $log.info(cmpId + 'finished...');
- }
- beneficiaryListController.$inject = ['$log', '$rootScope', '_session', '$uibModal'];
- beneficiaryListController.resolve = {
- '_session': ['sessionService', function (sessionService) {
- return sessionService.getCurrentSession();
- }]
- };
- appControllers.controller('beneficiaryListController', beneficiaryListController);
- */
-

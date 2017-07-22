@@ -351,13 +351,6 @@
                     ng-click="vm.addOrEditBeneficiary()">
                 {{vm.beneficiaryLabel}} Beneficiary
             </button>
-            <!--
-            &nbsp;&nbsp;&nbsp;
-            <button type="submit" class="btn btn-primary"
-                    ng-click="vm.editx()">
-                EditX
-            </button>
-            -->
         </div>
         <div class="col-md-4">
             <br/>&nbsp;<strong>Note : <span class="text-danger">*</span> indicates mandatory fields</strong>
@@ -374,25 +367,10 @@
                     ng-click="vm.save()">
                 Next
             </button>
-            <!--
             &nbsp;&nbsp;&nbsp;
-            <a type="submit" class="btn btn-primary" href="#!/cdd"
-               ng-show="appMode == 'local'">
-                NextX
-            </a>
-
-            &nbsp;&nbsp;&nbsp;
-            <a type="submit" class="btn btn-primary" ng-click="vm.onGoToTest()"
-               ng-show="appMode == 'local'">
-                test
-            </a>
-            -->
+            <a type="submit" class="btn btn-primary" href="#!/cdd" ng-show="appMode == 'local'">NextX</a>
         </div>
     </div>
-    <!--
-    <br/>
-    <pre>{{vm.form | json}}</pre>
-    -->
 </form>
 
 

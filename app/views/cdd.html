@@ -2,7 +2,7 @@
 <form name="vm.form" >
     <div class="row">
         <div class="col-md-4">
-            <div class="form-group">
+            <div class="form-group" ng-if="appMode == 'local'">
                 <label for="customer">Customers <span class="text-danger">*</span></label>
                 <select class="form-control"id="customer" aria-describedby="customerHelpBlock"
                         name="customer" ng-model="vm.customer" xng-change="onCustomerChange()"
@@ -12,27 +12,10 @@
                     <span>{{vm.customer.email}}&nbsp;&nbsp;&nbsp;{{vm.customer.mobile}}</span>
                 </div>
             </div>
+            <div ng-if="appMode != 'local'"><strong>{{vm.customer.email}}&nbsp;&nbsp;&nbsp;{{vm.customer.mobile}}</strong></div>
         </div>
         <div class="col-md-4">
-            <!--
-            <div class="form-group has-feedback"
-                 ng-class="{ 'has-error' : (vm.form.name.$dirty && vm.form.name.$invalid), 'has-success' : (vm.form.name.$dirty && vm.form.name.$valid) }">
-                <label for="name" class="control-label">Full Name <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="name" placeholder="Full Name" aria-describedby="nameHelpBlock"
-                       name="name" ng-model="vm.name"
-                       ng-minlength="5" ng-maxlength="30" ng-pattern="/^[a-zA-Z\s]*$/">
-                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
-                      ng-if="vm.form.name.$dirty && vm.form.name.$invalid"></span>
-                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
-                      ng-if="vm.form.name.$dirty && vm.form.name.$valid"></span>
-                <div id="nameHelpBlock" class="help-inline" ng-messages="vm.form.name.$error"
-                     ng-if="vm.form.name.$dirty">
-                    <span ng-message="required">This is required.</span>
-                    <span ng-message="pattern">This should contains alphabets only</span>
-                    <span ng-message="minlength, maxlength">This should have minimum 5 and maximum 30 characters long</span>
-                </div>
-            </div>
-            -->&nbsp;
+            &nbsp;
         </div>
         <div class="col-md-4">
             &nbsp;
@@ -46,7 +29,7 @@
                 <label for="passportFront" class="control-label">Passport Front <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="passportFront" placeholder="" aria-describedby="passportFrontHelpBlock"
                        name="passportFront" ng-model="vm.passportFront" accept="image/*" ngf-select
-                       ng-required="vm.customer.idType == 'Passport'" ngf-max-size="1MB" ngf-model-invalid="vm.passportFrontError">
+                       xng-required="vm.customer.idType == 'Passport'" ngf-max-size="1MB" ngf-model-invalid="vm.passportFrontError">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.passportFront.$dirty && vm.form.passportFront.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -55,8 +38,20 @@
                     <span ng-show="vm.form.passportFront.$error.required">This is required.</span>
                     <span ng-show="vm.form.passportFront.$error.maxSize">File too large {{vm.passportFrontError.size / 1000000 | number:1}}MB: max 1MB</span>
                 </div>
+                <div class="progress" ng-show="vm.passportFront.progress >= 0">
+                    <div class="progress-bar progress-bar-info progress-bar-striped"
+                         style="width:{{vm.passportFront.progress}}%" ng-bind="vm.passportFront.progress + '%'"></div>
+                </div>
             </div>
         </div>
+        <!--
+        <div class="col-md-4">
+            <div><img ng-src="{{vm.passportFrontImage}}" class="img-thumbnail"></div>
+        </div>
+        <div class="col-md-4">
+            &nbsp;
+        </div>
+        -->
     </div>
     <div class="row" ng-if="vm.customer.idType == 'Passport'">
         <div class="col-md-4">
@@ -65,7 +60,7 @@
                 <label for="passportBack" class="control-label">Passport Back <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="passportBack" placeholder="" aria-describedby="passportBackHelpBlock"
                        name="passportBack" ng-model="vm.passportBack" accept="image/*" ngf-select
-                       ng-required="vm.customer.idType == 'Passport'" ngf-max-size="1MB" ngf-model-invalid="vm.passportBackError">
+                       xng-required="vm.customer.idType == 'Passport'" ngf-max-size="1MB" ngf-model-invalid="vm.passportBackError">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.passportBack.$dirty && vm.form.passportBack.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -74,17 +69,21 @@
                     <span ng-show="vm.form.passportBack.$error.required">This is required.</span>
                     <span ng-show="vm.form.passportBack.$error.maxSize">File too large {{vm.passportBackError.size / 1000000 | number:1}}MB: max 1MB</span>
                 </div>
+                <div class="progress" ng-show="vm.passportBack.progress >= 0">
+                    <div class="progress-bar progress-bar-info progress-bar-striped"
+                         style="width:{{vm.passportBack.progress}}%" ng-bind="vm.passportBack.progress + '%'"></div>
+                </div>
             </div>
         </div>
-    </div>
-            <!--
+        <!--
         <div class="col-md-4">
-            <div><img ng-src="{{vm.passportFrontImage}}" class="img-thumbnail"></div>
+            <div><img ng-src="{{vm.passportBackImage}}" class="img-thumbnail"></div>
         </div>
         <div class="col-md-4">
             &nbsp;
         </div>
         -->
+    </div>
     <div class="row" ng-show="vm.customer.idType == 'NRIC'">
         <div class="col-md-4">
             <div><img ng-show="vm.form.nricFront.$valid" ngf-thumbnail="vm.nricFront" class="img-thumbnail"></div>
@@ -93,7 +92,7 @@
                 <label for="nricFront" class="control-label">NRIC Front <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="nricFront" placeholder="" aria-describedby="nricFrontHelpBlock"
                        name="nricFront" ng-model="vm.nricFront" ngf-select
-                       required accept="image/*" ngf-max-size="1MB" ngf-model-invalid="vm.nricFrontError">
+                       xng-required="vm.customer.idType == 'NRIC'" accept="image/*" ngf-max-size="1MB" ngf-model-invalid="vm.nricFrontError">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.nricFront.$dirty && vm.form.nricFront.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -102,18 +101,19 @@
                     <span ng-show="vm.form.nricFront.$error.required">This is required.</span>
                     <span ng-show="vm.form.nricFront.$error.maxSize">File too large {{vm.nricFrontError.size / 1000000 | number:1}}MB: max 1MB</span>
                 </div>
+                <div class="progress" ng-show="vm.nricFront.progress >= 0">
+                     <div class="progress-bar progress-bar-info progress-bar-striped"
+                          style="width:{{vm.nricFront.progress}}%" ng-bind="vm.nricFront.progress + '%'"></div>
+                </div>
             </div>
         </div>
         <div class="col-md-4">
             <div><img ng-src="{{vm.nricFrontImage}}" class="img-thumbnail"></div>
         </div>
-        <!--
         <div class="col-md-4">
-            <pre>{{vm.form.nricFront | json}}</pre>
+            &nbsp;
         </div>
-        -->
     </div>
-
 
     <div class="row" ng-show="vm.customer.idType == 'NRIC'">
         <div class="col-md-4">
@@ -123,7 +123,7 @@
                 <label for="nricBack" class="control-label">NRIC Back <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="nricBack" placeholder="" aria-describedby="nricBackHelpBlock"
                        name="nricBack" ng-model="vm.nricBack" ngf-select
-                       required accept="image/*" ngf-max-size="1MB" ngf-model-invalid="vm.nricBackError">
+                       xng-required="vm.customer.idType == 'NRIC'" accept="image/*" ngf-max-size="1MB" ngf-model-invalid="vm.nricBackError">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.nricBack.$dirty && vm.form.nricBack.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -131,6 +131,10 @@
                 <div id="nricBackHelpBlock" class="help-inline" ng-if="vm.form.nricBack.$dirty">
                     <span ng-show="vm.form.nricBack.$error.required">This is required.</span>
                     <span ng-show="vm.form.nricBack.$error.maxSize">File too large {{vm.nricBackError.size / 1000000 | number:1}}MB: max 1MB</span>
+                </div>
+                <div class="progress" ng-show="vm.nricBack.progress >= 0">
+                    <div class="progress-bar progress-bar-info progress-bar-striped"
+                         style="width:{{vm.nricBack.progress}}%" ng-bind="vm.nricBack.progress + '%'"></div>
                 </div>
             </div>
         </div>
@@ -153,11 +157,10 @@
                     ng-class="{'btn-primary' : vm.form.$pristine, 'btn-success' : (vm.form.$dirty && vm.form.$valid), 'btn-danger' : (vm.form.$dirty && vm.form.$invalid) }"
                     xng-disabled="(vm.form.$dirty && vm.form.$valid)"
                     ng-click="vm.save()">
-                Save
+                Next
             </button>
         </div>
     </div>
-
     <!--
     <br/>
     <pre>{{vm.customer | json}}</pre>
