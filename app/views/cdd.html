@@ -46,33 +46,45 @@
                 <label for="passportFront" class="control-label">Passport Front <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="passportFront" placeholder="" aria-describedby="passportFrontHelpBlock"
                        name="passportFront" ng-model="vm.passportFront" accept="image/*" ngf-select
-                       ng-required="vm.customer.idType == 'Passport'" ngf-max-size="2MB" ngf-model-invalid="passportFrontError">
+                       ng-required="vm.customer.idType == 'Passport'" ngf-max-size="1MB" ngf-model-invalid="vm.passportFrontError">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.passportFront.$dirty && vm.form.passportFront.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.passportFront.$dirty && vm.form.passportFront.$valid"></span>
-                <div id="passportFrontHelpBlock" class="help-inline" ng-messages="vm.form.passportFront.$error" ng-if="vm.form.passportFront.$dirty">
-                    <span ng-message="required">This is required.</span>
-                    <span ng-message="max-size">File too large {{passportFrontError.size / 1000000|number:1}}MB: max 2MB</span>
+                <div id="passportFrontHelpBlock" class="help-inline" ng-if="vm.form.passportFront.$dirty">
+                    <span ng-show="vm.form.passportFront.$error.required">This is required.</span>
+                    <span ng-show="vm.form.passportFront.$error.maxSize">File too large {{vm.passportFrontError.size / 1000000 | number:1}}MB: max 1MB</span>
                 </div>
             </div>
-            <!--
-            <div class="form-group">
-                <label for="passportFrontX">Passport Front <span class="text-danger">*</span></label>
-                <input type="file" class="form-control" id="passportFrontX" placeholder=""
-                       name="passportFront" xng-model="vm.passportFrontX"
-                       accept="image/*" file-model="vm.passportFrontX">
-            </div>
-            -->
         </div>
+    </div>
+    <div class="row" ng-if="vm.customer.idType == 'Passport'">
+        <div class="col-md-4">
+            <div><img ng-show="vm.form.passportBack.$valid" ngf-thumbnail="vm.passportBack" class="img-thumbnail"></div>
+            <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.passportBack.$dirty && vm.form.passportBack.$invalid), 'has-success' : (vm.form.passportBack.$dirty && vm.form.passportBack.$valid) }">
+                <label for="passportBack" class="control-label">Passport Back <span class="text-danger">*</span></label>
+                <input type="file" class="form-control" id="passportBack" placeholder="" aria-describedby="passportBackHelpBlock"
+                       name="passportBack" ng-model="vm.passportBack" accept="image/*" ngf-select
+                       ng-required="vm.customer.idType == 'Passport'" ngf-max-size="1MB" ngf-model-invalid="vm.passportBackError">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.passportBack.$dirty && vm.form.passportBack.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.passportBack.$dirty && vm.form.passportBack.$valid"></span>
+                <div id="passportBackHelpBlock" class="help-inline" ng-if="vm.form.passportBack.$dirty">
+                    <span ng-show="vm.form.passportBack.$error.required">This is required.</span>
+                    <span ng-show="vm.form.passportBack.$error.maxSize">File too large {{vm.passportBackError.size / 1000000 | number:1}}MB: max 1MB</span>
+                </div>
+            </div>
+        </div>
+    </div>
+            <!--
         <div class="col-md-4">
             <div><img ng-src="{{vm.passportFrontImage}}" class="img-thumbnail"></div>
         </div>
         <div class="col-md-4">
             &nbsp;
         </div>
-    </div>
-
+        -->
     <div class="row" ng-show="vm.customer.idType == 'NRIC'">
         <div class="col-md-4">
             <div><img ng-show="vm.form.nricFront.$valid" ngf-thumbnail="vm.nricFront" class="img-thumbnail"></div>
@@ -88,16 +100,18 @@
                       ng-if="vm.form.nricFront.$dirty && vm.form.nricFront.$valid"></span>
                 <div id="nricFrontHelpBlock" class="help-inline" ng-if="vm.form.nricFront.$dirty">
                     <span ng-show="vm.form.nricFront.$error.required">This is required.</span>
-                    <span ng-show="vm.form.nricFront.$error.maxSize">File too large {{vm.nricFrontError.size / 1000000 | number:1}}MB: max 2MB</span>
+                    <span ng-show="vm.form.nricFront.$error.maxSize">File too large {{vm.nricFrontError.size / 1000000 | number:1}}MB: max 1MB</span>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div><img ng-src="{{vm.nricFrontImage}}" class="img-thumbnail"></div>
         </div>
+        <!--
         <div class="col-md-4">
             <pre>{{vm.form.nricFront | json}}</pre>
         </div>
+        -->
     </div>
 
 
@@ -109,14 +123,14 @@
                 <label for="nricBack" class="control-label">NRIC Back <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="nricBack" placeholder="" aria-describedby="nricBackHelpBlock"
                        name="nricBack" ng-model="vm.nricBack" ngf-select
-                       required accept="image/*" ngf-max-size="2MB" ngf-model-invalid="nricBackError">
+                       required accept="image/*" ngf-max-size="1MB" ngf-model-invalid="vm.nricBackError">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.nricBack.$dirty && vm.form.nricBack.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.nricBack.$dirty && vm.form.nricBack.$valid"></span>
-                <div id="nricBackHelpBlock" class="help-inline" ng-messages="vm.form.nricBack.$error" ng-if="vm.form.nricBack.$dirty">
-                    <span ng-message="required">This is required.</span>
-                    <span ngf-message="maxSize">File too large {{nricBackError.size / 1000000|number:1}}MB: max 2MB</span>
+                <div id="nricBackHelpBlock" class="help-inline" ng-if="vm.form.nricBack.$dirty">
+                    <span ng-show="vm.form.nricBack.$error.required">This is required.</span>
+                    <span ng-show="vm.form.nricBack.$error.maxSize">File too large {{vm.nricBackError.size / 1000000 | number:1}}MB: max 1MB</span>
                 </div>
             </div>
         </div>
@@ -144,8 +158,8 @@
         </div>
     </div>
 
-    <!---->
+    <!--
     <br/>
     <pre>{{vm.customer | json}}</pre>
-    <!---->
+    -->
 </form>
