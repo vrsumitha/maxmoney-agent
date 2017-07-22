@@ -314,6 +314,39 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
+    service.signIn = function(params) {
+        var reqData = {'username': params.userId, 'password': params.password};
+        var path = apiBasePath + '/sessions/current';
+        var req = {
+            method: 'POST',
+            url: path,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj) {
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                }
+                return str.join("&");
+            },
+            data: reqData
+        };
+        //$log.debug(req);
+        $log.debug('signIn started...');
+        var deferred = $q.defer();
+        $http(req).then(function (res) {
+            //$log.info(res);
+            $log.debug('signIn finished with success.');
+            $sessionStorage.sessionId = res.data.session;
+            $rootScope.sessionId = $sessionStorage.sessionId;
+            deferred.resolve(res.data);
+        }, function (res) {
+            $log.error(res);
+            $log.debug('signIn finished with failure.');
+            deferred.reject(res.data);
+        });
+        return deferred.promise;
+    };
+
     service.getCurrentUser = function () {
         var path = apiBasePath + '/users/current';
         var req = {
@@ -344,23 +377,20 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         var path = apiBasePath + '/sessions/current';
         var req = {
             method: 'GET',
+            headers: {'api-key': $rootScope.sessionId},
             url: path
         };
         //$log.info(req);
         $log.debug('fetching current session started...');
         var deferred = $q.defer();
-        $http(req).then(function (res, status) {
+        $http(req).then(function (res) {
             //$log.info(res);
-            //$log.info(status);
-            if (status == 200) {
-                deferred.resolve(res);
-            }
             $log.debug('fetching current session finished with success.');
-        }, function (res, status) {
-            $log.debug(res);
-            $log.debug(status);
-            deferred.reject({res: res, status: status});
+            deferred.resolve(res.data);
+        }, function (res) {
+            $log.error(res.data);
             $log.debug('fetching current session finished with failure.');
+            deferred.reject(res.data);
         });
         return deferred.promise;
     };
@@ -387,27 +417,31 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         //$log.info(req);
         $log.debug('signout current session started...');
         var deferred = $q.defer();
-        $http(req).then(function (res, status) {
-            console.log(res);
-            // $log.debug(res);
-            // $log.debug(status);
-            deferred.resolve(res);
+        $http(req).then(function (res) {
+            // $log.info(res);
+            $rootScope.sessionId = null;
             $sessionStorage.$reset();
-            $log.debug('signout current session finished with success.');
+            deferred.resolve(res.data);
+            $log.debug('signOut current session finished with success.');
         }, function (res, status) {
-            $log.debug(res);
-            $log.debug(status);
-            deferred.reject({res: res, status: status});
+            // $log.info(res);
+            $rootScope.sessionId = null;
             $sessionStorage.$reset();
-            $log.debug('signout current session finished with failure.');
+            deferred.reject(res.data);
+            $log.debug('signOut current session finished with failure.');
         });
         return deferred.promise;
     };
 
+    console.log('Frontend Hostname : ' + window.location.hostname);
     if(window.location.hostname == 'maxmoney.com') {
         apiBasePath = 'https://api.maxmoney.com/v1';
     }
     console.log('Backend URL : ' + apiBasePath);
+    if(window.location.hostname == 'localhost') {
+        $rootScope.appMode = 'local';
+    }
+    console.log('Application Mode : ' + $rootScope.appMode);
 
     return service;
 }

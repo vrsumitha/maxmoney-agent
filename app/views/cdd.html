@@ -1,7 +1,16 @@
 <form name="vm.form" >
     <div class="row">
         <div class="col-md-4">
-            &nbsp;
+            <div class="form-group">
+                <label for="customer">Customers <span class="text-danger">*</span></label>
+                <select class="form-control"id="customer" aria-describedby="customerHelpBlock"
+                        name="customer" ng-model="vm.customer" xng-change="onCustomerChange()"
+                        ng-options="item.customerName for item in vm.customers">
+                </select>
+                <div id="bankNameHelpBlock" class="help-inline">
+                    <span>{{vm.customer.email}}&nbsp;&nbsp;&nbsp;{{vm.customer.mobile}}</span>
+                </div>
+            </div>
         </div>
         <div class="col-md-4">
             &nbsp;
@@ -13,9 +22,10 @@
 
     <div class="row" ng-show="vm.customer.idType == 'Passport'">
         <div class="col-md-4">
+
             <div><img ng-show="vm.form.passportFront.$valid" ngf-thumbnail="vm.passportFront" class="img-thumbnail"></div>
             <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.passportFront.$dirty && vm.form.passportFront.$invalid), 'has-success' : (vm.form.passportFront.$dirty && vm.form.passportFront.$valid) }">
-                <label for="passportFront" class="control-label">Passport Image <span class="text-danger">*</span></label>
+                <label for="passportFront" class="control-label">Passport Front <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="passportFront" placeholder="" aria-describedby="passportFrontHelpBlock"
                        name="passportFront" ng-model="vm.passportFront" ngf-select
                        required accept="image/*" ngf-max-size="2MB" ngf-model-invalid="passportFrontError">
@@ -28,13 +38,21 @@
                     <span ng-message="maxsize">File too large {{passportFrontError.size / 1000000|number:1}}MB: max 2M</span>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label for="passportFrontX">Passport Front <span class="text-danger">*</span></label>
+                <input type="file" class="form-control" id="passportFrontX" placeholder=""
+                       name="passportFront" xng-model="vm.passportFrontX"
+                       required accept="image/*" file-model="vm.passportFrontX">
+            </div>
+
         </div>
         <div class="col-md-4">
            &nbsp;
         </div>
     </div>
 
-    <div class="row" ng-show="vm.customer.idType != 'Passport'">
+    <div class="row" ng-show="vm.customer.idType == 'NRIC'">
         <div class="col-md-4">
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.nricFront.$dirty && vm.form.nricFront.$invalid), 'has-success' : (vm.form.nricFront.$dirty && vm.form.nricFront.$valid) }">
@@ -53,7 +71,7 @@
         </div>
     </div>
 
-    <div class="row" ng-show="vm.customer.idType != 'Passport'">
+    <div class="row" ng-show="vm.customer.idType == 'NRIC'">
         <div class="col-md-4">
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.nricBack.$dirty && vm.form.nricBack.$invalid), 'has-success' : (vm.form.nricBack.$dirty && vm.form.nricBack.$valid) }">
@@ -86,8 +104,8 @@
             </button>
         </div>
     </div>
-    <!--
+    <!---->
     <br/>
     <pre>{{vm.customer | json}}</pre>
-    -->
+    <!---->
 </form>

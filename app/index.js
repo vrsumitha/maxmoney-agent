@@ -1,3 +1,39 @@
+function generalHttpInterceptor($log, $rootScope, $q, $window) {
+    return {
+        'request': function (config) {
+            // if($rootScope.sessionId) {
+            //     config.headers['api-key'] = $rootScope.sessionId;
+            //     //$log.info('sessionId = ' + $rootScope.sessionId);
+            // }
+            //console.log($rootScope.sessionId);
+            $log.info(config);
+            return config;
+        },
+
+        'requestError': function (rejection) {
+            //console.log(rejection);
+            $log.error(rejection);
+            return rejection;
+        },
+
+        'response': function (response) {
+            //console.log(response);
+            //$log.info(response);
+            return response;
+        },
+
+        'responseError': function (rejection) {
+            //console.log(rejection);
+            $log.error(rejection);
+            // if (rejection.status == 401 && rejection.data.code == 91) {
+            //     $rootScope.$emit('session:invalid', 'Invalid session...');
+            // }
+            return rejection;
+        }
+    };
+}
+appServices.factory('generalHttpInterceptor', generalHttpInterceptor);
+
 appDirectives.directive('inputMaskNumber', function ($parse) {
     return {
         require: 'ngModel',
@@ -55,12 +91,20 @@ function rootController($log, $rootScope, $scope, $window, sessionService) {
     sessionService.getOrderPurposes();
     sessionService.getAgents();
 
-    $rootScope.message = {};
+    var params = { userId : 'sa@maxmoney.com', password : 'MaxMoney@2016'};
+    //params = { userId : 'vteial@gmail.com', password : 'D123456*'};
+    sessionService.signIn(params).then(function(res) {
+        sessionService.getCurrentSessionX().then(function (res) {
+            $log.info('Current Session Id : ' + $rootScope.sessionId);
+            $log.info('Current User Id    : ' + res.username);
+            $log.info('Current User Role  : ' + res.role);
+        });
+    });
 
 }
 appControllers.controller('rootController', rootController);
 
-function signUpController($log, $rootScope, $scope, _session, wydNotifyService, $sessionStorage, sessionService, $uibModal, $location) {
+function signUpController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $uibModal, $location) {
     var cmpId = 'signUpController', cmpName = 'Sign Up';
     $log.info(cmpId + ' started ...');
 
@@ -237,8 +281,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         sessionService.signUp(reqCus).then(function (res) {
             $log.info(res);
             sessionService.currentCustomer = res.data;
-            $sessionStorage.$reset();
-            $sessionStorage.currentCustomer = res.data;
+            storageService.saveCustomer(res.data);
             wydNotifyService.showSuccess('Successfully signed up...');
             $location.path('/cdd');
             //reset();
@@ -282,12 +325,6 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         onNationalityChange: onNationalityChange,
         onIdTypeChange: onIdTypeChange,
         save: save,
-        savex: function () {
-            console.log($sessionStorage.currentCustomer);
-            sessionService.currentCustomer = $sessionStorage.currentCustomer;
-            console.log(sessionService.currentCustomer);
-            $location.path('/cdd');
-        },
         editx: function () {
             console.log($sessionStorage.currentBeneficiary);
             vm.beneficiary = $sessionStorage.currentBeneficiary;
@@ -300,7 +337,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
 
     $log.info(cmpId + 'finished...');
 }
-signUpController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', '$sessionStorage', 'sessionService', '$uibModal', '$location'];
+signUpController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$uibModal', '$location'];
 signUpController.resolve = {
     '_session': ['sessionService', function (sessionService) {
         return sessionService.getCurrentSession();
@@ -308,7 +345,22 @@ signUpController.resolve = {
 };
 appControllers.controller('signUpController', signUpController);
 
-function cddController($log, $rootScope, $scope, _session, wydNotifyService, $sessionStorage, sessionService, Upload) {
+appDirectives.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}]);
+
+function cddController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $http, Upload) {
     var cmpId = 'cddController', cmpName = 'CDD';
     $log.info(cmpId + ' started ...');
 
@@ -321,8 +373,14 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, $se
 
         console.log(vm.passportFront);
 
+        var path = sessionService.getApiBasePath() + '/' + vm.customer.idNo;
+        //path = sessionService.getApiBasePath() + '/100002';
+
         Upload.upload({
-            url : sessionService.getApiBasePath() + '/' + vm.customer.idNo,
+            url: path,
+            method: 'PUT',
+            headers: {'api-key': $rootScope.sessionId},
+            transformRequest: angular.identity,
             data : { front : vm.passportFront }
         }).then(function (res) {
             console.log('Success ' + res.config.data.file.name + 'uploaded. Response: ' + res.data);
@@ -333,12 +391,31 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, $se
             console.log('Progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
         });
 
+        /*
+        console.log(vm.passportFrontX);
+
+        var formData = new FormData();
+        formData.append('front', vm.passportFrontX);
+        $http.put(path, formData, {
+            transformRequest: angular.identity,
+            headers: {'api-key': $rootScope.sessionId, 'Content-Type': undefined}
+        }).then(function(res){
+            console.log(res);
+        }, function(res){
+            console.log(res);
+        });
+        */
+
         $log.info("saving finished...");
     }
 
     function init() {
         $log.info("init started...");
+        vm.customers = storageService.getCustomers();
         vm.customer = sessionService.currentCustomer;
+        if(!vm.customer) {
+            vm.customer = vm.customers[0];
+        }
         console.log(vm.customer);
         $log.info("init finished...");
     }
@@ -352,7 +429,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, $se
 
     $log.info(cmpId + 'finished...');
 }
-cddController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', '$sessionStorage', 'sessionService', 'Upload'];
+cddController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$http', 'Upload'];
 cddController.resolve = {
     '_session': ['sessionService', function (sessionService) {
         return sessionService.getCurrentSession();
@@ -615,6 +692,7 @@ dependents.push('ngclipboard');
 dependents.push('green.inputmask4angular');
 dependents.push('blockUI');
 dependents.push('ngNotify');
+//dependents.push('selector');
 dependents.push('ui.bootstrap');
 dependents.push('ngFileUpload');
 dependents.push('app.filters');
@@ -622,6 +700,17 @@ dependents.push('app.directives');
 dependents.push('app.services');
 dependents.push('app.controllers');
 var app = angular.module('app', dependents), lodash = _, jquery = $;
+
+app.config(function ($logProvider) {
+    $logProvider.debugEnabled(true);
+});
+
+app.config(function ($httpProvider) {
+    // $httpProvider.defaults.useXDomain = true;
+    // $httpProvider.defaults.withCredentials = true;
+    // delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    $httpProvider.interceptors.push('generalHttpInterceptor');
+});
 
 function appConfig($routeProvider, $locationProvider) {
     $routeProvider.when('/', {
@@ -680,6 +769,7 @@ function appInit($log, $rootScope, $location, $sessionStorage) {
     $log.info('Initialization started...');
 
     var path = '/sign-up';
+    path = '/cdd';
     $location.path(path);
 
     $log.info('Initialization finished...');
