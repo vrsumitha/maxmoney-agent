@@ -73,13 +73,15 @@
         </div>
     </div>
 
-    <div class="row" ng-show="vm.customer.idType == 'NRIC'">
+    <div class="row" ng-show="vm.customer.idType != 'Passport'">
         <div class="col-md-4">
+            <div><img ng-show="vm.form.nricFront.$valid" ngf-thumbnail="vm.nricFront" class="img-thumbnail"></div>
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.nricFront.$dirty && vm.form.nricFront.$invalid), 'has-success' : (vm.form.nricFront.$dirty && vm.form.nricFront.$valid) }">
                 <label for="nricFront" class="control-label">NRIC Front <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="nricFront" placeholder="" aria-describedby="nricFrontHelpBlock"
-                       name="nricFront" ng-model="vm.nricFront">
+                       name="nricFront" ng-model="vm.nricFront" ngf-select
+                       required accept="image/*" ngf-max-size="2MB" ngf-model-invalid="nricFrontError">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.nricFront.$dirty && vm.form.nricFront.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -92,13 +94,16 @@
         </div>
     </div>
 
-    <div class="row" ng-show="vm.customer.idType == 'NRIC'">
+
+    <div class="row" ng-show="vm.customer.idType != 'Passport'">
         <div class="col-md-4">
+            <div><img ng-show="vm.form.nricBack.$valid" ngf-thumbnail="vm.nricBack" class="img-thumbnail"></div>
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.nricBack.$dirty && vm.form.nricBack.$invalid), 'has-success' : (vm.form.nricBack.$dirty && vm.form.nricBack.$valid) }">
                 <label for="nricBack" class="control-label">NRIC Back <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="nricBack" placeholder="" aria-describedby="nricBackHelpBlock"
-                       name="nricBack" ng-model="vm.nricBack">
+                       name="nricBack" ng-model="vm.nricBack" ngf-select
+                       required accept="image/*" ngf-max-size="2MB" ngf-model-invalid="nricBackError">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.nricBack.$dirty && vm.form.nricBack.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
