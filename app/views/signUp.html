@@ -136,12 +136,13 @@
     </div>
     <div class="row">
         <div class="col-md-4">
+            <!-- type1
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.dob.$dirty && vm.form.dob.$invalid), 'has-success' : (vm.form.dob.$dirty && vm.form.dob.$valid) }">
                 <label for="dob" class="control-label">DOB (dd-mm-yyyy) <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="dob" placeholder="Date Of Birth" aria-describedby="dobHelpBlock"
-                           name="dob" ng-model="vm.dob"
-                           required input-mask="{'alias' : 'dd-mm-yyyy'}" input-mask-date>
+                <input type="text" class="form-control" id="dob" placeholder="Date Of Birth" aria-describedby="dobHelpBlock"
+                       name="dob" ng-model="vm.dob" ng-change="vm.onDobChange()" ng-model-options="{ updateOn: 'blur' }"
+                       required input-mask="{'alias' : 'dd-mm-yyyy'}" input-mask-date>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.dob.$dirty && vm.form.dob.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -149,9 +150,13 @@
                 <div id="dobHelpBlock" class="help-inline" ng-messages="vm.form.dob.$error" ng-if="vm.form.dob.$dirty">
                     <span ng-message="required">This is required.</span>
                     <span ng-message="date">This should be valid date.</span>
+                    <span ng-message="min">This should be before {{vm.dobMax}}</span>
+                    <span ng-message="max">This should be after {{vm.dobMin}}</span>
                 </div>
             </div>
-            <!--
+            -->
+
+            <!-- type2
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.dob.$dirty && vm.form.dob.$invalid), 'has-success' : (vm.form.dob.$dirty && vm.form.dob.$valid) }">
                 <label for="dob" class="control-label">DOB (dd/mm/yyyy) <span class="text-danger">*</span></label>
@@ -168,24 +173,62 @@
                 <div id="dobHelpBlock" class="help-inline" ng-messages="vm.form.dob.$error" ng-if="vm.form.dob.$dirty">
                     <span ng-message="required">This is required.</span>
                     <span ng-message="date">This should be valid date.</span>
-                    <span ng-message="max">This should be above 16 years.</span>
-                    <span ng-message="min">This should be below 100 years.</span>
+                    <span ng-message="min">This should be before {{vm.dobMax}}</span>
+                    <span ng-message="max">This should be after {{vm.dobMin}}</span>
                 </div>
             </div>
             -->
+
+            <!-- type3 -->
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.dob.$dirty && vm.form.dob.$invalid), 'has-success' : (vm.form.dob.$dirty && vm.form.dob.$valid) }">
+                <label for="dob" class="control-label">DOB (dd-mm-yyyy) <span class="text-danger">*</span></label>
+                <div class="input-group" change="vm.onDobChangeX(newValue, oldValue)"
+                     xmin-date="vm.dobxMin" xmax-date="vm.dobxMax" start-date="vm.dobxMax"
+                     moment-picker="vm.dobx" format="DD-MM-YYYY" start-view="decade" set-on-select="true">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    <input type="text" class="form-control" id="dob" placeholder="Date Of Birth" aria-describedby="dobHelpBlock"
+                           name="dob" ng-model="vm.dob" ng-change="vm.onDobChange()" ng-model-options="{ updateOn: 'blur' }"
+                           required input-mask="{'alias' : 'dd-mm-yyyy'}" input-mask-date>
+                </div>
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.dob.$dirty && vm.form.dob.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.dob.$dirty && vm.form.dob.$valid"></span>
+                <div id="dobHelpBlock" class="help-inline" ng-messages="vm.form.dob.$error" ng-if="vm.form.dob.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="date">This should be valid date.</span>
+                    <span ng-message="min">This should be before {{vm.dobMax}}</span>
+                    <span ng-message="max">This should be after {{vm.dobMin}}</span>
+                </div>
+            </div>
+
         </div>
         <div class="col-md-4">
+            <!--
             <div class="form-group has-feedback">
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : (vm.form.nationality.$dirty && vm.form.nationality.$invalid), 'has-success' : (vm.form.nationality.$dirty && vm.form.nationality.$valid) }">
                     <label for="nationality">Nationality <span class="text-danger">*</span></label>
                     <select class="form-control" id="nationality" aria-describedby="nationalityHelpBlock"
                             ng-options="item as item.nationality for item in vm.countries"
-                            name="nationality" ng-model="vm.nationality" ng-change="vm.onNationalityChange()"
-                            xng-disabled ="vm.idType == 'nric'">
+                            name="nationality" ng-model="vm.nationality" ng-change="vm.onNationalityChange()">
                     </select>
-                    <div id="nationalityHelpBlock" class="help-inline" ng-messages="vm.form.nationality.$error"
-                         ng-if="vm.form.nationality.$dirty">
+                    <div id="nationalityHelpBlock" class="help-inline" ng-messages="vm.form.nationality.$error" ng-if="vm.form.nationality.$dirty">
+                        <span ng-message="required">This is required.</span>
+                    </div>
+                </div>
+            </div>
+            -->
+            <div class="form-group has-feedback">
+                <div class="form-group has-feedback"
+                     ng-class="{ 'has-error' : (vm.form.nationality.$dirty && vm.form.nationality.$invalid), 'has-success' : (vm.form.nationality.$dirty && vm.form.nationality.$valid) }">
+                    <label for="nationality">Nationality <span class="text-danger">*</span></label>
+                    <select id="nationality" name="nationality" aria-describedby="nationalityHelpBlock" placeholder="Choose Nationality"
+                            selector options="vm.countries" label-attr="nationality" closeAfterSelection="true"
+                            model="vm.nationality" change="vm.onNationalityChangeX(oldValue, newValue)" require="true" >
+                    </select>
+                    <div id="nationalityHelpBlock" class="help-inline" ng-messages="vm.form.nationality.$error" ng-if="vm.form.nationality.$dirty">
                         <span ng-message="required">This is required.</span>
                     </div>
                 </div>
@@ -316,10 +359,9 @@
                     <label for="nationality">State <span class="text-danger">*</span></label>
                     <select class="form-control" id="state" aria-describedby="stateHelpBlock"
                             ng-options="item as item for item in vm.malasiyaStates"
-                            name="state" ng-model="vm.state">
+                            name="state" ng-model="vm.state" required>
                     </select>
-                    <div id="stateHelpBlock" class="help-inline" ng-messages="vm.form.nationality.$error"
-                         ng-if="vm.form.state.$dirty">
+                    <div id="stateHelpBlock" class="help-inline" ng-messages="vm.form.state.$error" ng-if="vm.form.state.$dirty">
                         <span ng-message="required">This is required.</span>
                     </div>
                 </div>

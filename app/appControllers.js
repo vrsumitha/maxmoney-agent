@@ -54,8 +54,43 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         });
     }
 
+    function validateDob() {
+        $log.info('vm.dob = ' + vm.dob);
+        var dob = moment(vm.dob, 'DDMMYYYY');
+        vm.form.dob.$setValidity('min', !dob.isAfter(vm.dobxMax));
+        $log.info('min = ' + dob.format('DD-MM-YYYY') + ' > ' + vm.dobxMax.format('DD-MM-YYYY') + ' = ' + dob.isAfter(vm.dobxMax));
+        vm.form.dob.$setValidity('max', !dob.isBefore(vm.dobxMin));
+        $log.info('max = ' + dob.format('DD-MM-YYYY') + ' < ' + vm.dobxMin.format('DD-MM-YYYY') + ' = ' + dob.isBefore(vm.dobxMin));
+    }
+
+    function onDobChange() {
+        if(vm.dob) {
+            vm.dobx = moment(vm.dob, 'DDMMYYYY');
+            validateDob();
+        }
+    }
+
+    function onDobChangeX(nv, ov) {
+        //console.log(ov);
+        //console.log(nv);
+        if(nv) {
+            vm.dob = nv.format('DDMMYYYY');
+            validateDob();
+        }
+    }
+
     function onNationalityChange() {
         vm.dialCode = vm.nationality.dial_code;
+    }
+
+    function onNationalityChangeX(ov, nv) {
+        if(nv) {
+            vm.dialCode = nv.dial_code;
+            vm.form.nationality.$setValidity('required', false);
+        } else {
+            vm.dialCode = '-';
+            vm.form.nationality.$setValidity('required', true);
+        }
     }
 
     function onIdTypeChange() {
@@ -75,6 +110,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         vm.form.$setPristine();
         vm.beneficiary = {id: 'NA'};
         vm.beneficiaryLabel = 'Add';
+        vm.dialCode = '-'
 
         $log.info("reset started...");
     }
@@ -197,8 +233,12 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         vm.idType = 'passport';
         //onIdTypeChange();
 
-        vm.dobMax = moment().subtract(16, 'years').format('YYYY-MM-DD');
-        vm.dobMin = moment().subtract(100, 'years').format('YYYY-MM-DD');
+        var tmoment = moment().subtract(16, 'years');
+        vm.dobMax = tmoment.format('YYYY-MM-DD');
+        vm.dobxMax = tmoment;
+        tmoment = moment().subtract(100, 'years');
+        vm.dobMin = tmoment.format('YYYY-MM-DD');
+        vm.dobxMin = tmoment;
 
         //vm.nationality = dnationality;
         // if (vm.countries && vm.countries.length > 0) {
@@ -216,7 +256,10 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
     angular.extend(this, {
         uiState: uiState,
         addOrEditBeneficiary: addOrEditBeneficiary,
+        onDobChange: onDobChange,
+        onDobChangeX: onDobChangeX,
         onNationalityChange: onNationalityChange,
+        onNationalityChangeX: onNationalityChangeX,
         onIdTypeChange: onIdTypeChange,
         save: save,
         reset: reset

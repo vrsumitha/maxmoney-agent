@@ -37,7 +37,8 @@ dependents.push('ngclipboard');
 dependents.push('green.inputmask4angular');
 dependents.push('blockUI');
 dependents.push('ngNotify');
-//dependents.push('selector');
+dependents.push('selector');
+dependents.push('moment-picker');
 dependents.push('ui.bootstrap');
 dependents.push('ngFileUpload');
 dependents.push('app.filters');
@@ -45,6 +46,12 @@ dependents.push('app.directives');
 dependents.push('app.services');
 dependents.push('app.controllers');
 var app = angular.module('app', dependents), lodash = _, jquery = $;
+
+// app.config(function ($logProvider) {
+//     if (window.location.hostname != 'localhost') {
+//         $logProvider.debugEnabled(false);
+//     }
+// });
 
 // app.config(function ($httpProvider) {
 //     // $httpProvider.defaults.useXDomain = true;
@@ -118,7 +125,7 @@ function appInit($log, $rootScope, $location, $sessionStorage) {
 
     var path = '/sign-up';
     if($rootScope.appMode == 'local') {
-        path = '/cdd';
+        //path = '/cdd';
     }
     $log.info('Startup Path : ' + path);
     $location.path(path);
