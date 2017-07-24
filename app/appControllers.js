@@ -36,6 +36,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
             size: 'lg',
             resolve: {
                 model: function () {
+                    //sessionService.switchOffAutoComplete();
                     return bnyModel;
                 },
                 country: function () {
@@ -280,6 +281,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
 signUpController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$uibModal', '$location'];
 signUpController.resolve = {
     '_session': ['sessionService', function (sessionService) {
+        //sessionService.switchOffAutoComplete();
         return '-:coming_soon:-';
         //return sessionService.getCurrentSession();
     }]
@@ -459,6 +461,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
 cddController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$http', 'Upload'];
 cddController.resolve = {
     '_session': ['sessionService', function (sessionService) {
+        //sessionService.switchOffAutoComplete();
         return '-:coming_soon:-';
         //return sessionService.getCurrentSession();
     }]
@@ -724,3 +727,115 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
 }
 beneficiaryAddOrEditController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$uibModalInstance', 'model', 'country'];
 appControllers.controller('beneficiaryAddOrEditController', beneficiaryAddOrEditController);
+
+
+/*
+ function homeController($log, $rootScope, $scope, _session) {
+ var cmpId = 'homeController', cmpName = 'Home';
+ $log.info(cmpId + ' started ...');
+
+ $rootScope.viewName = cmpName;
+
+ var vm = this;
+ vm.isReady = false;
+
+ vm.session = _session;
+
+ $log.info(cmpId + 'finished...');
+ }
+ homeController.$inject = ['$log', '$rootScope', '$scope', '_session'];
+ homeController.resolve = {
+ '_session': ['sessionService', function (sessionService) {
+ return sessionService.getCurrentSession();
+ }]
+ };
+ appControllers.controller('homeController', homeController);
+
+ function customerToUserController($log, $rootScope, $scope, _session) {
+ var cmpId = 'customerToUserController', cmpName = 'Customer To User';
+ $log.info(cmpId + ' started ...');
+
+ $rootScope.viewName = cmpName;
+
+ var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
+
+ function init() {
+ $log.info("init started...");
+
+ $log.info("init finished...");
+ }
+
+ angular.extend(this, {
+ uiState: uiState
+ });
+
+ init();
+
+ $log.info(cmpId + 'finished...');
+ }
+ customerToUserController.$inject = ['$log', '$rootScope', '$scope', '_session'];
+ customerToUserController.resolve = {
+ '_session': ['sessionService', function (sessionService) {
+ return sessionService.getCurrentSession();
+ }]
+ };
+ appControllers.controller('customerToUserController', customerToUserController);
+
+ function beneficiaryListController($log, $rootScope, _session, $uibModal) {
+ var cmpId = 'beneficiaryListController', cmpName = 'Beneficiaries';
+ $log.info(cmpId + ' started ...');
+
+ $rootScope.viewName = cmpName;
+
+ var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
+
+ function addBeneficiary() {
+
+ var modalInstance = $uibModal.open({
+ ariaLabelledBy: 'modal-title',
+ ariaDescribedBy: 'modal-body',
+ templateUrl: 'app/bootstrap/beneficiaryAddOrEdit.html',
+ controller: 'beneficiaryAddOrEditController',
+ controllerAs: 'vm',
+ size: 'lg',
+ resolve: {
+ model: function () {
+ return null;
+ },
+ country: function () {
+ return null;
+ }
+ }
+ });
+ modalInstance.result.then(function (result) {
+ $log.info('beneficiary created successfully...');
+ //loadBeneficiaries();
+ }, function () {
+ $log.info('canceled beneficiary creation...');
+ });
+
+ }
+
+ function init() {
+ $log.info("init started...");
+
+ $log.info("init finished...");
+ }
+
+ angular.extend(this, {
+ uiState: uiState,
+ addBeneficiary: addBeneficiary
+ });
+
+ init();
+
+ $log.info(cmpId + 'finished...');
+ }
+ beneficiaryListController.$inject = ['$log', '$rootScope', '_session', '$uibModal'];
+ beneficiaryListController.resolve = {
+ '_session': ['sessionService', function (sessionService) {
+ return sessionService.getCurrentSession();
+ }]
+ };
+ appControllers.controller('beneficiaryListController', beneficiaryListController);
+ */

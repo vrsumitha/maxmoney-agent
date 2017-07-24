@@ -413,6 +413,19 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
+    service.switchOffAutoComplete = function() {
+        if (document.getElementsByTagName) {
+            var inputElements = document.getElementsByTagName('input');
+            for (i = 0; inputElements[i]; i++) {
+                if (inputElements[i].className && (inputElements[i].className.indexOf('disableAutoComplete') != -1)) {
+                    inputElements[i].setAttribute('autocomplete', 'off');
+                }
+                inputElements[i].setAttribute('autocorrect', 'off');
+                inputElements[i].setAttribute('autocapitalize', 'off');
+            }
+        }
+    };
+
     console.log('Frontend Hostname : ' + window.location.hostname);
     if (window.location.hostname == 'maxmoney.com') {
         apiBasePath = 'https://api.maxmoney.com/v1';
