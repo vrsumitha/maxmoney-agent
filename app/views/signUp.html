@@ -353,13 +353,28 @@
             </div>
         </div>
         <div class="col-md-4">
+            <!--
             <div class="form-group has-feedback">
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : (vm.form.state.$dirty && vm.form.state.$invalid), 'has-success' : (vm.form.state.$dirty && vm.form.state.$valid) }">
-                    <label for="nationality">State <span class="text-danger">*</span></label>
+                    <label for="state">State <span class="text-danger">*</span></label>
                     <select class="form-control" id="state" aria-describedby="stateHelpBlock"
                             ng-options="item as item for item in vm.malasiyaStates"
                             name="state" ng-model="vm.state" required>
+                    </select>
+                    <div id="stateHelpBlock" class="help-inline" ng-messages="vm.form.state.$error" ng-if="vm.form.state.$dirty">
+                        <span ng-message="required">This is required.</span>
+                    </div>
+                </div>
+            </div>
+            -->
+            <div class="form-group has-feedback">
+                <div class="form-group has-feedback"
+                     ng-class="{ 'has-error' : (vm.form.state.$dirty && vm.form.state.$invalid), 'has-success' : (vm.form.state.$dirty && vm.form.state.$valid) }">
+                    <label for="state">State <span class="text-danger">*</span></label>
+                    <select id="state" name="state" aria-describedby="stateHelpBlock" placeholder="Choose State"
+                            selector options="vm.malasiyaStates" label-attr="state" closeAfterSelection="true"
+                            model="vm.state" change="vm.onStateChangeX(oldValue, newValue)" require="true">
                     </select>
                     <div id="stateHelpBlock" class="help-inline" ng-messages="vm.form.state.$error" ng-if="vm.form.state.$dirty">
                         <span ng-message="required">This is required.</span>

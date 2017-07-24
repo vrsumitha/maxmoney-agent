@@ -47,7 +47,6 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
             $log.info('beneficiary created successfully...');
             vm.beneficiary = result;
             vm.beneficiaryLabel = 'Edit';
-            $sessionStorage.currentBeneficiary = vm.beneficiary;
             //loadBeneficiaries();
         }, function () {
             $log.info('canceled beneficiary creation...');
@@ -90,6 +89,14 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         } else {
             vm.dialCode = '-';
             vm.form.nationality.$setValidity('required', true);
+        }
+    }
+
+    function onStateChangeX(ov, nv) {
+        if(nv) {
+            vm.form.state.$setValidity('required', false);
+        } else {
+            vm.form.state.$setValidity('required', true);
         }
     }
 
@@ -260,6 +267,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         onDobChangeX: onDobChangeX,
         onNationalityChange: onNationalityChange,
         onNationalityChangeX: onNationalityChangeX,
+        onStateChangeX: onStateChangeX,
         onIdTypeChange: onIdTypeChange,
         save: save,
         reset: reset
@@ -550,6 +558,16 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
         }
     }
 
+    function onPayoutAgentChangeX(ov, nv) {
+        if(nv) {
+            vm.model.bankAccount.payoutAgent.$setValidity('required', false);
+            //vm.form.bankName.$setValidity('required', false);
+        } else {
+            vm.model.bankAccount.payoutAgent.$setValidity('required', true);
+            // vm.form.bankName.$setValidity('required', true);
+        }
+    }
+
     // function onPayBy(value) {
     //     vm.payBy = value;
     //     console.log(vm.payBy);
@@ -694,6 +712,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
     angular.extend(this, {
         uiState: uiState,
         onCountryChange: onCountryChange,
+        onPayoutAgentChangeX: onPayoutAgentChangeX,
         reset: reset,
         cancel: cancel,
         save: save
