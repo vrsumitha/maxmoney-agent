@@ -21,11 +21,11 @@ function rootController($log, $rootScope, $scope, $window, sessionService) {
 
     var params = {userId: 'sa@maxmoney.com', password: 'MaxMoney@2016'};
     sessionService.signIn(params).then(function (res) {
-        // sessionService.getCurrentSessionX().then(function (res) {
-        //     $log.info('Current Session Id : ' + $rootScope.sessionId);
-        //     $log.info('Current User Id    : ' + res.username);
-        //     $log.info('Current User Role  : ' + res.role);
-        // });
+        sessionService.getCurrentSession().then(function (res) {
+            $log.info('Current Session Id : ' + $rootScope.sessionId);
+            $log.info('Current User Id    : ' + res.username);
+            $log.info('Current User Role  : ' + res.role);
+        });
     });
 
 }

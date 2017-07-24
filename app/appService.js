@@ -354,6 +354,19 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
     };
 
     service.getCurrentSessionX = function () {
+        $log.debug('fetching current session started...');
+        var deferred = $q.defer();
+        $http.get('app/session.json').then(function (res) {
+            $log.debug('fetching current session finished with success...');
+            deferred.resolve(res.data);
+        }, function (res) {
+            $log.debug('fetching current session finished with failure...');
+            deferred.reject(res);
+        });
+        return deferred.promise;
+    };
+
+    service.getCurrentSession = function () {
         var path = apiBasePath + '/sessions/current';
         var req = {
             method: 'GET',
@@ -371,19 +384,6 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
             $log.error(res.data);
             $log.debug('fetching current session finished with failure.');
             deferred.reject(res.data);
-        });
-        return deferred.promise;
-    };
-
-    service.getCurrentSession = function () {
-        $log.info('fetching current session started...');
-        var deferred = $q.defer();
-        $http.get('app/session.json').then(function (res) {
-            deferred.resolve(res.data);
-            $log.info('fetching current session finished with success...');
-        }, function (res) {
-            deferred.reject(res);
-            $log.info('fetching current session finished with failure...');
         });
         return deferred.promise;
     };

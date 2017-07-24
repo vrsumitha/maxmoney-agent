@@ -272,7 +272,8 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
 signUpController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$uibModal', '$location'];
 signUpController.resolve = {
     '_session': ['sessionService', function (sessionService) {
-        return sessionService.getCurrentSession();
+        return '-:coming_soon:-';
+        //return sessionService.getCurrentSession();
     }]
 };
 appControllers.controller('signUpController', signUpController);
@@ -450,7 +451,8 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
 cddController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$http', 'Upload'];
 cddController.resolve = {
     '_session': ['sessionService', function (sessionService) {
-        return sessionService.getCurrentSession();
+        return '-:coming_soon:-';
+        //return sessionService.getCurrentSession();
     }]
 };
 appControllers.controller('cddController', cddController);
