@@ -31,7 +31,7 @@
                     <div class="input-group-addon">{{vm.dialCode}}</div>
                     <input type="text" class="form-control" id="mobileNo" placeholder="Mobile Number" aria-describedby="mobileNoHelpBlock"
                            name="mobileNo" ng-model="vm.mobileNo"
-                           required ng-minlength="10" ng-maxlength="10" input-mask="'mask'" mask-option="{'mask':'9999999999'}" input-mask-number>
+                           required ng-minlength="9" ng-maxlength="10" input-mask="'mask'" mask-option="{'mask':'9999999999'}" input-mask-number>
                 </div>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                   ng-if="vm.form.mobileNo.$dirty && vm.form.mobileNo.$invalid"></span>
@@ -39,7 +39,7 @@
                   ng-if="vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid"></span>
                 <div id="mobileNoHelpBlock" class="help-inline" ng-messages="vm.form.mobileNo.$error" ng-if="vm.form.mobileNo.$dirty">
                     <span ng-message="required">This is required.</span>
-                    <span ng-message="minlength, maxlength">This should be exactly 10 digits</span>
+                    <span ng-message="minlength, maxlength">This should be minimum 9 digits</span>
                 </div>
                 <!--
                 <span ng-show="vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid" class="help-line text-warning">
@@ -54,7 +54,7 @@
                 <label for="name" class="control-label">Full Name <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="name" placeholder="Full Name" aria-describedby="nameHelpBlock"
                        name="name" ng-model="vm.name"
-                       required ng-minlength="5" ng-maxlength="30" ng-pattern="/^[a-zA-Z\s]*$/">
+                       required ng-minlength="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z\s]*$/">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.name.$dirty && vm.form.name.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -63,7 +63,7 @@
                      ng-if="vm.form.name.$dirty">
                     <span ng-message="required">This is required.</span>
                     <span ng-message="pattern">This should contains alphabets only</span>
-                    <span ng-message="minlength, maxlength">This should have minimum 5 and maximum 30 characters long</span>
+                    <span ng-message="minlength, maxlength">This should have minimum 3 and maximum 30 characters long</span>
                 </div>
             </div>
         </div>
@@ -296,7 +296,7 @@
                 <label for="contactPerson" class="control-label">Contact Person <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="contactPerson" placeholder="Contact Person" aria-describedby="contactPersonHelpBlock"
                        name="contactPerson" ng-model="vm.contactPerson"
-                       ng-required="vm.accountType != 'personal'" ng-minlength="5" ng-maxlength="30" ng-pattern="/^[a-zA-Z\s]*$/">
+                       ng-required="vm.accountType != 'personal'" ng-minlength="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z\s]*$/">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.contactPerson.$dirty && vm.form.contactPerson.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -305,7 +305,7 @@
                      ng-if="vm.form.contactPerson.$dirty">
                     <span ng-message="required">This is required.</span>
                     <span ng-message="pattern">This should contains alphabets only</span>
-                    <span ng-message="minlength, maxlength">This should have minimum 5 and maximum 30 characters long</span>
+                    <span ng-message="minlength, maxlength">This should have minimum 3 and maximum 30 characters long</span>
                 </div>
             </div>
         </div>
@@ -338,7 +338,7 @@
                     <label for="city">City <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="city" placeholder="City" aria-describedby="cityHelpBlock"
                            name="city" ng-model="vm.city"
-                           required ng-minlength="5" ng-maxlength="30" ng-pattern="/^[a-zA-Z\s]*$/">
+                           required ng-minlength="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z\s]*$/">
                     <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                           ng-if="vm.form.city.$dirty && vm.form.city.$invalid"></span>
                     <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -347,7 +347,7 @@
                          ng-if="vm.form.city.$dirty">
                         <span ng-message="required">This is required.</span>
                         <span ng-message="pattern">This should contains alphabets only</span>
-                        <span ng-message="minlength, maxlength">This should have minimum 5 and maximum 30 characters long</span>
+                        <span ng-message="minlength, maxlength">This should have minimum 3 and maximum 30 characters long</span>
                     </div>
                 </div>
             </div>

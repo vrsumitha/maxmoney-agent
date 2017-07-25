@@ -87,6 +87,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         if(nv) {
             vm.dialCode = nv.dial_code;
             vm.form.nationality.$setValidity('required', false);
+           // $log.info('ov value is : ', ov);
         } else {
             vm.dialCode = '-';
             vm.form.nationality.$setValidity('required', true);
@@ -241,7 +242,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         vm.idType = 'passport';
         //onIdTypeChange();
 
-        var tmoment = moment().subtract(16, 'years');
+        var tmoment = moment().subtract(18, 'years');
         vm.dobMax = tmoment.format('YYYY-MM-DD');
         vm.dobxMax = tmoment;
         tmoment = moment().subtract(100, 'years');

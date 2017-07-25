@@ -1,5 +1,23 @@
 [
   {
+    "name": "Malaysia",
+    "dial_code": "+60",
+    "code": "MY",
+    "nationality": "Malaysian"
+  },
+  {
+    "name": "Singapore",
+    "dial_code": "+65",
+    "code": "SG",
+    "nationality": "Singaporean"
+  },
+  {
+    "name": "Indonesia",
+    "dial_code": "+62",
+    "code": "ID",
+    "nationality": "Indonesian"
+  },
+  {
     "name": "Afghanistan",
     "dial_code": "+93",
     "code": "AF",
@@ -588,12 +606,6 @@
     "nationality": "Indian"
   },
   {
-    "name": "Indonesia",
-    "dial_code": "+62",
-    "code": "ID",
-    "nationality": "Indonesian"
-  },
-  {
     "name": "Iran, Islamic Republic of Persian Gulf",
     "dial_code": "+98",
     "code": "IR",
@@ -772,12 +784,6 @@
     "dial_code": "+265",
     "code": "MW",
     "nationality": "Malawian"
-  },
-  {
-    "name": "Malaysia",
-    "dial_code": "+60",
-    "code": "MY",
-    "nationality": "Malaysian"
   },
   {
     "name": "Maldives",
@@ -1168,12 +1174,6 @@
     "dial_code": "+232",
     "code": "SL",
     "nationality": "Sierra Leonean"
-  },
-  {
-    "name": "Singapore",
-    "dial_code": "+65",
-    "code": "SG",
-    "nationality": "Singaporean"
   },
   {
     "name": "Slovakia",
