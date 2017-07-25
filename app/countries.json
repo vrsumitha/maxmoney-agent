@@ -18,6 +18,48 @@
     "nationality": "Indonesian"
   },
   {
+    "name": "India",
+    "dial_code": "+91",
+    "code": "IN",
+    "nationality": "Indian"
+  },
+  {
+    "name": "Sri Lanka",
+    "dial_code": "+94",
+    "code": "LK",
+    "nationality": "Sri Lankan"
+  },
+  {
+    "name": "Myanmar",
+    "dial_code": "+95",
+    "code": "MM",
+    "nationality": "Myanmarese"
+  },
+  {
+    "name": "Pakistan",
+    "dial_code": "+92",
+    "code": "PK",
+    "nationality": "Pakistani"
+  },
+  {
+    "name": "Thailand",
+    "dial_code": "+66",
+    "code": "TH",
+    "nationality": "Thai"
+  },
+  {
+    "name": "Philippines",
+    "dial_code": "+63",
+    "code": "PH",
+    "nationality": "Philippine"
+  },
+  {
+    "name": "China",
+    "dial_code": "+86",
+    "code": "CN",
+    "nationality": "Chinese"
+  },
+  {
     "name": "Afghanistan",
     "dial_code": "+93",
     "code": "AF",
@@ -274,12 +316,6 @@
     "dial_code": "+56",
     "code": "CL",
     "nationality": "Chilean"
-  },
-  {
-    "name": "China",
-    "dial_code": "+86",
-    "code": "CN",
-    "nationality": "Chinese"
   },
   {
     "name": "Christmas Island",
@@ -600,12 +636,6 @@
     "nationality": "Icelandic"
   },
   {
-    "name": "India",
-    "dial_code": "+91",
-    "code": "IN",
-    "nationality": "Indian"
-  },
-  {
     "name": "Iran, Islamic Republic of Persian Gulf",
     "dial_code": "+98",
     "code": "IR",
@@ -888,12 +918,6 @@
     "nationality": "Mozambican"
   },
   {
-    "name": "Myanmar",
-    "dial_code": "+95",
-    "code": "MM",
-    "nationality": "Myanmarese"
-  },
-  {
     "name": "Namibia",
     "dial_code": "+264",
     "code": "NA",
@@ -984,12 +1008,6 @@
     "nationality": "Omani"
   },
   {
-    "name": "Pakistan",
-    "dial_code": "+92",
-    "code": "PK",
-    "nationality": "Pakistani"
-  },
-  {
     "name": "Palau",
     "dial_code": "+680",
     "code": "PW",
@@ -1024,12 +1042,6 @@
     "dial_code": "+51",
     "code": "PE",
     "nationality": "Peruvian"
-  },
-  {
-    "name": "Philippines",
-    "dial_code": "+63",
-    "code": "PH",
-    "nationality": "Philippine"
   },
   {
     "name": "Pitcairn",
@@ -1224,12 +1236,6 @@
     "nationality": "Spanish"
   },
   {
-    "name": "Sri Lanka",
-    "dial_code": "+94",
-    "code": "LK",
-    "nationality": "Sri Lankan"
-  },
-  {
     "name": "Sudan",
     "dial_code": "+249",
     "code": "SD",
@@ -1288,12 +1294,6 @@
     "dial_code": "+255",
     "code": "TZ",
     "nationality": "Tanzanian"
-  },
-  {
-    "name": "Thailand",
-    "dial_code": "+66",
-    "code": "TH",
-    "nationality": "Thai"
   },
   {
     "name": "Timor-Leste",
