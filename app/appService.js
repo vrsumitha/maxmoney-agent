@@ -414,6 +414,32 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
+    service.approve = function (id) {
+        var path = apiBasePath + '/customers' + id + '/approve';
+        var req = {
+            method: 'POST',
+            url: path,
+            headers: {'api-key': $rootScope.sessionId}
+        };
+        //$log.info(req);
+        $log.debug('aapprove current session started...');
+        var deferred = $q.defer();
+        $http(req).then(function (res) {
+            // $log.debug(res);
+           // $rootScope.sessionId = null;
+           // $sessionStorage.$reset();
+            deferred.resolve(res.data);
+            $log.debug('approve current session finished with success.');
+        }, function (res) {
+            $log.error(res);
+         //   $rootScope.sessionId = null;
+          //  $sessionStorage.$reset();
+            deferred.reject(res.data);
+            $log.debug('approve current session finished with failure.');
+        });
+        return deferred.promise;
+    };
+
     service.switchOffAutoComplete = function() {
         if (document.getElementsByTagName) {
             var inputElements = document.getElementsByTagName('input');

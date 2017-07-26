@@ -472,6 +472,21 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
         $log.info('saving finished...');
     }
 
+    function approve() {
+        $log.info('approve started...');
+        $log.info(vm.customer.idNo);
+
+        sessionService.approve(vm.customers.idNo).then(function (res) {
+           // $log.info(vm.customers.idNo + ' successfully approved');
+            $log.info(res.idNo + ' successfully approved');
+        }, function (res) {
+           // $log.info(vm.customers.idNo + ' approval failure');
+            $log.info(res.idNo + ' approval failure');
+        });
+
+        $log.info('approve finished...');
+    }
+
     function loadImage() {
         var basePath = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
         if (vm.customer.idType == 'Passport') {
@@ -541,7 +556,8 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
 
     angular.extend(this, {
         uiState: uiState,
-        save: save
+        save: save,
+        approve: approve
     });
 
     init();
