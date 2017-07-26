@@ -415,27 +415,23 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
     };
 
     service.approve = function (id) {
-        var path = apiBasePath + '/customers' + id + '/approve';
+        var path = apiBasePath + '/customers/' + id + '/approve';
         var req = {
             method: 'POST',
             url: path,
             headers: {'api-key': $rootScope.sessionId}
         };
         //$log.info(req);
-        $log.debug('aapprove current session started...');
+        $log.debug('approve customer started...');
         var deferred = $q.defer();
         $http(req).then(function (res) {
-            // $log.debug(res);
-           // $rootScope.sessionId = null;
-           // $sessionStorage.$reset();
+            $log.debug(res);
             deferred.resolve(res.data);
-            $log.debug('approve current session finished with success.');
+            $log.debug('approve customer finished with success.');
         }, function (res) {
             $log.error(res);
-         //   $rootScope.sessionId = null;
-          //  $sessionStorage.$reset();
             deferred.reject(res.data);
-            $log.debug('approve current session finished with failure.');
+            $log.debug('approve customer finished with failure.');
         });
         return deferred.promise;
     };

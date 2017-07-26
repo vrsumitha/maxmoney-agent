@@ -33,7 +33,7 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
             });
         }, function(res) {
             console.log(res);
-            wydNotifyService.showError(res.data.description);
+            wydNotifyService.showError(res.message);
         });
 
         $log.info('signIn finished...');
@@ -476,12 +476,12 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
         $log.info('approve started...');
         $log.info(vm.customer.idNo);
 
-        sessionService.approve(vm.customers.idNo).then(function (res) {
-           // $log.info(vm.customers.idNo + ' successfully approved');
-            $log.info(res.idNo + ' successfully approved');
+        sessionService.approve(vm.customer.idNo).then(function (res) {
+            $log.debug(res);
+            wydNotifyService.showError('Successfully approved...');
         }, function (res) {
-           // $log.info(vm.customers.idNo + ' approval failure');
-            $log.info(res.idNo + ' approval failure');
+            $log.debug(res);
+            wydNotifyService.showError('Approve failed. ' + res.description);
         });
 
         $log.info('approve finished...');
