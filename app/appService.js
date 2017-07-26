@@ -392,7 +392,8 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         var path = apiBasePath + '/sessions/current';
         var req = {
             method: 'DELETE',
-            url: path
+            url: path,
+            headers: {'api-key': $rootScope.sessionId}
         };
         //$log.info(req);
         $log.debug('signout current session started...');

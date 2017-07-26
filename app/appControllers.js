@@ -1,3 +1,92 @@
+function signInController($log, $rootScope, $scope, wydNotifyService, storageService, sessionService, $location) {
+    var cmpId = 'signInController', cmpName = 'Sign In';
+    $log.info(cmpId + ' started ...');
+
+    $rootScope.viewName = cmpName;
+
+    var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
+
+    function reset() {
+        $log.info('reset started...');
+
+        vm.form.$setPristine();
+        vm.message = 'Sign In';
+
+        $log.info('reset started...');
+    }
+
+    function signIn() {
+        $log.info('signIn started...');
+
+        vm.message = 'Sign In';
+        var params = {userId: vm.userId, password: vm.password};
+        sessionService.signIn(params).then(function (res) {
+            sessionService.getCurrentSession().then(function (res) {
+                //console.log(res);
+                $log.info('Current Session Id : ' + $rootScope.sessionId);
+                $log.info('Current User Id    : ' + res.username);
+                $log.info('Current User Role  : ' + res.role);
+
+                $rootScope.session = res;
+
+                $location.path('/sign-up');
+            });
+        }, function(res) {
+            console.log(res);
+            wydNotifyService.showError(res.data.description);
+        });
+
+        $log.info('signIn finished...');
+    }
+
+    function init() {
+        $log.info('init started...');
+
+        vm.message = 'Sign In';
+
+        $log.info('init finished...');
+    }
+
+    angular.extend(this, {
+        uiState: uiState,
+        signIn: signIn,
+        reset: reset
+    });
+
+    init();
+
+    $log.info(cmpId + 'finished...');
+
+
+    $log.info(cmpId + 'finished...');
+}
+signInController.$inject = ['$log', '$rootScope', '$scope', 'wydNotifyService', 'storageService', 'sessionService', '$location'];
+appControllers.controller('signInController', signInController);
+
+function signOutController($log, $rootScope, $scope, sessionService, $location) {
+    var cmpId = 'signOutController', cmpName = 'Sign Out';
+    $log.info(cmpId + ' started ...');
+
+    $rootScope.viewName = cmpName;
+
+    var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
+
+    function onSignOut() {
+        $rootScope.session = null;
+        $rootScope.sessionId = null;
+    }
+
+    sessionService.signOut().then(function(res){
+        onSignOut();
+        $location.path('/sign-in');
+    }, function(res){
+        onSignOut();
+        $location.path('/sign-in');
+    });
+
+}signOutController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$location'];
+appControllers.controller('signOutController', signOutController);
+
 function signUpController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $uibModal, $location) {
     var cmpId = 'signUpController', cmpName = 'Sign Up';
     $log.info(cmpId + ' started ...');
@@ -114,21 +203,21 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
     }
 
     function reset() {
-        $log.info("reset started...");
+        $log.info('reset started...');
 
         vm.form.$setPristine();
         vm.beneficiary = {id: 'NA'};
         vm.beneficiaryLabel = 'Add';
         vm.dialCode = '-'
 
-        $log.info("reset started...");
+        $log.info('reset started...');
     }
 
     function save() {
-        $log.info("saving started...");
+        $log.info('saving started...');
 
         if (vm.form.$pristine) {
-            alertify.alert("There is no change. Hence, nothing to save.");
+            alertify.alert('There is no change. Hence, nothing to save.');
             return;
         }
 
@@ -229,11 +318,11 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
             wydNotifyService.showError(res.data.description);
         });
 
-        $log.info("saving finished...");
+        $log.info('saving finished...');
     }
 
     function init() {
-        $log.info("init started...");
+        $log.info('init started...');
 
         vm.beneficiaryLabel = 'Add';
         vm.beneficiary = {id: 'NA'};
@@ -259,7 +348,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         //     vm.malasiyaStates.unshift(vm.state);
         // }
 
-        $log.info("init finished...");
+        $log.info('init finished...');
     }
 
     angular.extend(this, {
@@ -438,7 +527,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
     }
 
     function init() {
-        $log.info("init started...");
+        $log.info('init started...');
         vm.customers = storageService.getCustomers();
         vm.customer = sessionService.currentCustomer;
         if (!vm.customer) {
@@ -447,7 +536,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
             //loadImage();
         }
         //console.log(vm.customer);
-        $log.info("init finished...");
+        $log.info('init finished...');
     }
 
     angular.extend(this, {
@@ -578,11 +667,11 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
     // }
 
     function reset() {
-        $log.info("reset started...");
+        $log.info('reset started...');
 
         vm.form.$setPristine();
 
-        $log.info("reset started...");
+        $log.info('reset started...');
     }
 
     function cancel() {
@@ -708,9 +797,9 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
     }
 
     function init() {
-        $log.info("init started...");
+        $log.info('init started...');
 
-        $log.info("init finished...");
+        $log.info('init finished...');
     }
 
     angular.extend(this, {
@@ -728,115 +817,3 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
 }
 beneficiaryAddOrEditController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$uibModalInstance', 'model', 'country'];
 appControllers.controller('beneficiaryAddOrEditController', beneficiaryAddOrEditController);
-
-
-/*
- function homeController($log, $rootScope, $scope, _session) {
- var cmpId = 'homeController', cmpName = 'Home';
- $log.info(cmpId + ' started ...');
-
- $rootScope.viewName = cmpName;
-
- var vm = this;
- vm.isReady = false;
-
- vm.session = _session;
-
- $log.info(cmpId + 'finished...');
- }
- homeController.$inject = ['$log', '$rootScope', '$scope', '_session'];
- homeController.resolve = {
- '_session': ['sessionService', function (sessionService) {
- return sessionService.getCurrentSession();
- }]
- };
- appControllers.controller('homeController', homeController);
-
- function customerToUserController($log, $rootScope, $scope, _session) {
- var cmpId = 'customerToUserController', cmpName = 'Customer To User';
- $log.info(cmpId + ' started ...');
-
- $rootScope.viewName = cmpName;
-
- var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
-
- function init() {
- $log.info("init started...");
-
- $log.info("init finished...");
- }
-
- angular.extend(this, {
- uiState: uiState
- });
-
- init();
-
- $log.info(cmpId + 'finished...');
- }
- customerToUserController.$inject = ['$log', '$rootScope', '$scope', '_session'];
- customerToUserController.resolve = {
- '_session': ['sessionService', function (sessionService) {
- return sessionService.getCurrentSession();
- }]
- };
- appControllers.controller('customerToUserController', customerToUserController);
-
- function beneficiaryListController($log, $rootScope, _session, $uibModal) {
- var cmpId = 'beneficiaryListController', cmpName = 'Beneficiaries';
- $log.info(cmpId + ' started ...');
-
- $rootScope.viewName = cmpName;
-
- var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
-
- function addBeneficiary() {
-
- var modalInstance = $uibModal.open({
- ariaLabelledBy: 'modal-title',
- ariaDescribedBy: 'modal-body',
- templateUrl: 'app/bootstrap/beneficiaryAddOrEdit.html',
- controller: 'beneficiaryAddOrEditController',
- controllerAs: 'vm',
- size: 'lg',
- resolve: {
- model: function () {
- return null;
- },
- country: function () {
- return null;
- }
- }
- });
- modalInstance.result.then(function (result) {
- $log.info('beneficiary created successfully...');
- //loadBeneficiaries();
- }, function () {
- $log.info('canceled beneficiary creation...');
- });
-
- }
-
- function init() {
- $log.info("init started...");
-
- $log.info("init finished...");
- }
-
- angular.extend(this, {
- uiState: uiState,
- addBeneficiary: addBeneficiary
- });
-
- init();
-
- $log.info(cmpId + 'finished...');
- }
- beneficiaryListController.$inject = ['$log', '$rootScope', '_session', '$uibModal'];
- beneficiaryListController.resolve = {
- '_session': ['sessionService', function (sessionService) {
- return sessionService.getCurrentSession();
- }]
- };
- appControllers.controller('beneficiaryListController', beneficiaryListController);
- */

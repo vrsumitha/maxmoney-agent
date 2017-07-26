@@ -19,14 +19,14 @@ function rootController($log, $rootScope, $scope, $window, sessionService) {
     sessionService.getOrderPurposes();
     sessionService.getAgents();
 
-    var params = {userId: 'sa@maxmoney.com', password: 'MaxMoney@2016'};
-    sessionService.signIn(params).then(function (res) {
-        sessionService.getCurrentSession().then(function (res) {
-            $log.info('Current Session Id : ' + $rootScope.sessionId);
-            $log.info('Current User Id    : ' + res.username);
-            $log.info('Current User Role  : ' + res.role);
-        });
-    });
+    // var params = {userId: 'sa@maxmoney.com', password: 'MaxMoney@2016'};
+    // sessionService.signIn(params).then(function (res) {
+    //     sessionService.getCurrentSession().then(function (res) {
+    //         $log.info('Current Session Id : ' + $rootScope.sessionId);
+    //         $log.info('Current User Id    : ' + res.username);
+    //         $log.info('Current User Role  : ' + res.role);
+    //     });
+    // });
 
 }
 appControllers.controller('rootController', rootController);
@@ -62,15 +62,19 @@ var app = angular.module('app', dependents), lodash = _, jquery = $;
 
 function appConfig($routeProvider, $locationProvider) {
     $routeProvider.when('/', {
-        redirectTo: '/home'
+        redirectTo: '/sign-in'
     });
-    /*
-     $routeProvider.when('/home', {
-     templateUrl: 'app/views/home.html',
-     controller: 'homeController as vm',
-     resolve: homeController.resolve
-     });
-     */
+
+    $routeProvider.when('/sign-in', {
+        templateUrl: 'app/views/signIn.html',
+        controller: 'signInController as vm'
+    });
+
+    $routeProvider.when('/sign-out', {
+        templateUrl: 'app/views/signOut.html',
+        controller: 'signOutController as vm'
+    });
+
     $routeProvider.when('/sign-up', {
         templateUrl: 'app/views/signUp.html',
         controller: 'signUpController as vm',
@@ -82,25 +86,6 @@ function appConfig($routeProvider, $locationProvider) {
         controller: 'cddController as vm',
         resolve: cddController.resolve
     });
-    /*
-     $routeProvider.when('/customer-to-user', {
-     templateUrl: 'app/views/customerToUser.html',
-     controller: 'customerToUserController as vm',
-     resolve: customerToUserController.resolve
-     });
-
-     $routeProvider.when('/beneficiaries', {
-     templateUrl: 'app/views/beneficiaryList.html',
-     controller: 'beneficiaryListController as vm',
-     resolve: beneficiaryListController.resolve
-     });
-
-     $routeProvider.when('/beneficiaries/beneficiary', {
-     templateUrl: 'app/views/beneficiaryAddOrEdit.html',
-     controller: 'beneficiaryAddOrEditController as vm',
-     resolve: beneficiaryAddOrEditController.resolve
-     });
-     */
     $routeProvider.when('/not-found', {
         template: '<p>Not Found</p>'
     });
@@ -123,11 +108,8 @@ function appInit($log, $rootScope, $location, $sessionStorage) {
     }
     console.log('Application Mode : ' + $rootScope.appMode);
 
-    var path = '/sign-up';
-    if($rootScope.appMode == 'local') {
-        //path = '/cdd';
-    }
-    $log.info('Startup Path : ' + path);
+    var path = '/sign-in';
+    $log.info('Start Path : ' + path);
     $location.path(path);
 
     $log.info('Initialization finished...');

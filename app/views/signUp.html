@@ -1,3 +1,4 @@
+<br/>
 <form name="vm.form" autocomplete=”off” novalidate="true">
     <div class="row">
         <div class="col-md-4">
@@ -10,8 +11,7 @@
                       ng-if="vm.form.emailId.$dirty && vm.form.emailId.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.emailId.$dirty && vm.form.emailId.$valid"></span>
-                <div id="emailIdHelpBlock" class="help-inline" ng-messages="vm.form.emailId.$error"
-                     ng-if="vm.form.emailId.$dirty">
+                <div id="emailIdHelpBlock" class="help-inline" ng-messages="vm.form.emailId.$error" ng-if="vm.form.emailId.$dirty">
                     <span ng-message="required">This is required.</span>
                     <span ng-message="email">This must be valid email</span>
                     <span ng-message="available">This is not available</span>
