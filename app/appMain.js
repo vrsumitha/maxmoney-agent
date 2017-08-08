@@ -116,6 +116,7 @@ function appInit($log, $rootScope, $location, $sessionStorage) {
     console.log('Application Mode : ' + $rootScope.appMode);
 
     var path = '/sign-in';
+   // var path = '/approve';
     $log.info('Start Path : ' + path);
     $location.path(path);
 

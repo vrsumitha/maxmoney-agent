@@ -31,7 +31,7 @@
                     <div class="input-group-addon">{{vm.dialCode}}</div>
                     <input type="text" class="form-control" id="mobileNo" placeholder="Mobile Number" aria-describedby="mobileNoHelpBlock"
                            name="mobileNo" ng-model="vm.mobileNo"
-                           required ng-minlength="9" ng-maxlength="10" input-mask="'mask'" mask-option="{'mask':'9999999999'}" input-mask-number>
+                           required ng-minlength="9" ng-maxlength="15" input-mask="'mask'" mask-option="{'mask':'999999999999999'}" input-mask-number>
                 </div>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                   ng-if="vm.form.mobileNo.$dirty && vm.form.mobileNo.$invalid"></span>

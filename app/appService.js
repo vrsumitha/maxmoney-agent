@@ -458,6 +458,29 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
+    service.validateCustomer = function (id, params) {
+        var path = apiBasePath + '/customers/' + id + '/validate';
+        var req = {
+            method: 'POST',
+            url: path,
+            params: params,
+            headers: {'api-key': $rootScope.sessionId}
+        };
+        //$log.info(req);
+        $log.debug('validate customer started...');
+        var deferred = $q.defer();
+        $http(req).then(function (res) {
+            $log.debug(res);
+            deferred.resolve(res.data);
+            $log.debug('validate customer finished with success.');
+        }, function (res) {
+            $log.error(res);
+            deferred.reject(res.data);
+            $log.debug('validate customer finished with failure.');
+        });
+        return deferred.promise;
+    };
+
     service.switchOffAutoComplete = function() {
         if (document.getElementsByTagName) {
             var inputElements = document.getElementsByTagName('input');

@@ -378,24 +378,18 @@ signUpController.resolve = {
 };
 appControllers.controller('signUpController', signUpController);
 
-function cddController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $http, Upload) {
+function cddController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $http, Upload, $location) {
     var cmpId = 'cddController', cmpName = 'CDD';
     $log.info(cmpId + ' started ...');
 
     $rootScope.viewName = cmpName;
 
     var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
-    vm.isReadyForApprove = false;
 
     function onCustomerChange() {
         sessionService.getCustomer(vm.customer.idNo).then(function(res) {
             _.assign(vm.customer, res);
             $log.info(vm.customer);
-            if(vm.customer.images.Front && vm.customer.images.Back) {
-                vm.isReadyForApprove = true;
-            } else {
-                vm.isReadyForApprove = false;
-            }
         });
     }
 
@@ -438,6 +432,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
         }).then(function (res) {
             $log.debug(res);
             wydNotifyService.showSuccess('Successfully updated...');
+            approve();
         }, function (res) {
             $log.debug(res);
             $log.error('Error Status: ' + res.status);
@@ -492,6 +487,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
         sessionService.approve(vm.customer.idNo).then(function (res) {
             $log.debug(res);
             wydNotifyService.showError('Successfully approved...');
+            $location.path('/approve');
         }, function (res) {
             $log.debug(res);
             wydNotifyService.showError('Approve failed. ' + res.description);
@@ -579,7 +575,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
 
     $log.info(cmpId + 'finished...');
 }
-cddController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$http', 'Upload'];
+cddController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$http', 'Upload', '$location'];
 cddController.resolve = {
     '_session': ['sessionService', function (sessionService) {
         //sessionService.switchOffAutoComplete();
@@ -596,7 +592,6 @@ function approveController($log, $rootScope, $scope, _session, wydNotifyService,
     $rootScope.viewName = cmpName;
 
     var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
-    vm.isReadyForApprove = false;
 
     function onCustomerChange() {
         sessionService.getCustomer(vm.customer.idNo).then(function(res) {
@@ -618,81 +613,22 @@ function approveController($log, $rootScope, $scope, _session, wydNotifyService,
                 vm.customer.imageBackUrl = imgUrl;
                 console.log(vm.customer.imageBackUrl);
             }
-            if(vm.customer.images.Front && vm.customer.images.Back) {
-                vm.isReadyForApprove = true;
-            } else {
-                vm.isReadyForApprove = false;
-            }
         });
     }
 
-    function approve() {
-        $log.info('approve started...');
+    function validateCustomer() {
+        $log.info('validate customer started...');
         $log.info(vm.customer.idNo);
-
-        sessionService.approve(vm.customer.idNo).then(function (res) {
+        var params = {id : vm.customer.idNo, url : '', status : 'Validated'};
+        sessionService.validateCustomer(vm.customer.idNo, params).then(function (res) {
             $log.debug(res);
-            wydNotifyService.showError('Successfully approved...');
+            wydNotifyService.showError('Successfully validated...');
         }, function (res) {
             $log.debug(res);
-            wydNotifyService.showError('Approve failed. ' + res.description);
+            wydNotifyService.showError('Validation failed. ' + res.description);
         });
 
-        $log.info('approve finished...');
-    }
-
-    function loadImage() {
-        var basePath = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
-        if (vm.customer.idType == 'Passport') {
-            var path = basePath + 'images/' + vm.customer.images.Front;
-            var req = {
-                method: 'GET',
-                url: path,
-                headers: {'api-key': $rootScope.sessionId}
-            };
-            //$log.info(req);
-            $http(req).then(function (res) {
-                $log.info(res);
-                if (res.status === 200) {
-                    vm.passportFrontImage = res.data;
-                }
-            }, function (res) {
-                $log.error(res);
-            });
-        }
-        if (vm.customer.idType == 'NRIC') {
-            var path = basePath + 'images/' + vm.customer.images.Front;
-            var req = {
-                method: 'GET',
-                url: path,
-                headers: {'api-key': $rootScope.sessionId}
-            };
-            //$log.info(req);
-            $http(req).then(function (res) {
-                $log.info(res);
-                if (res.status === 200) {
-                    vm.nricFrontImage = res.data;
-                }
-            }, function (res) {
-                $log.error(res);
-            });
-
-            var path = basePath + 'images/' + vm.customer.images.Back;
-            req = {
-                method: 'GET',
-                url: path,
-                headers: {'api-key': $rootScope.sessionId}
-            };
-            //$log.info(req);
-            $http(req).then(function (res) {
-                $log.info(res);
-                if (res.status === 200) {
-                    vm.nricBackImage = res.data;
-                }
-            }, function (res) {
-                $log.error(res);
-            });
-        }
+        $log.info('validate customer finished...');
     }
 
     function init() {
@@ -712,7 +648,7 @@ function approveController($log, $rootScope, $scope, _session, wydNotifyService,
     angular.extend(this, {
         uiState: uiState,
         onCustomerChange: onCustomerChange,
-        approve: approve
+        validateCustomer: validateCustomer
     });
 
     init();

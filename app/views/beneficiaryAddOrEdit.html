@@ -112,7 +112,7 @@
                             <span class="input-group-addon">{{vm.model.dialingCode}}</span>
                             <input type="text" class="form-control" id="dialingNumber" placeholder="Phone Number" aria-describedby="dialingNumberHelpBlock"
                                    name="dialingNumber" ng-model="vm.model.dialingNumber"
-                                   required ng-minlength="10" ng-maxlength="10" input-mask="'mask'" mask-option="{'mask' : '9999999999'}" input-mask-number>
+                                   required ng-minlength="9" ng-maxlength="15" input-mask="'mask'" mask-option="{'mask' : '999999999999999'}" input-mask-number>
                         </div>
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                               ng-if="vm.form.dialingNumber.$dirty && vm.form.dialingNumber.$invalid"></span>
@@ -121,7 +121,7 @@
                         <div id="dialingNumberHelpBlock" class="help-inline"
                              ng-messages="vm.form.dialingNumber.$error"
                              ng-if="vm.form.dialingNumber.$dirty">
-                            <span ng-message="minlength, maxlength">This should be exactly 10 digits</span>
+                            <span ng-message="minlength, maxlength">This should be minimum 9 digits</span>
                             <span ng-message="required">This is required.</span>
                         </div>
                     </div>
