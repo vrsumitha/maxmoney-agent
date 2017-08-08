@@ -1,5 +1,5 @@
 
-<form name="vm.form" autocomplete=â€offâ€ novalidate="true">
+<form name="vm.form" autocomplete=â€?offâ€? novalidate="true">
     <div class="row">
         <div class="col-md-4">
             <div class="form-group" ng-if="appMode == 'local'">
@@ -43,16 +43,6 @@
                 </div>
             </div>
         </div>
-        <!--
-        <div class="col-md-4">
-            <div><img ng-src="{{vm.passportFrontImage}}" class="img-thumbnail"></div>
-        </div>
-        <div class="col-md-4">
-            &nbsp;
-        </div>
-        -->
-    </div>
-    <div class="row" ng-if="vm.customer.idType == 'Passport'">
         <div class="col-md-4">
             <div><img ng-show="vm.form.passportBack.$valid" ngf-thumbnail="vm.passportBack" class="img-thumbnail"></div>
             <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.passportBack.$dirty && vm.form.passportBack.$invalid), 'has-success' : (vm.form.passportBack.$dirty && vm.form.passportBack.$valid) }">
@@ -76,14 +66,15 @@
         </div>
         <!--
         <div class="col-md-4">
-            <div><img ng-src="{{vm.passportBackImage}}" class="img-thumbnail"></div>
+            <div><img ng-src="{{vm.passportFrontImage}}" class="img-thumbnail"></div>
         </div>
         <div class="col-md-4">
             &nbsp;
         </div>
         -->
     </div>
-    <div class="row" ng-show="vm.customer.idType == 'NRIC'">
+
+    <div class="row" ng-if="vm.customer.idType == 'NRIC'">
         <div class="col-md-4">
             <div><img ng-show="vm.form.nricFront.$valid" ngf-thumbnail="vm.nricFront" class="img-thumbnail"></div>
             <div class="form-group has-feedback"
@@ -101,21 +92,13 @@
                     <span ng-show="vm.form.nricFront.$error.maxSize">File too large {{vm.nricFrontError.size / 1000000 | number:1}}MB: max 1MB</span>
                 </div>
                 <div class="progress" ng-show="vm.nricFront.progress >= 0">
-                     <div class="progress-bar progress-bar-info progress-bar-striped"
-                          style="width:{{vm.nricFront.progress}}%" ng-bind="vm.nricFront.progress + '%'"></div>
+                    <div class="progress-bar progress-bar-info progress-bar-striped"
+                         style="width:{{vm.nricFront.progress}}%" ng-bind="vm.nricFront.progress + '%'"></div>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div><img ng-src="{{vm.nricFrontImage}}" class="img-thumbnail"></div>
-        </div>
-        <div class="col-md-4">
-            &nbsp;
-        </div>
-    </div>
-
-    <div class="row" ng-show="vm.customer.idType == 'NRIC'">
-        <div class="col-md-4">
+            <!--  <div><img ng-src="{{vm.nricFrontImage}}" class="img-thumbnail"></div> -->
             <div><img ng-show="vm.form.nricBack.$valid" ngf-thumbnail="vm.nricBack" class="img-thumbnail"></div>
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.nricBack.$dirty && vm.form.nricBack.$invalid), 'has-success' : (vm.form.nricBack.$dirty && vm.form.nricBack.$valid) }">
@@ -136,12 +119,6 @@
                          style="width:{{vm.nricBack.progress}}%" ng-bind="vm.nricBack.progress + '%'"></div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div><img ng-src="{{vm.nricBackImage}}" class="img-thumbnail"></div>
-        </div>
-        <div class="col-md-4">
-            &nbsp;
         </div>
     </div>
 
