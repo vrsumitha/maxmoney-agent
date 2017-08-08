@@ -1,6 +1,6 @@
 
 <form name="vm.form" autocomplete=â€?offâ€? novalidate="true">
-    <div class="row">
+    <div class="row" ng-show="appMode == 'local'">
         <div class="col-md-4">
             <div class="form-group" ng-if="appMode == 'local'">
                 <label for="customer">Customers <span class="text-danger">*</span></label>

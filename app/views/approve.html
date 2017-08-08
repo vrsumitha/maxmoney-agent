@@ -1,6 +1,6 @@
 
 <form name="vm.form" autocomplete=”off” novalidate="true">
-    <div class="row">
+    <div class="row" ng-show="appMode == 'local'">
         <div class="col-md-4">
             <div class="form-group" ng-if="appMode == 'local'">
                 <label for="customer">Customers <span class="text-danger">*</span></label>
@@ -21,4 +21,219 @@
             &nbsp;
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h4><strong>Customer Information</strong></h4>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-3">
+                    Customer Name
+                </div>
+                <div class="col-md-3">
+                   <strong>{{vm.customer.customerName}}</strong>
+                </div>
+                <div class="col-md-3">
+                    Last Name
+                </div>
+                <div class="col-md-3">
+                    &nbsp;
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-3">
+                    Email
+                </div>
+                <div class="col-md-3">
+                   <strong>{{vm.customer.email}}</strong>
+                </div>
+                <div class="col-md-3">
+                    Status
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.customer.status}}</strong>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-3">
+                    ID Type
+                </div>
+                <div class="col-md-3">
+                   <strong>{{vm.customer.idType}}</strong>
+                </div>
+                <div class="col-md-3">
+                    ID Number
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.customer.idNo}}</strong>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-3">
+                    ID Issue Date
+                </div>
+                <div class="col-md-3">
+                    &nbsp;
+                </div>
+                <div class="col-md-3">
+                    ID Expiry Date
+                </div>
+                <div class="col-md-3">
+                    &nbsp;
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                    <div class="col-md-3">
+                        ID Issue Place
+                    </div>
+                    <div class="col-md-3">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-3">
+                        Date Of Birth
+                    </div>
+                    <div class="col-md-3">
+                        <strong>{{vm.customer.dob}}</strong>
+                    </div>
+                </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-3">
+                    Gender
+                </div>
+                <div class="col-md-3">
+                    &nbsp;
+                </div>
+                <div class="col-md-3">
+                    Nationality
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.customer.nationality}}</strong>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-3">
+                    Country
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.customer.country}}</strong>
+                </div>
+                <div class="col-md-3">
+                    State
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.customer.state}}</strong>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-3">
+                    City
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.customer.city}}</strong>
+                </div>
+                <div class="col-md-3">
+                    Address
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.customer.address}}</strong>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-3">
+                    Mobile
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.customer.mobile}}</strong>
+                </div>
+                <div class="col-md-3">
+                    Phone
+                </div>
+                <div class="col-md-3">
+                    &nbsp;
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-3">
+                    Customer Type
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.customer.type}}</strong>
+                </div>
+                <div class="col-md-3">
+                    Risk Score
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.customer.riskScore}}</strong>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-3">
+                    Company Name
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.customer.companyName}}</strong>
+                </div>
+                <div class="col-md-3">
+                     Nature Of Business
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.customer.natureOfBusiness}}</strong>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-3">
+                    Company Type
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.customer.companyType}}</strong>
+                </div>
+                <div class="col-md-3">
+                    Contact Person
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.customer.contactPerson}}</strong>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="text-center">
+                <h4><strong>Documents Information</strong></h4>
+            </div>
+            <div class="text-center">
+                <strong>Front</strong>
+            </div>
+            <div class="text-center">
+                <img src="" alt="Front" class="img-thumbnail">
+            </div>
+            <div class="text-center">
+                <strong>Back</strong>
+            </div>
+            <div class="text-center">
+                <img src="" alt="Back" class="img-thumbnail">
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary"
+                ng-click="vm.approve()">
+            Approve
+        </button>
+    </div>
+
 </form>
