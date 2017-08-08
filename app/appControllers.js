@@ -602,6 +602,22 @@ function approveController($log, $rootScope, $scope, _session, wydNotifyService,
         sessionService.getCustomer(vm.customer.idNo).then(function(res) {
             _.assign(vm.customer, res);
             $log.info(vm.customer);
+            if(vm.customer.images.Front) {
+                var imgUrl = sessionService.getApiBasePath() + '/customers/';
+                imgUrl += vm.customer.idNo + '/images/';
+                imgUrl += vm.customer.images.Front;
+                imgUrl += '?api-key=' + $rootScope.sessionId;
+                vm.customer.imageFrontUrl = imgUrl;
+                console.log(vm.customer.imageFrontUrl);
+            }
+            if(vm.customer.images.Back) {
+                var imgUrl = sessionService.getApiBasePath() + '/customers/';
+                imgUrl += vm.customer.idNo + '/images/';
+                imgUrl += vm.customer.images.Back;
+                imgUrl += '?api-key=' + $rootScope.sessionId;
+                vm.customer.imageBackUrl = imgUrl;
+                console.log(vm.customer.imageBackUrl);
+            }
             if(vm.customer.images.Front && vm.customer.images.Back) {
                 vm.isReadyForApprove = true;
             } else {
