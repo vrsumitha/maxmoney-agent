@@ -8,9 +8,11 @@
                         name="customer" ng-model="vm.customer" ng-change="vm.onCustomerChange()"
                         ng-options="item.customerName for item in vm.customers">
                 </select>
+                <!--
                 <div id="bankNameHelpBlock" class="help-inline">
                     <span>{{vm.customer.email}}&nbsp;&nbsp;&nbsp;{{vm.customer.mobile}}</span>
                 </div>
+                -->
             </div>
             <div ng-if="appMode != 'local'"><strong>{{vm.customer.email}}&nbsp;&nbsp;&nbsp;{{vm.customer.mobile}}</strong></div>
         </div>
@@ -218,13 +220,13 @@
                 <strong>Front</strong>
             </div>
             <div class="text-center">
-                <img ng-src="{{vm.customer.imageFrontUrl}}" alt="Front" class="img-thumbnail">
+                <img ng-src="{{vm.customer.imageFrontUrl}}" alt="Front" class="img-thumbnail" style="width: 250px; height: 200px">
             </div>
             <div class="text-center">
                 <strong>Back</strong>
             </div>
             <div class="text-center">
-                <img ng-src="{{vm.customer.imageBackUrl}}" alt="Back" class="img-thumbnail">
+                <img ng-src="{{vm.customer.imageBackUrl}}" alt="Back" class="img-thumbnail" style="width: 250px; height: 200px">
             </div>
         </div>
     </div>

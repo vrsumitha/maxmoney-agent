@@ -23,7 +23,7 @@
     </div>
     <div class="row" ng-if="vm.customer.idType == 'Passport'">
         <div class="col-md-4">
-            <div><img ng-show="vm.form.passportFront.$valid" ngf-thumbnail="vm.passportFront" class="img-thumbnail"></div>
+            <div><img ng-show="vm.form.passportFront.$valid" ngf-thumbnail="vm.passportFront" class="img-thumbnail" style="width: 250px; height: 200px"></div>
             <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.passportFront.$dirty && vm.form.passportFront.$invalid), 'has-success' : (vm.form.passportFront.$dirty && vm.form.passportFront.$valid) }">
                 <label for="passportFront" class="control-label">Passport Front <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="passportFront" placeholder="" aria-describedby="passportFrontHelpBlock"
@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div><img ng-show="vm.form.passportBack.$valid" ngf-thumbnail="vm.passportBack" class="img-thumbnail"></div>
+            <div><img ng-show="vm.form.passportBack.$valid" ngf-thumbnail="vm.passportBack" class="img-thumbnail" style="width: 250px; height: 200px"></div>
             <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.passportBack.$dirty && vm.form.passportBack.$invalid), 'has-success' : (vm.form.passportBack.$dirty && vm.form.passportBack.$valid) }">
                 <label for="passportBack" class="control-label">Passport Back <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="passportBack" placeholder="" aria-describedby="passportBackHelpBlock"
@@ -76,7 +76,7 @@
 
     <div class="row" ng-if="vm.customer.idType == 'NRIC'">
         <div class="col-md-4">
-            <div><img ng-show="vm.form.nricFront.$valid" ngf-thumbnail="vm.nricFront" class="img-thumbnail"></div>
+            <div><img ng-show="vm.form.nricFront.$valid" ngf-thumbnail="vm.nricFront" class="img-thumbnail" style="width: 250px; height: 200px"></div>
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.nricFront.$dirty && vm.form.nricFront.$invalid), 'has-success' : (vm.form.nricFront.$dirty && vm.form.nricFront.$valid) }">
                 <label for="nricFront" class="control-label">NRIC Front <span class="text-danger">*</span></label>
@@ -99,7 +99,7 @@
         </div>
         <div class="col-md-4">
             <!--  <div><img ng-src="{{vm.nricFrontImage}}" class="img-thumbnail"></div> -->
-            <div><img ng-show="vm.form.nricBack.$valid" ngf-thumbnail="vm.nricBack" class="img-thumbnail"></div>
+            <div><img ng-show="vm.form.nricBack.$valid" ngf-thumbnail="vm.nricBack" class="img-thumbnail" style="width: 250px; height: 200px"></div>
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.nricBack.$dirty && vm.form.nricBack.$invalid), 'has-success' : (vm.form.nricBack.$dirty && vm.form.nricBack.$valid) }">
                 <label for="nricBack" class="control-label">NRIC Back <span class="text-danger">*</span></label>
