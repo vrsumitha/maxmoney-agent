@@ -5,7 +5,7 @@
             <div class="form-group" ng-if="appMode == 'local'">
                 <label for="customer">Customers <span class="text-danger">*</span></label>
                 <select class="form-control"id="customer" aria-describedby="customerHelpBlock"
-                        name="customer" ng-model="vm.customer" xng-change="onCustomerChange()"
+                        name="customer" ng-model="vm.customer" ng-change="vm.onCustomerChange()"
                         ng-options="item.customerName for item in vm.customers">
                 </select>
                 <div id="bankNameHelpBlock" class="help-inline">
@@ -21,7 +21,6 @@
             &nbsp;
         </div>
     </div>
-
     <div class="row" ng-if="vm.customer.idType == 'Passport'">
         <div class="col-md-4">
             <div><img ng-show="vm.form.passportFront.$valid" ngf-thumbnail="vm.passportFront" class="img-thumbnail"></div>
@@ -157,23 +156,11 @@
                     ng-class="{'btn-primary' : vm.form.$pristine, 'btn-success' : (vm.form.$dirty && vm.form.$valid), 'btn-danger' : (vm.form.$dirty && vm.form.$invalid) }"
                     xng-disabled="(vm.form.$dirty && vm.form.$valid)"
                     ng-click="vm.save()">
-                Save
+                Next
             </button>
+            &nbsp;&nbsp;&nbsp;
+            <a type="submit" class="btn btn-primary" href="#!/approve" ng-show="appMode == 'local'">NextX</a>
         </div>
     </div>
-    <br/>
-    <div class="row">
-        <div class="col-md-4  text-right">
-            <button type="submit" class="btn"
-                    ng-class="{'btn-primary' : vm.form.$pristine, 'btn-success' : (vm.form.$dirty && vm.form.$valid), 'btn-danger' : (vm.form.$dirty && vm.form.$invalid) }"
-                    xng-disabled="(vm.form.$dirty && vm.form.$valid)"
-                    ng-click="vm.approve()">
-                Approve
-            </button>
-        </div>
-    </div>
-    <!--
-    <br/>
-    <pre>{{vm.customer | json}}</pre>
-    -->
+
 </form>

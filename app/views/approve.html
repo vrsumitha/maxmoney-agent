@@ -1,0 +1,24 @@
+
+<form name="vm.form" autocomplete=”off” novalidate="true">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group" ng-if="appMode == 'local'">
+                <label for="customer">Customers <span class="text-danger">*</span></label>
+                <select class="form-control"id="customer" aria-describedby="customerHelpBlock"
+                        name="customer" ng-model="vm.customer" ng-change="vm.onCustomerChange()"
+                        ng-options="item.customerName for item in vm.customers">
+                </select>
+                <div id="bankNameHelpBlock" class="help-inline">
+                    <span>{{vm.customer.email}}&nbsp;&nbsp;&nbsp;{{vm.customer.mobile}}</span>
+                </div>
+            </div>
+            <div ng-if="appMode != 'local'"><strong>{{vm.customer.email}}&nbsp;&nbsp;&nbsp;{{vm.customer.mobile}}</strong></div>
+        </div>
+        <div class="col-md-4">
+            &nbsp;
+        </div>
+        <div class="col-md-4">
+            &nbsp;
+        </div>
+    </div>
+</form>

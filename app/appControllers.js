@@ -385,6 +385,19 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
     $rootScope.viewName = cmpName;
 
     var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
+    vm.isReadyForApprove = false;
+
+    function onCustomerChange() {
+        sessionService.getCustomer(vm.customer.idNo).then(function(res) {
+            _.assign(vm.customer, res);
+            $log.info(vm.customer);
+            if(vm.customer.images.Front && vm.customer.images.Back) {
+                vm.isReadyForApprove = true;
+            } else {
+                vm.isReadyForApprove = false;
+            }
+        });
+    }
 
     function save() {
         $log.info('saving started...');
@@ -549,13 +562,15 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
             vm.customer = vm.customers[vm.customers.length - 1];
             vm.name = vm.customer.customerName;
             //loadImage();
+            onCustomerChange();
         }
-        //console.log(vm.customer);
+        console.log(vm.customer);
         $log.info('init finished...');
     }
 
     angular.extend(this, {
         uiState: uiState,
+        onCustomerChange: onCustomerChange,
         save: save,
         approve: approve
     });
@@ -573,6 +588,130 @@ cddController.resolve = {
     }]
 };
 appControllers.controller('cddController', cddController);
+
+function approveController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $http) {
+    var cmpId = 'cddController', cmpName = 'CDD';
+    $log.info(cmpId + ' started ...');
+
+    $rootScope.viewName = cmpName;
+
+    var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
+    vm.isReadyForApprove = false;
+
+    function onCustomerChange() {
+        sessionService.getCustomer(vm.customer.idNo).then(function(res) {
+            _.assign(vm.customer, res);
+            $log.info(vm.customer);
+            if(vm.customer.images.Front && vm.customer.images.Back) {
+                vm.isReadyForApprove = true;
+            } else {
+                vm.isReadyForApprove = false;
+            }
+        });
+    }
+
+    function approve() {
+        $log.info('approve started...');
+        $log.info(vm.customer.idNo);
+
+        sessionService.approve(vm.customer.idNo).then(function (res) {
+            $log.debug(res);
+            wydNotifyService.showError('Successfully approved...');
+        }, function (res) {
+            $log.debug(res);
+            wydNotifyService.showError('Approve failed. ' + res.description);
+        });
+
+        $log.info('approve finished...');
+    }
+
+    function loadImage() {
+        var basePath = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
+        if (vm.customer.idType == 'Passport') {
+            var path = basePath + 'images/' + vm.customer.images.Front;
+            var req = {
+                method: 'GET',
+                url: path,
+                headers: {'api-key': $rootScope.sessionId}
+            };
+            //$log.info(req);
+            $http(req).then(function (res) {
+                $log.info(res);
+                if (res.status === 200) {
+                    vm.passportFrontImage = res.data;
+                }
+            }, function (res) {
+                $log.error(res);
+            });
+        }
+        if (vm.customer.idType == 'NRIC') {
+            var path = basePath + 'images/' + vm.customer.images.Front;
+            var req = {
+                method: 'GET',
+                url: path,
+                headers: {'api-key': $rootScope.sessionId}
+            };
+            //$log.info(req);
+            $http(req).then(function (res) {
+                $log.info(res);
+                if (res.status === 200) {
+                    vm.nricFrontImage = res.data;
+                }
+            }, function (res) {
+                $log.error(res);
+            });
+
+            var path = basePath + 'images/' + vm.customer.images.Back;
+            req = {
+                method: 'GET',
+                url: path,
+                headers: {'api-key': $rootScope.sessionId}
+            };
+            //$log.info(req);
+            $http(req).then(function (res) {
+                $log.info(res);
+                if (res.status === 200) {
+                    vm.nricBackImage = res.data;
+                }
+            }, function (res) {
+                $log.error(res);
+            });
+        }
+    }
+
+    function init() {
+        $log.info('init started...');
+        vm.customers = storageService.getCustomers();
+        vm.customer = sessionService.currentCustomer;
+        if (!vm.customer) {
+            vm.customer = vm.customers[vm.customers.length - 1];
+            vm.name = vm.customer.customerName;
+            //loadImage();
+            onCustomerChange();
+        }
+        console.log(vm.customer);
+        $log.info('init finished...');
+    }
+
+    angular.extend(this, {
+        uiState: uiState,
+        onCustomerChange: onCustomerChange,
+        approve: approve
+    });
+
+    init();
+
+    $log.info(cmpId + 'finished...');
+}
+approveController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$http'];
+approveController.resolve = {
+    '_session': ['sessionService', function (sessionService) {
+        //sessionService.switchOffAutoComplete();
+        return '-:coming_soon:-';
+        //return sessionService.getCurrentSession();
+    }]
+};
+appControllers.controller('approveController', approveController);
 
 function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService, $uibModalInstance, model, country) {
     var cmpId = 'beneficiaryAddOrEditController', cmpName = 'Add/Edit Beneficiary';

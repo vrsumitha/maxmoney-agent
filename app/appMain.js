@@ -86,6 +86,13 @@ function appConfig($routeProvider, $locationProvider) {
         controller: 'cddController as vm',
         resolve: cddController.resolve
     });
+
+    $routeProvider.when('/approve', {
+        templateUrl: 'app/views/approve.html',
+        controller: 'approveController as vm',
+        resolve: approveController.resolve
+    });
+
     $routeProvider.when('/not-found', {
         template: '<p>Not Found</p>'
     });
