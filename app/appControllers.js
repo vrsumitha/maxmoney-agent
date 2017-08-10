@@ -585,8 +585,8 @@ cddController.resolve = {
 };
 appControllers.controller('cddController', cddController);
 
-function approveController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $http) {
-    var cmpId = 'cddController', cmpName = 'CDD';
+function approveController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $http, $location) {
+    var cmpId = 'approveController', cmpName = 'Validate Customer';
     $log.info(cmpId + ' started ...');
 
     $rootScope.viewName = cmpName;
@@ -619,16 +619,33 @@ function approveController($log, $rootScope, $scope, _session, wydNotifyService,
     function validateCustomer() {
         $log.info('validate customer started...');
         $log.info(vm.customer.idNo);
-        var params = {id : vm.customer.idNo, url : '', status : 'Validated'};
+        var params = {url : 'http://www.maxmoney.com/abcde/uuu', status : 'Validated'};
         sessionService.validateCustomer(vm.customer.idNo, params).then(function (res) {
             $log.debug(res);
             wydNotifyService.showError('Successfully validated...');
+            convertCustomer();
         }, function (res) {
-            $log.debug(res);
+            $log.debug(res.value);
             wydNotifyService.showError('Validation failed. ' + res.description);
+            //$location.path('/convertCustomer');
         });
 
         $log.info('validate customer finished...');
+    }
+
+    function convertCustomer() {
+        $log.info('convert customer started...');
+        $log.info(vm.customer.idNo, ' ', vm.customer.pin);
+        var params = {pin : vm.customer.pin, password : '12345'};
+        sessionService.convertCustomer(vm.customer.idNo, params).then(function (res) {
+            $log.debug(res);
+            wydNotifyService.showError('Successfully converted...');
+        }, function (res) {
+            $log.debug(res);
+            wydNotifyService.showError('Conversion failed. ' + res.description);
+        });
+
+        $log.info('convert customer finished...');
     }
 
     function init() {
@@ -648,14 +665,16 @@ function approveController($log, $rootScope, $scope, _session, wydNotifyService,
     angular.extend(this, {
         uiState: uiState,
         onCustomerChange: onCustomerChange,
-        validateCustomer: validateCustomer
+        validateCustomer: validateCustomer,
+        convertCustomer: convertCustomer
+
     });
 
     init();
 
     $log.info(cmpId + 'finished...');
 }
-approveController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$http'];
+approveController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$http', '$location'];
 approveController.resolve = {
     '_session': ['sessionService', function (sessionService) {
         //sessionService.switchOffAutoComplete();
@@ -664,6 +683,91 @@ approveController.resolve = {
     }]
 };
 appControllers.controller('approveController', approveController);
+
+function convertCustomerController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $http) {
+    var cmpId = 'convertCustomerController', cmpName = 'Convert Customer';
+    $log.info(cmpId + ' started ...');
+
+    $rootScope.viewName = cmpName;
+
+    var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
+    function onCustomerChange() {
+
+    }
+
+ function onCustomerChange() {
+        sessionService.getCustomer(vm.customer.idNo).then(function(res) {
+            _.assign(vm.customer, res);
+            $log.info(vm.customer);
+            if(vm.customer.images.Front) {
+                var imgUrl = sessionService.getApiBasePath() + '/customers/';
+                imgUrl += vm.customer.idNo + '/images/';
+                imgUrl += vm.customer.images.Front;
+                imgUrl += '?api-key=' + $rootScope.sessionId;
+                vm.customer.imageFrontUrl = imgUrl;
+                console.log(vm.customer.imageFrontUrl);
+            }
+            if(vm.customer.images.Back) {
+                var imgUrl = sessionService.getApiBasePath() + '/customers/';
+                imgUrl += vm.customer.idNo + '/images/';
+                imgUrl += vm.customer.images.Back;
+                imgUrl += '?api-key=' + $rootScope.sessionId;
+                vm.customer.imageBackUrl = imgUrl;
+                console.log(vm.customer.imageBackUrl);
+            }
+        });
+    }
+
+function convertCustomer() {
+    $log.info('convert customer started...');
+    $log.info(vm.customer.idNo, ' ' , vm.password , ' ', vm.customer.pin);
+    var params = {pin : vm.customer.pin, password : vm.password, code : '909'};
+    sessionService.convertCustomer(vm.customer.idNo, params).then(function (res) {
+        $log.debug(res);
+        wydNotifyService.showError('Successfully converted...');
+    }, function (res) {
+        $log.debug(res);
+        wydNotifyService.showError('Conversion failed. ' + res.description);
+    });
+
+    $log.info('convert customer finished...');
+}
+
+    function init() {
+        $log.info('init started...');
+        vm.customers = storageService.getCustomers();
+        vm.customer = sessionService.currentCustomer;
+        if (!vm.customer) {
+            vm.customer = vm.customers[vm.customers.length - 1];
+            vm.name = vm.customer.customerName;
+            //loadImage();
+            onCustomerChange();
+        }
+        console.log(vm.customer);
+        $log.info('init finished...');
+    }
+
+    angular.extend(this, {
+        uiState: uiState,
+        onCustomerChange: onCustomerChange,
+        convertCustomer: convertCustomer
+    });
+
+    init();
+
+    $log.info(cmpId + 'finished...');
+}
+convertCustomerController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$http'];
+convertCustomerController.resolve = {
+    '_session': ['sessionService', function (sessionService) {
+        //sessionService.switchOffAutoComplete();
+        return '-:coming_soon:-';
+        //return sessionService.getCurrentSession();
+    }]
+};
+appControllers.controller('convertCustomerController', convertCustomerController);
+
+
 
 function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService, $uibModalInstance, model, country) {
     var cmpId = 'beneficiaryAddOrEditController', cmpName = 'Add/Edit Beneficiary';

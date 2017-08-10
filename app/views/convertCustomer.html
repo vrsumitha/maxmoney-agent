@@ -1,0 +1,78 @@
+<form name="vm.form" autocomplete=”off” novalidate="true">
+    <div class="row" ng-show="appMode == 'local'">
+        <div class="col-md-4">
+            <div class="form-group" ng-if="appMode == 'local'">
+                <label for="customer">Customers <span class="text-danger">*</span></label>
+                <select class="form-control"id="customer" aria-describedby="customerHelpBlock"
+                        name="customer" ng-model="vm.customer" ng-change="vm.onCustomerChange()"
+                        ng-options="item.customerName for item in vm.customers">
+                </select>
+                <!--
+                <div id="bankNameHelpBlock" class="help-inline">
+                    <span>{{vm.customer.email}}&nbsp;&nbsp;&nbsp;{{vm.customer.mobile}}</span>
+                </div>
+                -->
+            </div>
+            <div ng-if="appMode != 'local'"><strong>{{vm.customer.email}}&nbsp;&nbsp;&nbsp;{{vm.customer.mobile}}</strong></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.pin.$dirty && vm.form.pin.$invalid), 'has-success' : (vm.form.pin.$dirty && vm.form.pin.$valid) }">
+                <label for="pin">Pin <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="pin" placeholder="Pin Number" aria-describedby="pinHelpBlock"
+                       name="pin" ng-model="vm.pin"
+                       ng-minlength="4" required>
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.pin.$dirty && vm.form.pin.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.pin.$dirty && vm.form.pin.$valid"></span>
+                <div id="pinHelpBlock" class="help-inline" ng-messages="vm.form.pin.$error" ng-if="vm.form.pin.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="minlength, maxlength">This should be minimum 4 digits</span>
+                </div>
+                <!--
+                <span ng-show="vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid" class="help-line text-warning">
+                    It must be valid number to receive activation info
+                </span>
+                -->
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.password.$dirty && vm.form.password.$invalid), 'has-success' : (vm.form.password.$dirty && vm.form.password.$valid) }">
+                <label for="password">Password <span class="text-danger">*</span></label>
+                <input type="password" class="form-control" id="password" placeholder="Password" aria-describedby="passwordHelpBlock"
+                       name="password" ng-model="vm.password"
+                       ng-minlength="5" required>
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.password.$dirty && vm.form.password.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.password.$dirty && vm.form.password.$valid"></span>
+                <div id="passwordHelpBlock" class="help-inline" ng-messages="vm.form.password.$error" ng-if="vm.form.password.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="minlength, maxlength">This should be minimum 5 digits</span>
+                </div>
+                <!--
+                <span ng-show="vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid" class="help-line text-warning">
+                    It must be valid number to receive activation info
+                </span>
+                -->
+            </div>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary"
+                ng-click="vm.convertCustomer()">
+            Convert Customer
+        </button>
+    </div>
+
+
+</form>
