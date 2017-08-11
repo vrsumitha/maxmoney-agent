@@ -481,8 +481,9 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
-    service.convertCustomer = function (id, params) {
-        var path = apiBasePath + '/customers/' + id + '/agent-convert';
+    service.convertCustomer = function (params) {
+        var path = apiBasePath + '/customers/' + params.id + '/convert-by-agent';
+        $log.debug('convert customer service started...');
         var req = {
             method: 'POST',
             url: path,
@@ -491,6 +492,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         };
         //$log.info(req);
         $log.debug('convert customer started...');
+        $log.debug($rootScope.sessionId);
         var deferred = $q.defer();
         $http(req).then(function (res) {
             $log.debug(res);

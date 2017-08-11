@@ -25,29 +25,51 @@
         </div>
         <div class="col-md-4">
             <div class="form-group has-feedback"
-                 ng-class="{ 'has-error' : (vm.form.mobileNo.$dirty && vm.form.mobileNo.$invalid), 'has-success' : (vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid) }">
-                <label for="mobileNo">Mobile Number <span class="text-danger">*</span></label>
-                <div class="input-group">
-                    <div class="input-group-addon">{{vm.dialCode}}</div>
-                    <input type="text" class="form-control" id="mobileNo" placeholder="Mobile Number" aria-describedby="mobileNoHelpBlock"
-                           name="mobileNo" ng-model="vm.mobileNo"
-                           required ng-minlength="9" ng-maxlength="15" input-mask="'mask'" mask-option="{'mask':'999999999999999'}" input-mask-number>
-                </div>
+                 ng-class="{ 'has-error' : (vm.form.password.$dirty && vm.form.password.$invalid), 'has-success' : (vm.form.password.$dirty && vm.form.password.$valid) }">
+                <label for="password">Password <span class="text-danger">*</span></label>
+                <input type="password" class="form-control" id="password" placeholder="password" aria-describedby="passwordHelpBlock"
+                       name="password" ng-model="vm.password" autofocus="true" required
+                       ng-minlength="5" ng-maxlength="15">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
-                  ng-if="vm.form.mobileNo.$dirty && vm.form.mobileNo.$invalid"></span>
+                      ng-if="vm.form.password.$dirty && vm.form.password.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
-                  ng-if="vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid"></span>
-                <div id="mobileNoHelpBlock" class="help-inline" ng-messages="vm.form.mobileNo.$error" ng-if="vm.form.mobileNo.$dirty">
+                      ng-if="vm.form.password.$dirty && vm.form.password.$valid"></span>
+                <div id="passwordHelpBlock" class="help-inline" ng-messages="vm.form.password.$error" ng-if="vm.form.password.$dirty">
                     <span ng-message="required">This is required.</span>
-                    <span ng-message="minlength, maxlength">This should be minimum 9 digits</span>
+                    <span ng-message="available">This is not available</span>
+                    <span ng-message="minlength, maxlength">This should be minimum 5 char</span>
                 </div>
                 <!--
-                <span ng-show="vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid" class="help-line text-warning">
-                    It must be valid number to receive activation info
+                <span ng-show="vm.form.emailId.$dirty && vm.form.emailId.$valid" class="help-line text-warning">
+                    It must be valid email to receive activation info
                 </span>
                 -->
             </div>
         </div>
+        <div class="col-md-4">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.confirmPassword.$dirty && vm.form.confirmPassword.$invalid) && (vm.password !== vm.confirmPassword), 'has-success' : (vm.form.confirmPassword.$dirty && vm.form.confirmPassword.$valid && (vm.password == vm.confirmPassword)) }">
+                <label for="confirmPassword">Confirm Password <span class="text-danger">*</span></label>
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password" aria-describedby="confirmPasswordHelpBlock"
+                       name="confirmPassword" ng-model="vm.confirmPassword" autofocus="true" required>
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="(vm.form.confirmPassword.$dirty && vm.form.confirmPassword.$invalid && (vm.password !== vm.confirmPassword))"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.confirmPassword.$dirty && vm.form.confirmPassword.$valid && (vm.password == vm.confirmPassword)"></span>
+                <div id="confirmPasswordHelpBlock" class="help-inline" ng-messages="vm.form.confirmPassword.$error &&(vm.password !== vm.confirmPassword)" ng-if="vm.form.confirmPassword.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="available">This is not available</span>
+                    <span ng-if="vm.password !== vm.confirmPassword">Password mismatch</span>
+                </div>
+                <!--
+                <span ng-show="vm.form.emailId.$dirty && vm.form.emailId.$valid" class="help-line text-warning">
+                    It must be valid email to receive activation info
+                </span>
+                -->
+            </div>
+        </div>
+   </div>
+    <div class="row">
         <div class="col-md-4">
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.name.$dirty && vm.form.name.$invalid), 'has-success' : (vm.form.name.$dirty && vm.form.name.$valid) }">
@@ -65,6 +87,48 @@
                     <span ng-message="pattern">This should contains alphabets only</span>
                     <span ng-message="minlength, maxlength">This should have minimum 3 and maximum 30 characters long</span>
                 </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group has-feedback">
+                <div class="form-group has-feedback"
+                     ng-class="{ 'has-error' : (vm.form.nationality.$dirty && vm.form.nationality.$invalid), 'has-success' : (vm.form.nationality.$dirty && vm.form.nationality.$valid) }">
+                    <label for="nationality">Nationality <span class="text-danger">*</span></label>
+                    <select id="nationality" name="nationality" aria-describedby="nationalityHelpBlock" placeholder="Choose Nationality"
+                            selector options="vm.countries" label-attr="nationality" closeAfterSelection="true"
+                            model="vm.nationality" change="vm.onNationalityChangeX(oldValue, newValue)" require="true" >
+                    </select>
+                    <div id="nationalityHelpBlock" class="help-inline" ng-messages="vm.form.nationality.$error" ng-if="vm.form.nationality.$dirty">
+                        <span ng-message="required">This is required.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.mobileNo.$dirty && vm.form.mobileNo.$invalid), 'has-success' : (vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid) }">
+                <label for="mobileNo">Mobile Number <span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <div class="input-group-addon">{{vm.dialCode}}</div>
+                    <input type="text" class="form-control" id="mobileNo" placeholder="Mobile Number" aria-describedby="mobileNoHelpBlock"
+                           name="mobileNo" ng-model="vm.mobileNo"
+                           required ng-minlength="9" ng-maxlength="15" input-mask="'mask'" mask-option="{'mask':'9999999999'}" input-mask-number>
+                </div>
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.mobileNo.$dirty && vm.form.mobileNo.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid"></span>
+                <div id="mobileNoHelpBlock" class="help-inline" ng-messages="vm.form.mobileNo.$error" ng-if="vm.form.mobileNo.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="minlength, maxlength">This should be minimum 9 digits</span>
+                </div>
+                <!--
+                <span ng-show="vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid" class="help-line text-warning">
+                    It must be valid number to receive activation info
+                </span>
+                -->
             </div>
         </div>
     </div>
@@ -204,36 +268,6 @@
             </div>
 
         </div>
-        <div class="col-md-4">
-            <!--
-            <div class="form-group has-feedback">
-                <div class="form-group has-feedback"
-                     ng-class="{ 'has-error' : (vm.form.nationality.$dirty && vm.form.nationality.$invalid), 'has-success' : (vm.form.nationality.$dirty && vm.form.nationality.$valid) }">
-                    <label for="nationality">Nationality <span class="text-danger">*</span></label>
-                    <select class="form-control" id="nationality" aria-describedby="nationalityHelpBlock"
-                            ng-options="item as item.nationality for item in vm.countries"
-                            name="nationality" ng-model="vm.nationality" ng-change="vm.onNationalityChange()">
-                    </select>
-                    <div id="nationalityHelpBlock" class="help-inline" ng-messages="vm.form.nationality.$error" ng-if="vm.form.nationality.$dirty">
-                        <span ng-message="required">This is required.</span>
-                    </div>
-                </div>
-            </div>
-            -->
-            <div class="form-group has-feedback">
-                <div class="form-group has-feedback"
-                     ng-class="{ 'has-error' : (vm.form.nationality.$dirty && vm.form.nationality.$invalid), 'has-success' : (vm.form.nationality.$dirty && vm.form.nationality.$valid) }">
-                    <label for="nationality">Nationality <span class="text-danger">*</span></label>
-                    <select id="nationality" name="nationality" aria-describedby="nationalityHelpBlock" placeholder="Choose Nationality"
-                            selector options="vm.countries" label-attr="nationality" closeAfterSelection="true"
-                            model="vm.nationality" change="vm.onNationalityChangeX(oldValue, newValue)" require="true" >
-                    </select>
-                    <div id="nationalityHelpBlock" class="help-inline" ng-messages="vm.form.nationality.$error" ng-if="vm.form.nationality.$dirty">
-                        <span ng-message="required">This is required.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="col-md-4" ng-show="vm.accountType != 'personal'">
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.companyName.$dirty && vm.form.companyName.$invalid), 'has-success' : (vm.form.companyName.$dirty && vm.form.companyName.$valid) }">
@@ -253,9 +287,7 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row" ng-show="vm.accountType != 'personal'">
-        <div class="col-md-4">
+        <div class="col-md-4" ng-show="vm.accountType != 'personal'">
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.nameOfBusiness.$dirty && vm.form.nameOfBusiness.$invalid), 'has-success' : (vm.form.nameOfBusiness.$dirty && vm.form.nameOfBusiness.$valid) }">
                 <label for="nameOfBusiness" class="control-label">Name Of Business <span class="text-danger">*</span></label>
@@ -273,6 +305,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row" ng-show="vm.accountType != 'personal'">
         <div class="col-md-4">
             <div class="form-group has-feedback">
                 <div class="form-group has-feedback"

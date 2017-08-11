@@ -93,12 +93,6 @@ function appConfig($routeProvider, $locationProvider) {
         resolve: approveController.resolve
     });
 
-    $routeProvider.when('/convertCustomer', {
-        templateUrl: 'app/views/convertCustomer.html',
-        controller: 'convertCustomerController as vm',
-        resolve: approveController.resolve
-    });
-
     $routeProvider.when('/not-found', {
         template: '<p>Not Found</p>'
     });
