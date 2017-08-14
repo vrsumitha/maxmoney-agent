@@ -482,13 +482,39 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
     };
 
     service.convertCustomer = function (params) {
-        var path = apiBasePath + '/customers/' + params.id + '/convert-by-agent';
         $log.debug('convert customer service started...');
         var reqData = {'password': params.password};
+        var path = apiBasePath + '/customers/' + params.id + '/convert-by-agent';
         var req = {
             method: 'POST',
             url: path,
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            params: reqData,
+            headers: {'api-key': $rootScope.sessionId}
+        };
+        //$log.info(req);
+        $log.debug('convert customer started...');
+        $log.debug($rootScope.sessionId);
+        var deferred = $q.defer();
+        $http(req).then(function (res) {
+            $log.debug(res);
+            deferred.resolve(res.data);
+            $log.debug('convert customer finished with success.');
+        }, function (res) {
+            $log.error(res);
+            deferred.reject(res.data);
+            $log.debug('convert customer finished with failure.');
+        });
+        return deferred.promise;
+    };
+
+    service.convertCustomerX = function (params) {
+        $log.debug('convert customer service started...');
+        var reqData = {'password': params.password};
+        var path = apiBasePath + '/customers/' + params.id + '/convert-by-agent';
+        var req = {
+            method: 'POST',
+            url: path,
+            headers: {'api-key': $rootScope.sessionId, 'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function (obj) {
                 var str = [];
                 for (var p in obj) {
@@ -496,8 +522,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
                 }
                 return str.join("&");
             },
-            data: reqData,
-            headers: {'api-key': $rootScope.sessionId}
+            data: reqData
         };
         //$log.info(req);
         $log.debug('convert customer started...');

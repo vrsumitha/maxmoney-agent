@@ -685,7 +685,6 @@ approveController.resolve = {
 appControllers.controller('approveController', approveController);
 
 
-
 function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService, $uibModalInstance, model, country) {
     var cmpId = 'beneficiaryAddOrEditController', cmpName = 'Add/Edit Beneficiary';
     $log.info(cmpId + ' started ...');
