@@ -484,10 +484,19 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
     service.convertCustomer = function (params) {
         var path = apiBasePath + '/customers/' + params.id + '/convert-by-agent';
         $log.debug('convert customer service started...');
+        var reqData = {'password': params.password};
         var req = {
             method: 'POST',
             url: path,
-            params: params,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function (obj) {
+                var str = [];
+                for (var p in obj) {
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                }
+                return str.join("&");
+            },
+            data: reqData,
             headers: {'api-key': $rootScope.sessionId}
         };
         //$log.info(req);

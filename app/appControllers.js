@@ -305,13 +305,10 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
             reqCus.beneficiaryId = vm.beneficiary.id;
         }
         $log.info(reqCus);
-        $log.info(vm.password +' ' + vm.confirmPassword);
-        $rootScope.password = vm.confirmPassword;
-        $log.info($rootScope.password);
-
         sessionService.signUp(reqCus).then(function (res) {
             $log.info(res);
             sessionService.currentCustomer = res.data;
+            sessionService.currentCustomerPwd = vm.confirmPassword;
             storageService.saveCustomer(res.data);
             wydNotifyService.showSuccess('Successfully signed up...');
             $location.path('/cdd');
@@ -638,8 +635,8 @@ function approveController($log, $rootScope, $scope, _session, wydNotifyService,
 
     function convertCustomer() {
         $log.info('convert customer started...');
-        $log.info(vm.customer.idNo , ' ', $rootScope.password);
-        var params = {id: vm.customer.idNo, password : $rootScope.password};
+       // var params = {id: vm.customer.idNo, password: sessionService.currentCustomerPwd};
+        var params = {id: vm.customer.idNo, password: '123456'};
         sessionService.convertCustomer(params).then(function (res) {
             $log.debug(res);
             wydNotifyService.showError('Successfully converted...');
