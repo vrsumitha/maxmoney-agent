@@ -122,6 +122,7 @@
                       ng-if="vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid"></span>
                 <div id="mobileNoHelpBlock" class="help-inline" ng-messages="vm.form.mobileNo.$error" ng-if="vm.form.mobileNo.$dirty">
                     <span ng-message="required">This is required.</span>
+                    <span ng-message="number">This should be minimum 9 digits</span>
                     <span ng-message="minlength, maxlength">This should be minimum 9 digits</span>
                 </div>
                 <!--

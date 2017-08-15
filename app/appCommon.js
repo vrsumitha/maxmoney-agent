@@ -61,7 +61,8 @@ appDirectives.directive('inputPhoneNumber', function ($parse) {
                 if (modelCtrl.$isEmpty(modelValue)) {
                     return true;
                 }
-                if (viewValue.length > 8 && viewValue.indexOf('_') == -1) {
+                var val = viewValue.replace(new RegExp('_', 'g'), ' ').trim();
+                if (val.length > 8) {
                     return true;
                 }
                 return false;
