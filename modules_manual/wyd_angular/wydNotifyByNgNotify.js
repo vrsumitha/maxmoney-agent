@@ -51,7 +51,11 @@ appServices.factory('wydNotifyService', function ($log, $timeout, ngNotify) {
         },
 
         hide: function () {
-            ngNotify.dismiss();
+            try {
+                ngNotify.dismiss();
+            } catch(err) {
+
+            }
         }
     };
 });

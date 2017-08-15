@@ -21,8 +21,8 @@
             &nbsp;
         </div>
     </div>
-    <div class="row" ng-if="vm.customer.idType == 'Passport'">
-        <div class="col-md-4">
+    <div class="row">
+        <div class="col-md-4" ng-if="vm.customer.idType == 'Passport'">
             <div><img ng-show="vm.form.passportFront.$valid" ngf-thumbnail="vm.passportFront" class="img-thumbnail" style="width: 250px; height: 200px"></div>
             <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.passportFront.$dirty && vm.form.passportFront.$invalid), 'has-success' : (vm.form.passportFront.$dirty && vm.form.passportFront.$valid) }">
                 <label for="passportFront" class="control-label">Passport Front <span class="text-danger">*</span></label>
@@ -43,7 +43,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+
+        <div class="col-md-4" ng-if="vm.customer.idType == 'Passport'">
             <div><img ng-show="vm.form.passportBack.$valid" ngf-thumbnail="vm.passportBack" class="img-thumbnail" style="width: 250px; height: 200px"></div>
             <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.passportBack.$dirty && vm.form.passportBack.$invalid), 'has-success' : (vm.form.passportBack.$dirty && vm.form.passportBack.$valid) }">
                 <label for="passportBack" class="control-label">Passport Back <span class="text-danger">*</span></label>
@@ -64,18 +65,9 @@
                 </div>
             </div>
         </div>
-        <!--
-        <div class="col-md-4">
-            <div><img ng-src="{{vm.passportFrontImage}}" class="img-thumbnail"></div>
-        </div>
-        <div class="col-md-4">
-            &nbsp;
-        </div>
-        -->
-    </div>
 
-    <div class="row" ng-if="vm.customer.idType == 'NRIC'">
-        <div class="col-md-4">
+  <!--  <div class="row" ng-if="vm.customer.idType == 'NRIC'"> -->
+        <div class="col-md-4" ng-if="vm.customer.idType == 'NRIC'">
             <div><img ng-show="vm.form.nricFront.$valid" ngf-thumbnail="vm.nricFront" class="img-thumbnail" style="width: 250px; height: 200px"></div>
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.nricFront.$dirty && vm.form.nricFront.$invalid), 'has-success' : (vm.form.nricFront.$dirty && vm.form.nricFront.$valid) }">
@@ -97,7 +89,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+
+        <div class="col-md-4" ng-if="vm.customer.idType == 'NRIC'">
             <!--  <div><img ng-src="{{vm.nricFrontImage}}" class="img-thumbnail"></div> -->
             <div><img ng-show="vm.form.nricBack.$valid" ngf-thumbnail="vm.nricBack" class="img-thumbnail" style="width: 250px; height: 200px"></div>
             <div class="form-group has-feedback"
@@ -117,6 +110,28 @@
                 <div class="progress" ng-show="vm.nricBack.progress >= 0">
                     <div class="progress-bar progress-bar-info progress-bar-striped"
                          style="width:{{vm.nricBack.progress}}%" ng-bind="vm.nricBack.progress + '%'"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div><img ng-show="vm.form.signature.$valid" ngf-thumbnail="vm.signature" class="img-thumbnail" style="width: 250px; height: 200px"></div>
+            <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.signature.$dirty && vm.form.signature.$invalid), 'has-success' : (vm.form.signature.$dirty && vm.form.signature.$valid) }">
+                <label for="signature" class="control-label">Signature <span class="text-danger">*</span></label>
+                <input type="file" class="form-control" id="signature" placeholder="" aria-describedby="signatureHelpBlock"
+                       name="signature" ng-model="vm.signature" accept="image/*" ngf-select
+                       ngf-max-size="1MB" ngf-model-invalid="vm.signatureError">
+                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                          ng-if="vm.form.signature.$dirty && vm.form.signature.$invalid"></span>
+                    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                          ng-if="vm.form.signature.$dirty && vm.form.signature.$valid"></span>
+                <div id="signatureHelpBlock" class="help-inline" ng-if="vm.form.signature.$dirty">
+                    <span ng-show="vm.form.signature.$error.required">This is required.</span>
+                    <span ng-show="vm.form.signature.$error.maxSize">File too large {{vm.signatureError.size / 1000000 | number:1}}MB: max 1MB</span>
+                </div>
+                <div class="progress" ng-show="vm.signature.progress >= 0">
+                    <div class="progress-bar progress-bar-info progress-bar-striped"
+                         style="width:{{vm.signature.progress}}%" ng-bind="vm.signature.progress + '%'"></div>
                 </div>
             </div>
         </div>

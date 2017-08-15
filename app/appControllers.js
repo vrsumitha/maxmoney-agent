@@ -217,6 +217,8 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
     function save() {
         $log.info('saving started...');
 
+        wydNotifyService.hide();
+
         if (vm.form.$pristine) {
             wydNotifyService.showError('There is no change. Hence, nothing to save.');
             return;
@@ -235,6 +237,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         reqCus.email = value;
 
         value = vm.mobileNo;
+        value = value.replace(new RegExp('_', 'g'), ' ').trim();
         reqCus.mobile = '+60' + value;
 
         if (vm.idType == 'nric') {
@@ -314,6 +317,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
             $log.info(res);
             sessionService.currentCustomer = res.data;
             sessionService.currentCustomerPwd = vm.confirmPassword;
+            res.data.password = vm.confirmPassword;
             storageService.saveCustomer(res.data);
             wydNotifyService.showSuccess('Successfully signed up...');
             $location.path('/cdd');
@@ -401,6 +405,8 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
     function save() {
         $log.info('saving started...');
 
+        wydNotifyService.hide();
+
         var path = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
         var reqData = {'idType': vm.customer.idType};
         if (vm.customer.idType == 'Passport') {
@@ -416,7 +422,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
             }
         }
         if (vm.customer.idType == 'NRIC') {
-            if (!vm.nricFront && !vm.nricFront) {
+            if (!vm.nricFront && !vm.nricBack) {
                 wydNotifyService.showWarning('There is nothing to update...');
                 return;
             }
@@ -427,6 +433,10 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
                 reqData['back'] = vm.nricBack;
             }
         }
+        if (vm.signature) {
+            reqData['signature'] = vm.signature;
+        }
+
         $log.info(reqData);
         Upload.upload({
             url: path,
@@ -443,7 +453,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
             $log.error('Error Status: ' + res.status);
             wydNotifyService.showError('Update failed. ' + res.description);
         }, function (evt) {
-            $log.debug(evt);
+            $log.info(evt);
             var pp = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
             if (vm.customer.idType == 'Passport') {
                 vm.passportFront.progress = pp;
@@ -453,6 +463,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
                 vm.nricFront.progress = pp;
                 vm.nricBack.progress = pp;
             }
+            vm.signature.progress = pp;
             $log.info('Progress: ' + pp + '% ');
         });
 
@@ -619,11 +630,22 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
                 vm.customer.imageBackUrl = imgUrl;
                 console.log(vm.customer.imageBackUrl);
             }
+            if (vm.customer.images.Signature) {
+                var imgUrl = sessionService.getApiBasePath() + '/customers/';
+                imgUrl += vm.customer.idNo + '/images/';
+                imgUrl += vm.customer.images.Signature;
+                imgUrl += '?api-key=' + $rootScope.sessionId;
+                vm.customer.imageSignatureUrl = imgUrl;
+                console.log(vm.customer.imageSignatureUrl);
+            }
         });
     }
 
     function validateCustomer() {
         $log.info('validate customer started...');
+
+        wydNotifyService.hide();
+
         var params = {url: 'https://www.maxmoney.com/agent/validate', status: 'Validated'};
         sessionService.validateCustomer(vm.customer.idNo, params).then(function (res) {
             $log.debug(res);
@@ -639,7 +661,8 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
 
     function convertCustomer() {
         $log.info('convert customer started...');
-        var params = {id: vm.customer.idNo, password: sessionService.currentCustomerPwd};
+
+        var params = {id: vm.customer.idNo, password: vm.customer.password};
         //var params = {id: vm.customer.idNo, password: '123456'};
         sessionService.convertCustomer(params).then(function (res) {
             $log.debug(res);
@@ -808,6 +831,8 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
     }
 
     function save() {
+        //wydNotifyService.hide();
+
         var reqBen = {}, reqBnk = {}, flag = false;
 
         var value = vm.model.name;
@@ -822,6 +847,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
         reqBen.country = value.country;
 
         value = vm.model.dialingNumber;
+        value = value.replace(new RegExp('_', 'g'), ' ').trim();
         value = vm.model.dialingCode + value;
         reqBen.mobile = value;
 
