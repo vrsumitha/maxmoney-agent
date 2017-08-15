@@ -114,7 +114,7 @@
                     <div class="input-group-addon">{{vm.dialCode}}</div>
                     <input type="text" class="form-control" id="mobileNo" placeholder="Mobile Number" aria-describedby="mobileNoHelpBlock"
                            name="mobileNo" ng-model="vm.mobileNo"
-                           required ng-minlength="9" ng-maxlength="15" input-mask="'mask'" mask-option="{'mask':'9999999999'}" input-mask-number>
+                           required ng-minlength="9" xng-maxlength="15" input-mask="'mask'" mask-option="{'mask':'999999999999999'}" input-phone-number>
                 </div>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.mobileNo.$dirty && vm.form.mobileNo.$invalid"></span>
@@ -241,7 +241,6 @@
                 </div>
             </div>
             -->
-
             <!-- type3 -->
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.dob.$dirty && vm.form.dob.$invalid), 'has-success' : (vm.form.dob.$dirty && vm.form.dob.$valid) }">
@@ -265,7 +264,6 @@
                     <span ng-message="max">This should be after {{vm.dobMin}}</span>
                 </div>
             </div>
-
         </div>
         <div class="col-md-4" ng-show="vm.accountType != 'personal'">
             <div class="form-group has-feedback"

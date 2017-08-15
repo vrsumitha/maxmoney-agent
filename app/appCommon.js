@@ -52,6 +52,24 @@ appDirectives.directive('inputMaskNumber', function ($parse) {
     };
 });
 
+appDirectives.directive('inputPhoneNumber', function ($parse) {
+    return {
+        require: 'ngModel',
+        link: function (scope, element, attrs, modelCtrl) {
+            modelCtrl.$validators.number = function (modelValue, viewValue) {
+                //console.log('mv : ' + modelValue + ' vv : ' +viewValue);
+                if (modelCtrl.$isEmpty(modelValue)) {
+                    return true;
+                }
+                if (viewValue.length > 8 && viewValue.indexOf('_') == -1) {
+                    return true;
+                }
+                return false;
+            };
+        }
+    };
+});
+
 appDirectives.directive('inputMaskDate', function ($parse) {
     return {
         require: 'ngModel',
