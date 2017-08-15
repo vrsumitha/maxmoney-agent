@@ -218,7 +218,11 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         $log.info('saving started...');
 
         if (vm.form.$pristine) {
-            alertify.alert('There is no change. Hence, nothing to save.');
+            wydNotifyService.showError('There is no change. Hence, nothing to save.');
+            return;
+        }
+        if(vm.password != vm.confirmPassword) {
+            wydNotifyService.showError('Password and Confirm password not matched');
             return;
         }
 
