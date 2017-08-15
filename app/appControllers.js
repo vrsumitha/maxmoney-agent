@@ -31,7 +31,7 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
 
                 $location.path('/sign-up');
             });
-        }, function(res) {
+        }, function (res) {
             console.log(res);
             wydNotifyService.showError(res.message);
         });
@@ -76,15 +76,16 @@ function signOutController($log, $rootScope, $scope, sessionService, $location) 
         $rootScope.sessionId = null;
     }
 
-    sessionService.signOut().then(function(res){
+    sessionService.signOut().then(function (res) {
         onSignOut();
         $location.path('/sign-in');
-    }, function(res){
+    }, function (res) {
         onSignOut();
         $location.path('/sign-in');
     });
 
-}signOutController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$location'];
+}
+signOutController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$location'];
 appControllers.controller('signOutController', signOutController);
 
 function signUpController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $uibModal, $location) {
@@ -153,7 +154,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
     }
 
     function onDobChange() {
-        if(vm.dob) {
+        if (vm.dob) {
             vm.dobx = moment(vm.dob, 'DDMMYYYY');
             validateDob();
         }
@@ -162,7 +163,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
     function onDobChangeX(nv, ov) {
         //console.log(ov);
         //console.log(nv);
-        if(nv) {
+        if (nv) {
             vm.dob = nv.format('DDMMYYYY');
             validateDob();
         }
@@ -173,10 +174,10 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
     }
 
     function onNationalityChangeX(ov, nv) {
-        if(nv) {
+        if (nv) {
             vm.dialCode = nv.dial_code;
             vm.form.nationality.$setValidity('required', false);
-           // $log.info('ov value is : ', ov);
+            // $log.info('ov value is : ', ov);
         } else {
             vm.dialCode = '-';
             vm.form.nationality.$setValidity('required', true);
@@ -184,7 +185,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
     }
 
     function onStateChangeX(ov, nv) {
-        if(nv) {
+        if (nv) {
             vm.form.state.$setValidity('required', false);
         } else {
             vm.form.state.$setValidity('required', true);
@@ -387,7 +388,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
     var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
 
     function onCustomerChange() {
-        sessionService.getCustomer(vm.customer.idNo).then(function(res) {
+        sessionService.getCustomer(vm.customer.idNo).then(function (res) {
             _.assign(vm.customer, res);
             $log.info(vm.customer);
         });
@@ -399,26 +400,26 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
         var path = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
         var reqData = {'idType': vm.customer.idType};
         if (vm.customer.idType == 'Passport') {
-            if(!vm.passportFront && !vm.passportBack) {
+            if (!vm.passportFront && !vm.passportBack) {
                 wydNotifyService.showWarning('There is nothing to update...');
                 return;
             }
-            if(vm.passportFront) {
+            if (vm.passportFront) {
                 reqData['front'] = vm.passportFront;
             }
-            if(vm.passportBack) {
+            if (vm.passportBack) {
                 reqData['back'] = vm.passportBack;
             }
         }
         if (vm.customer.idType == 'NRIC') {
-            if(!vm.nricFront && !vm.nricFront) {
+            if (!vm.nricFront && !vm.nricFront) {
                 wydNotifyService.showWarning('There is nothing to update...');
                 return;
             }
-            if(vm.nricFront) {
+            if (vm.nricFront) {
                 reqData['front'] = vm.nricFront;
             }
-            if(vm.nricBack) {
+            if (vm.nricBack) {
                 reqData['back'] = vm.nricBack;
             }
         }
@@ -436,6 +437,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
         }, function (res) {
             $log.debug(res);
             $log.error('Error Status: ' + res.status);
+            wydNotifyService.showError('Update failed. ' + res.description);
         }, function (evt) {
             $log.debug(evt);
             var pp = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
@@ -486,7 +488,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
 
         sessionService.approve(vm.customer.idNo).then(function (res) {
             $log.debug(res);
-            wydNotifyService.showError('Successfully approved...');
+            wydNotifyService.showSuccess('Successfully approved...');
             $location.path('/approve');
         }, function (res) {
             $log.debug(res);
@@ -585,8 +587,8 @@ cddController.resolve = {
 };
 appControllers.controller('cddController', cddController);
 
-function approveController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $http, $location) {
-    var cmpId = 'approveController', cmpName = 'Validate Customer';
+function convertController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $http, $location) {
+    var cmpId = 'convertController', cmpName = 'Convert Customer';
     $log.info(cmpId + ' started ...');
 
     $rootScope.viewName = cmpName;
@@ -594,10 +596,10 @@ function approveController($log, $rootScope, $scope, _session, wydNotifyService,
     var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
 
     function onCustomerChange() {
-        sessionService.getCustomer(vm.customer.idNo).then(function(res) {
+        sessionService.getCustomer(vm.customer.idNo).then(function (res) {
             _.assign(vm.customer, res);
             $log.info(vm.customer);
-            if(vm.customer.images.Front) {
+            if (vm.customer.images.Front) {
                 var imgUrl = sessionService.getApiBasePath() + '/customers/';
                 imgUrl += vm.customer.idNo + '/images/';
                 imgUrl += vm.customer.images.Front;
@@ -605,7 +607,7 @@ function approveController($log, $rootScope, $scope, _session, wydNotifyService,
                 vm.customer.imageFrontUrl = imgUrl;
                 console.log(vm.customer.imageFrontUrl);
             }
-            if(vm.customer.images.Back) {
+            if (vm.customer.images.Back) {
                 var imgUrl = sessionService.getApiBasePath() + '/customers/';
                 imgUrl += vm.customer.idNo + '/images/';
                 imgUrl += vm.customer.images.Back;
@@ -618,16 +620,14 @@ function approveController($log, $rootScope, $scope, _session, wydNotifyService,
 
     function validateCustomer() {
         $log.info('validate customer started...');
-        $log.info(vm.customer.idNo);
-        var params = {url : 'http://www.maxmoney.com/abcde/uuu', status : 'Validated'};
+        var params = {url: 'https://www.maxmoney.com/agent/validate', status: 'Validated'};
         sessionService.validateCustomer(vm.customer.idNo, params).then(function (res) {
             $log.debug(res);
-            wydNotifyService.showError('Successfully validated...');
-           // convertCustomer();
+            wydNotifyService.showSuccess('Successfully validated...');
+            // convertCustomer();
         }, function (res) {
             $log.debug(res.value);
             wydNotifyService.showError('Validation failed. ' + res.description);
-            //$location.path('/convertCustomer');
         });
 
         $log.info('validate customer finished...');
@@ -635,11 +635,11 @@ function approveController($log, $rootScope, $scope, _session, wydNotifyService,
 
     function convertCustomer() {
         $log.info('convert customer started...');
-       // var params = {id: vm.customer.idNo, password: sessionService.currentCustomerPwd};
-        var params = {id: vm.customer.idNo, password: '123456'};
+        var params = {id: vm.customer.idNo, password: sessionService.currentCustomerPwd};
+        //var params = {id: vm.customer.idNo, password: '123456'};
         sessionService.convertCustomer(params).then(function (res) {
             $log.debug(res);
-            wydNotifyService.showError('Successfully converted...');
+            wydNotifyService.showSuccess('Successfully converted...');
         }, function (res) {
             $log.debug(res);
             wydNotifyService.showError('Conversion failed. ' + res.description);
@@ -667,7 +667,6 @@ function approveController($log, $rootScope, $scope, _session, wydNotifyService,
         onCustomerChange: onCustomerChange,
         validateCustomer: validateCustomer,
         convertCustomer: convertCustomer
-
     });
 
     init();
@@ -682,7 +681,7 @@ approveController.resolve = {
         //return sessionService.getCurrentSession();
     }]
 };
-appControllers.controller('approveController', approveController);
+appControllers.controller('convertController', convertController);
 
 
 function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService, $uibModalInstance, model, country) {
@@ -779,7 +778,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
     }
 
     function onPayoutAgentChangeX(ov, nv) {
-        if(nv) {
+        if (nv) {
             vm.model.bankAccount.payoutAgent.$setValidity('required', false);
             //vm.form.bankName.$setValidity('required', false);
         } else {

@@ -540,7 +540,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
-    service.switchOffAutoComplete = function() {
+    service.switchOffAutoComplete = function () {
         if (document.getElementsByTagName) {
             var inputElements = document.getElementsByTagName('input');
             for (i = 0; inputElements[i]; i++) {
