@@ -36,7 +36,7 @@
                         <label for="name">Full Name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="name" placeholder="Full Name" aria-describedby="nameHelpBlock"
                                name="name" ng-model="vm.model.name" autofocus="true"
-                               required ng-minlength="5" ng-maxlength="30" ng-pattern="/^[a-zA-Z\s]*$/">
+                               required ng-minlength="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z\s]*$/">
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                                ng-if="vm.form.name.$dirty && vm.form.name.$invalid"></span>
                         <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -45,7 +45,7 @@
                              ng-if="vm.form.name.$dirty">
                             <span ng-message="required">This is required.</span>
                             <span ng-message="pattern">This should contains alphabets only</span>
-                            <span ng-message="minlength, maxlength">This should be between 5 and 30 characters long</span>
+                            <span ng-message="minlength, maxlength">This should be between 3 and 30 characters long</span>
                         </div>
                     </div>
                 </div>

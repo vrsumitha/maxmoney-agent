@@ -141,7 +141,7 @@
                 <select class="form-control" id="accountType" aria-describedby="accountTypeHelpBlock"
                         name="accountType" ng-model="vm.accountType" ng-change="vm.onAccountTypeChange()">
                     <option value="personal" >Personal</option>
-                    <option value="business">Business</option>
+                    <option value="business" hidden>Business</option>
                 </select>
                 <div id="accountTypeHelpBlock" class="help-inline" ng-messages="vm.form.accountType.$error"
                      ng-if="vm.form.accountType.$dirty">

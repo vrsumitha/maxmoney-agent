@@ -489,7 +489,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
         sessionService.approve(vm.customer.idNo).then(function (res) {
             $log.debug(res);
             wydNotifyService.showSuccess('Successfully approved...');
-            $location.path('/approve');
+            $location.path('/convert');
         }, function (res) {
             $log.debug(res);
             wydNotifyService.showError('Approve failed. ' + res.description);
@@ -624,7 +624,7 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
         sessionService.validateCustomer(vm.customer.idNo, params).then(function (res) {
             $log.debug(res);
             wydNotifyService.showSuccess('Successfully validated...');
-            // convertCustomer();
+            convertCustomer();
         }, function (res) {
             $log.debug(res.value);
             wydNotifyService.showError('Validation failed. ' + res.description);
@@ -673,8 +673,8 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
 
     $log.info(cmpId + 'finished...');
 }
-approveController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$http', '$location'];
-approveController.resolve = {
+convertController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$http', '$location'];
+convertController.resolve = {
     '_session': ['sessionService', function (sessionService) {
         //sessionService.switchOffAutoComplete();
         return '-:coming_soon:-';
@@ -682,7 +682,6 @@ approveController.resolve = {
     }]
 };
 appControllers.controller('convertController', convertController);
-
 
 function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService, $uibModalInstance, model, country) {
     var cmpId = 'beneficiaryAddOrEditController', cmpName = 'Add/Edit Beneficiary';
