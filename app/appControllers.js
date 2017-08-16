@@ -675,6 +675,7 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
         sessionService.convertCustomer(params).then(function (res) {
             $log.debug(res);
             wydNotifyService.showSuccess('Successfully converted...');
+            $location.path('/sign-up');
         }, function (res) {
             $log.debug(res);
             wydNotifyService.showError('Conversion failed. ' + res.description);
