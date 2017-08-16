@@ -316,7 +316,6 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         sessionService.signUp(reqCus).then(function (res) {
             $log.info(res);
             sessionService.currentCustomer = res.data;
-            sessionService.currentCustomerPwd = vm.confirmPassword;
             res.data.password = vm.confirmPassword;
             storageService.saveCustomer(res.data);
             wydNotifyService.showSuccess('Successfully signed up...');
@@ -614,31 +613,35 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
         sessionService.getCustomer(vm.customer.idNo).then(function (res) {
             _.assign(vm.customer, res);
             $log.info(vm.customer);
-            if (vm.customer.images.Front) {
-                var imgUrl = sessionService.getApiBasePath() + '/customers/';
-                imgUrl += vm.customer.idNo + '/images/';
-                imgUrl += vm.customer.images.Front;
-                imgUrl += '?api-key=' + $rootScope.sessionId;
-                vm.customer.imageFrontUrl = imgUrl;
-                console.log(vm.customer.imageFrontUrl);
-            }
-            if (vm.customer.images.Back) {
-                var imgUrl = sessionService.getApiBasePath() + '/customers/';
-                imgUrl += vm.customer.idNo + '/images/';
-                imgUrl += vm.customer.images.Back;
-                imgUrl += '?api-key=' + $rootScope.sessionId;
-                vm.customer.imageBackUrl = imgUrl;
-                console.log(vm.customer.imageBackUrl);
-            }
-            if (vm.customer.images.Signature) {
-                var imgUrl = sessionService.getApiBasePath() + '/customers/';
-                imgUrl += vm.customer.idNo + '/images/';
-                imgUrl += vm.customer.images.Signature;
-                imgUrl += '?api-key=' + $rootScope.sessionId;
-                vm.customer.imageSignatureUrl = imgUrl;
-                console.log(vm.customer.imageSignatureUrl);
-            }
+            computeImageUrls();
         });
+    }
+
+    function computeImageUrls() {
+        if (vm.customer.images.Front) {
+            var imgUrl = sessionService.getApiBasePath() + '/customers/';
+            imgUrl += vm.customer.idNo + '/images/';
+            imgUrl += vm.customer.images.Front;
+            imgUrl += '?api-key=' + $rootScope.sessionId;
+            vm.customer.imageFrontUrl = imgUrl;
+            console.log(vm.customer.imageFrontUrl);
+        }
+        if (vm.customer.images.Back) {
+            var imgUrl = sessionService.getApiBasePath() + '/customers/';
+            imgUrl += vm.customer.idNo + '/images/';
+            imgUrl += vm.customer.images.Back;
+            imgUrl += '?api-key=' + $rootScope.sessionId;
+            vm.customer.imageBackUrl = imgUrl;
+            console.log(vm.customer.imageBackUrl);
+        }
+        if (vm.customer.images.Signature) {
+            var imgUrl = sessionService.getApiBasePath() + '/customers/';
+            imgUrl += vm.customer.idNo + '/images/';
+            imgUrl += vm.customer.images.Signature;
+            imgUrl += '?api-key=' + $rootScope.sessionId;
+            vm.customer.imageSignatureUrl = imgUrl;
+            console.log(vm.customer.imageSignatureUrl);
+        }
     }
 
     function validateCustomer() {
@@ -682,9 +685,8 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
         if (!vm.customer) {
             vm.customer = vm.customers[vm.customers.length - 1];
             vm.name = vm.customer.customerName;
-            //loadImage();
-            onCustomerChange();
         }
+        onCustomerChange();
         console.log(vm.customer);
         $log.info('init finished...');
     }
