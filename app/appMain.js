@@ -1,7 +1,7 @@
 function rootController($log, $rootScope, $scope, $window, sessionService) {
     $log.debug('rootController...');
 
-    $scope.lodash = _;
+    $scope.lodash = _; $rootScope.homePath = '/sign-in';
 
     $scope.historyBack = function () {
         $window.history.back();
@@ -116,7 +116,7 @@ function appInit($log, $rootScope, $location, $sessionStorage) {
     console.log('Application Mode : ' + $rootScope.appMode);
 
     var path = '/sign-in';
-    path = '/sign-up';
+    //path = '/sign-up';
     $log.info('Start Path : ' + path);
     $location.path(path);
 

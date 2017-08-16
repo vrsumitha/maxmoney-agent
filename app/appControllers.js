@@ -28,7 +28,7 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
                 $log.info('Current User Role  : ' + res.role);
 
                 $rootScope.session = res;
-
+                $rootScope.homePath = '/sign-up';
                 $location.path('/sign-up');
             });
         }, function (res) {
@@ -72,8 +72,10 @@ function signOutController($log, $rootScope, $scope, sessionService, $location) 
     var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
 
     function onSignOut() {
+        sessionService.currentCustomer = null;
         $rootScope.session = null;
         $rootScope.sessionId = null;
+        $rootScope.homePath = '/sign-in';
     }
 
     sessionService.signOut().then(function (res) {

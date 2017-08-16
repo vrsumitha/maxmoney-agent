@@ -41,14 +41,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#!/sign-up">Max CDD Console</a>
+                <a class="navbar-brand" ng-href="#!{{homePath}}">Max CDD Console</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <!--
                     <li ng-class="{'active' : (viewName == 'Home')}"><a href="#!/home">Home</a></li>
                     -->
-                    <li ng-class="{'active' : (viewName == 'Sign Up')}"><a href="#!/sign-up">Customer Registration</a></li>
+                    <li ng-class="{'active' : (viewName == 'Sign Up')}" ng-show="(sessionId)">
+                        <a href="#!/sign-up">Customer Registration</a>
+                    </li>
                     <!--
                     <li ng-class="{'active' : (viewName == 'CDD')}"><a href="#!/cdd">CDD</a></li>
                     <li><a href="#!/customer-to-user">Customer To User</a></li>
