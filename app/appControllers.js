@@ -211,7 +211,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         vm.beneficiaryLabel = 'Add';
         vm.dialCode = '-'
 
-        $log.info('reset started...');
+        $log.info('reset finished...');
     }
 
     function save() {
@@ -402,7 +402,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
     }
 
     function save() {
-        $log.info('saving started...');
+        $log.info('update started...');
 
         wydNotifyService.hide();
 
@@ -493,7 +493,7 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
         //     console.log(res);
         // });
 
-        $log.info('saving finished...');
+        $log.info('update finished...');
     }
 
     function approve() {
@@ -825,7 +825,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
 
         vm.form.$setPristine();
 
-        $log.info('reset started...');
+        $log.info('reset finished...');
     }
 
     function cancel() {
