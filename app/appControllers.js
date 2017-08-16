@@ -209,7 +209,10 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         vm.form.$setPristine();
         vm.beneficiary = {id: 'NA'};
         vm.beneficiaryLabel = 'Add';
-        vm.dialCode = '-'
+        vm.dialCode = '-';
+        vm.nationality = null;
+        vm.state = null;
+
 
         $log.info('reset finished...');
     }
@@ -825,6 +828,10 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
 
         vm.form2.$setPristine();
         vm.payBy = 'CP';
+        vm.model.agentCountry = null;
+        vm.model.orderPurpose = null;
+        vm.model.relationship = null;
+        vm.model.bankAccount.payoutAgent = null;
 
         $log.info('reset finished...');
     }

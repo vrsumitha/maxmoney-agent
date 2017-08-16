@@ -139,11 +139,11 @@
 
     <div class="row">
         <div class="col-md-4  text-right">
-            <button type="reset" class="btn btn-default"
+           <!-- <button type="reset" class="btn btn-default"
                     xng-click="vm.reset()">
                 Reset
             </button>
-            &nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp; -->
             <button type="submit" class="btn "
                     ng-class="{'btn-primary' : vm.form.$pristine, 'btn-success' : (vm.form.$dirty && vm.form.$valid), 'btn-danger' : (vm.form.$dirty && vm.form.$invalid) }"
                     xng-disabled="(vm.form.$dirty && vm.form.$valid)"
