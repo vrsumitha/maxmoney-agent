@@ -89,7 +89,7 @@ signOutController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '
 appControllers.controller('signOutController', signOutController);
 
 function signUpController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $uibModal, $location) {
-    var cmpId = 'signUpController', cmpName = 'Sign Up';
+    var cmpId = 'signUpController', cmpName = 'Customer Registration';
     $log.info(cmpId + ' started ...');
 
     $rootScope.viewName = cmpName;
@@ -824,6 +824,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
         $log.info('reset started...');
 
         vm.form.$setPristine();
+        vm.payBy = 'CP';
 
         $log.info('reset finished...');
     }
