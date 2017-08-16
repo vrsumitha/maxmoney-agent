@@ -823,7 +823,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
     function reset() {
         $log.info('reset started...');
 
-        vm.form.$setPristine();
+        vm.form2.$setPristine();
         vm.payBy = 'CP';
 
         $log.info('reset finished...');
