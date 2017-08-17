@@ -678,12 +678,23 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
             $log.debug(res);
             if (res.status === 201) {
                 // wydNotifyService.showSuccess('Successfully converted...');
-                alertify.alert('Info', 'Successfully converted...', function () {
-                    console.log('converted ...');
-                    $scope.$apply(function () {
-                        $location.path('/sign-up');
-                    });
-                });
+                // alertify.alert('Info', 'Successfully converted...', function () {
+                //     console.log('converted ...');
+                //     $scope.$apply(function () {
+                //         $location.path('/sign-up');
+                //     });
+                // });
+                swal({
+                    type: 'info',
+                    text: 'Successfully converted...',
+                    allowOutsideClick: false
+                }).then(
+                    function () {
+                        $scope.$apply(function () {
+                            $location.path('/sign-up');
+                        });
+                    }
+                );
             }
         }, function (res) {
             $log.debug(res);

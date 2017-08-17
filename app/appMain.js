@@ -116,7 +116,7 @@ function appInit($log, $rootScope, $location, $sessionStorage) {
     console.log('Application Mode : ' + $rootScope.appMode);
 
     var path = '/sign-in';
-    //path = '/convert';
+    path = '/convert';
     $log.info('Start Path : ' + path);
     $location.path(path);
 
