@@ -179,11 +179,25 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         if (nv) {
             vm.dialCode = nv.dial_code;
             vm.form.nationality.$setValidity('required', false);
-            // $log.info('ov value is : ', ov);
+             $log.info('ov value is : ', nv);
+            if (nv.code == 'MY') {
+                    vm.idType = 'nric';
+                } else {
+                    vm.idType = 'passport';
+                }
         } else {
             vm.dialCode = '-';
             vm.form.nationality.$setValidity('required', true);
         }
+        //
+        //$log.info(vm.nationality);
+        //if (vm.nationality.code == 'MY') {
+        //    vm.idType = 'nric';
+        //} else {
+        //    vm.idType = 'passport';
+        //}
+
+
     }
 
     function onStateChangeX(ov, nv) {
@@ -685,8 +699,9 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
                 //     });
                 // });
                 swal({
-                    type: 'info',
-                    text: 'Successfully converted. Your MaxMoney Id is ' + res.data.maxMoneyId,
+                    type: 'success',
+                    title: 'Customer Created.',
+                    text: 'Your MaxMoney Id is ' + res.data.maxMoneyId,
                     allowOutsideClick: false
                 }).then(
                     function () {
