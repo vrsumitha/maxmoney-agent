@@ -471,7 +471,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         var deferred = $q.defer();
         $http(req).then(function (res) {
             $log.debug(res);
-            deferred.resolve(res.data);
+            deferred.resolve(res);
             $log.debug('validate customer finished with success.');
         }, function (res) {
             $log.error(res);
@@ -497,7 +497,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         var deferred = $q.defer();
         $http(req).then(function (res) {
             $log.debug(res);
-            deferred.resolve(res.data);
+            deferred.resolve(res);
             $log.debug('convert customer finished with success.');
         }, function (res) {
             $log.error(res);

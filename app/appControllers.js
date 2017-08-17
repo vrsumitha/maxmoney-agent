@@ -657,8 +657,11 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
         var params = {url: 'https://www.maxmoney.com/agent/validate', status: 'Validated'};
         sessionService.validateCustomer(vm.customer.idNo, params).then(function (res) {
             $log.debug(res);
-            wydNotifyService.showSuccess('Successfully validated...');
-            convertCustomer();
+           // wydNotifyService.showSuccess('Successfully validated...');
+            if (res.status === 204) {
+                convertCustomer();
+            }
+
         }, function (res) {
             $log.debug(res.value);
             wydNotifyService.showError('Validation failed. ' + res.description);
@@ -674,8 +677,13 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
         //var params = {id: vm.customer.idNo, password: '123456'};
         sessionService.convertCustomer(params).then(function (res) {
             $log.debug(res);
-            wydNotifyService.showSuccess('Successfully converted...');
-            $location.path('/sign-up');
+            if (res.status === 201) {
+               // wydNotifyService.showSuccess('Successfully converted...');
+                alertify.alert('Info', 'Successfully converted...', function() {
+                    console.log('converted ...');
+                    $location.path('/sign-up');
+                });
+            }
         }, function (res) {
             $log.debug(res);
             wydNotifyService.showError('Conversion failed. ' + res.description);
