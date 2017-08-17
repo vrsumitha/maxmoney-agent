@@ -2,5 +2,9 @@
   "Spouse",
   "Child",
   "Relative",
-  "Friends"
+  "Friend",
+  "Employee",
+  "Employer",
+  "Partner",
+  "Own"
 ]
