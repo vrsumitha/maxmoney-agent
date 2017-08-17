@@ -686,7 +686,7 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
                 // });
                 swal({
                     type: 'info',
-                    text: 'Successfully converted...',
+                    text: 'Successfully converted. Your MaxMoney Id is ' + res.data.maxMoneyId,
                     allowOutsideClick: false
                 }).then(
                     function () {
