@@ -228,7 +228,7 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
             wydNotifyService.showError('There is no change. Hence, nothing to save.');
             return;
         }
-        if(vm.password != vm.confirmPassword) {
+        if (vm.password != vm.confirmPassword) {
             wydNotifyService.showError('Password and Confirm password not matched');
             return;
         }
@@ -657,11 +657,10 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
         var params = {url: 'https://www.maxmoney.com/agent/validate', status: 'Validated'};
         sessionService.validateCustomer(vm.customer.idNo, params).then(function (res) {
             $log.debug(res);
-           // wydNotifyService.showSuccess('Successfully validated...');
+            // wydNotifyService.showSuccess('Successfully validated...');
             if (res.status === 204) {
                 convertCustomer();
             }
-
         }, function (res) {
             $log.debug(res.value);
             wydNotifyService.showError('Validation failed. ' + res.description);
@@ -678,10 +677,12 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
         sessionService.convertCustomer(params).then(function (res) {
             $log.debug(res);
             if (res.status === 201) {
-               // wydNotifyService.showSuccess('Successfully converted...');
-                alertify.alert('Info', 'Successfully converted...', function() {
+                // wydNotifyService.showSuccess('Successfully converted...');
+                alertify.alert('Info', 'Successfully converted...', function () {
                     console.log('converted ...');
-                    $location.path('/sign-up');
+                    $scope.$apply(function () {
+                        $location.path('/sign-up');
+                    });
                 });
             }
         }, function (res) {
