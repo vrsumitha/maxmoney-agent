@@ -451,9 +451,9 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
                 reqData['back'] = vm.nricBack;
             }
         }
-        if (vm.signature) {
-            reqData['signature'] = vm.signature;
-        }
+        //if (vm.signature) {
+        //    reqData['signature'] = vm.signature;
+        //}
 
         $log.info(reqData);
         Upload.upload({
@@ -481,8 +481,8 @@ function cddController($log, $rootScope, $scope, _session, wydNotifyService, sto
                 vm.nricFront.progress = pp;
                 vm.nricBack.progress = pp;
             }
-            vm.signature.progress = pp;
-            $log.info('Progress: ' + pp + '% ');
+            //vm.signature.progress = pp;
+            //$log.info('Progress: ' + pp + '% ');
         });
 
         // var reqData = { 'customerName' : vm.name};
@@ -653,14 +653,14 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
             vm.customer.imageBackUrl = imgUrl;
             console.log(vm.customer.imageBackUrl);
         }
-        if (vm.customer.images.Signature) {
-            var imgUrl = sessionService.getApiBasePath() + '/customers/';
-            imgUrl += vm.customer.idNo + '/images/';
-            imgUrl += vm.customer.images.Signature;
-            imgUrl += '?api-key=' + $rootScope.sessionId;
-            vm.customer.imageSignatureUrl = imgUrl;
-            console.log(vm.customer.imageSignatureUrl);
-        }
+        //if (vm.customer.images.Signature) {
+        //    var imgUrl = sessionService.getApiBasePath() + '/customers/';
+        //    imgUrl += vm.customer.idNo + '/images/';
+        //    imgUrl += vm.customer.images.Signature;
+        //    imgUrl += '?api-key=' + $rootScope.sessionId;
+        //    vm.customer.imageSignatureUrl = imgUrl;
+        //    console.log(vm.customer.imageSignatureUrl);
+        //}
     }
 
     function validateCustomer() {
