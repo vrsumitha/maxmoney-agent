@@ -93,6 +93,18 @@ function appConfig($routeProvider, $locationProvider) {
         resolve: convertController.resolve
     });
 
+    $routeProvider.when('/customers', {
+        templateUrl: 'app/views/customerListing.html',
+        controller: 'customerListingController as vm',
+        resolve: customerListingController.resolve
+    });
+
+    //$routeProvider.when('/customers/:id', {
+    //    templateUrl: 'app/views/customerUpdate.html',
+    //    controller: 'customerUpdateController as vm',
+    //    resolve: customerUpdateController.resolve
+    //});
+
     $routeProvider.when('/not-found', {
         template: '<p>Not Found</p>'
     });
@@ -116,7 +128,7 @@ function appInit($log, $rootScope, $location, $sessionStorage) {
     console.log('Application Mode : ' + $rootScope.appMode);
 
     var path = '/sign-in';
-    //path = '/convert';
+   // path = '/customers';
     $log.info('Start Path : ' + path);
     $location.path(path);
 

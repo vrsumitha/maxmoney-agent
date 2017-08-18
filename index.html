@@ -54,6 +54,9 @@
                     <li ng-class="{'active' : (viewName == 'Sign Up')}" ng-show="(sessionId)">
                         <a href="#!/sign-up">Customer Registration</a>
                     </li>
+                    <li ng-class="{'active' : (viewName == 'Customers')}" ng-show="(sessionId)">
+                        <a href="#!/customers">Customers</a>
+                    </li>
                     <!--
                     <li ng-class="{'active' : (viewName == 'CDD')}"><a href="#!/cdd">CDD</a></li>
                     <li><a href="#!/customer-to-user">Customer To User</a></li>
@@ -146,6 +149,7 @@
 <script src="app/storageService.js"></script>
 <script src="app/appService.js"></script>
 <script src="app/appControllers.js"></script>
+<script src="app/customerListingController.js"></script>
 <script src="app/appMain.js"></script>
 
 </body>

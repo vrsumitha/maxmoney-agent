@@ -8,7 +8,8 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         malasiyaStates: [],
         orderPurposes: {},
         agentDetail: {},
-        beneficiaries: []
+        beneficiaries: [],
+        customers: []
     };
 
     service.getApiBasePath = function () {
@@ -414,6 +415,29 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
+    service.getCustomers = function (id) {
+        var path = apiBasePath + '/customers?size=100&page=1&status=Unapproved'
+        var req = {
+            method: 'GET',
+            headers: {'api-key': $rootScope.sessionId},
+            url: path
+        };
+        //$log.info(req);
+        $log.debug('fetching customers started...');
+        var deferred = $q.defer();
+        $http(req).then(function (res) {
+            //$log.debug(res);
+            $log.debug('fetching customers finished with success.');
+            service.customers = res.data.customers;
+            deferred.resolve(res);
+        }, function (res) {
+            $log.error(res.data);
+            $log.debug('fetching customers finished with failure.');
+            deferred.reject(res.data);
+        });
+        return deferred.promise;
+    };
+
     service.getCustomer = function (id) {
         var path = apiBasePath + '/customers/' + id;
         var req = {
@@ -553,11 +577,11 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         }
     };
 
-    console.log('Frontend Hostname : ' + window.location.hostname);
-    if (window.location.hostname == 'maxmoney.com') {
-        apiBasePath = 'https://api.maxmoney.com/v1';
-    }
-    console.log('Backend URL : ' + apiBasePath);
+    //console.log('Frontend Hostname : ' + window.location.hostname);
+    //if (window.location.hostname == 'maxmoney.com') {
+    //    apiBasePath = 'https://api.maxmoney.com/v1';
+    //}
+    //console.log('Backend URL : ' + apiBasePath);
 
     return service;
 }
