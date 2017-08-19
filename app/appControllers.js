@@ -102,6 +102,8 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
 
     vm.countries = sessionService.countries;
     vm.malasiyaStates = sessionService.malasiyaStates;
+    vm.sourceOfIncomes = sessionService.sourceOfIncomes;
+    vm.natureOfBusinesses = sessionService.natureOfBusinesses;
 
     $scope.$on('session:countries', function (event, data) {
         vm.countries = sessionService.countries;
@@ -115,6 +117,14 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         // if (vm.malasiyaStates && vm.malasiyaStates.length > 0) {
         //     vm.malasiyaStates.unshift(vm.state);
         // }
+    });
+
+    $scope.$on('session:sourceOfIncomes', function (event, data) {
+        vm.sourceOfIncomes = sessionService.sourceOfIncomes;
+    });
+
+    $scope.$on('session:natureOfBusinesses', function (event, data) {
+        vm.natureOfBusinesses = sessionService.natureOfBusinesses;
     });
 
     function addOrEditBeneficiary() {
@@ -374,9 +384,10 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         // if (vm.malasiyaStates && vm.malasiyaStates.length > 0) {
         //     vm.malasiyaStates.unshift(vm.state);
         // }
-        sessionService.getSourceOfIncomes().then(function (res) {
-            vm.sourceOfIncomes = res.data;
-        });
+
+        sessionService.getSourceOfIncomes();
+        sessionService.getNatureOfBusinesses();
+
         $log.info('init finished...');
     }
 

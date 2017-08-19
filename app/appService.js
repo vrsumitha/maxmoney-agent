@@ -8,7 +8,9 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         malasiyaStates: [],
         orderPurposes: {},
         agentDetail: {},
-        beneficiaries: []
+        beneficiaries: [],
+        sourceOfIncomes: {},
+        natureOfBusinesses: {}
     };
 
     service.getApiBasePath = function () {
@@ -325,7 +327,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         }, function (res) {
             $log.error(res);
             $log.debug('signIn finished with failure.');
-            deferred.reject(res.data);
+            deferred.reject(res);
         });
         return deferred.promise;
     };
@@ -381,7 +383,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
             $log.debug('fetching current session finished with success.');
             deferred.resolve(res.data);
         }, function (res) {
-            $log.error(res.data);
+            $log.error(res);
             $log.debug('fetching current session finished with failure.');
             deferred.reject(res.data);
         });
@@ -408,7 +410,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
             $log.error(res);
             $rootScope.sessionId = null;
             $sessionStorage.$reset();
-            deferred.reject(res.data);
+            deferred.reject(res);
             $log.debug('signOut current session finished with failure.');
         });
         return deferred.promise;
@@ -429,7 +431,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
             $log.debug('fetching customer by id finished with success.');
             deferred.resolve(res.data);
         }, function (res) {
-            $log.error(res.data);
+            $log.error(res);
             $log.debug('fetching customer by id finished with failure.');
             deferred.reject(res.data);
         });
@@ -452,7 +454,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
             $log.debug('approve customer finished with success.');
         }, function (res) {
             $log.error(res);
-            deferred.reject(res.data);
+            deferred.reject(res);
             $log.debug('approve customer finished with failure.');
         });
         return deferred.promise;
@@ -475,7 +477,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
             $log.debug('validate customer finished with success.');
         }, function (res) {
             $log.error(res);
-            deferred.reject(res.data);
+            deferred.reject(res);
             $log.debug('validate customer finished with failure.');
         });
         return deferred.promise;
@@ -501,7 +503,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
             $log.debug('convert customer finished with success.');
         }, function (res) {
             $log.error(res);
-            deferred.reject(res.data);
+            deferred.reject(res);
             $log.debug('convert customer finished with failure.');
         });
         return deferred.promise;
@@ -534,11 +536,19 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
             $log.debug('convert customer finished with success.');
         }, function (res) {
             $log.error(res);
-            deferred.reject(res.data);
+            deferred.reject(res);
             $log.debug('convert customer finished with failure.');
         });
         return deferred.promise;
     };
+
+    function processSourceOfIncomes(items) {
+        var titems = service.sourceOfIncomes;
+        _.forOwn(items, function (value, key) {
+            titems[value] = key;
+        });
+        //console.log(service.sourceOfIncomes);
+    }
 
     service.getSourceOfIncomes = function () {
         var path = apiBasePath + '/risks/sources';
@@ -552,12 +562,38 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         var deferred = $q.defer();
         $http(req).then(function (res) {
             $log.debug(res);
+            processSourceOfIncomes(res.data);
+            $rootScope.$broadcast('session:sourceOfIncomes', 'Session source of incomes updated...');
             $log.debug('fetching source of incomes finished with success.');
             deferred.resolve(res);
         }, function (res) {
             $log.error(res.data);
             $log.debug('fetching source of incomes finished with failure.');
-            deferred.reject(res.data);
+            deferred.reject(res);
+        });
+        return deferred.promise;
+    };
+
+    service.getNatureOfBusinesses = function () {
+        var path = apiBasePath + '/risks/businesses';
+        var req = {
+            method: 'GET',
+            headers: {'api-key': $rootScope.sessionId},
+            url: path
+        };
+        //$log.info(req);
+        $log.debug('fetching nature of businesses started...');
+        var deferred = $q.defer();
+        $http(req).then(function (res) {
+            $log.debug(res);
+            service.natureOfBusinesses = res.data;
+            $rootScope.$broadcast('session:natureOfBusinesses', 'Session nature of businesses updated...');
+            $log.debug('fetching nature of businesses finished with success.');
+            deferred.resolve(res);
+        }, function (res) {
+            $log.error(res.data);
+            $log.debug('fetching nature of businesses with failure.');
+            deferred.reject(res);
         });
         return deferred.promise;
     };
