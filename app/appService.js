@@ -540,6 +540,28 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
+    service.getSourceOfIncomes = function () {
+        var path = apiBasePath + '/risks/sources';
+        var req = {
+            method: 'GET',
+            headers: {'api-key': $rootScope.sessionId},
+            url: path
+        };
+        //$log.info(req);
+        $log.debug('fetching source of incomes started...');
+        var deferred = $q.defer();
+        $http(req).then(function (res) {
+            $log.debug(res);
+            $log.debug('fetching source of incomes finished with success.');
+            deferred.resolve(res);
+        }, function (res) {
+            $log.error(res.data);
+            $log.debug('fetching source of incomes finished with failure.');
+            deferred.reject(res.data);
+        });
+        return deferred.promise;
+    };
+
     service.switchOffAutoComplete = function () {
         if (document.getElementsByTagName) {
             var inputElements = document.getElementsByTagName('input');

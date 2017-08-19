@@ -374,7 +374,9 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         // if (vm.malasiyaStates && vm.malasiyaStates.length > 0) {
         //     vm.malasiyaStates.unshift(vm.state);
         // }
-
+        sessionService.getSourceOfIncomes().then(function (res) {
+            vm.sourceOfIncomes = res.data;
+        });
         $log.info('init finished...');
     }
 
@@ -766,6 +768,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
     vm.relationships = sessionService.relationships;
     vm.orderPurposes = _.keys(sessionService.orderPurposes);
     vm.agentCountries = sessionService.agentDetail.agents;
+
 
     vm.payBy = 'CP';
     vm.isCountryInitialized = false;
