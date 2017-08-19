@@ -432,15 +432,15 @@
                 </div>
             </div>
         </div>
-        <!--
+
         <div class="col-md-4">
             <div class="form-group has-feedback">
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : (vm.form.natureOfBusiness.$dirty && vm.form.natureOfBusiness.$invalid), 'has-success' : (vm.form.natureOfBusiness.$dirty && vm.form.natureOfBusiness.$valid) }">
                     <label for="natureOfBusiness">Nature Of Business <span class="text-danger">*</span></label>
-                    <select id="natureOfBusiness" name="natureOfBusiness" aria-describedby="natureOfBusinessHelpBlock" placeholder="Choose Nature Of Business"
-                            selector options="vm.natureOfBusinesses" label-attr="natureOfBusiness" closeAfterSelection="true"
-                            model="vm.natureOfBusiness" require="true">
+                    <select class="form-control" id="natureOfBusiness" name="natureOfBusiness" aria-describedby="natureOfBusinessHelpBlock" placeholder="Choose Nature Of Business"
+                            ng-options="item for item in vm.natureOfBusinesses"
+                            ng-model="vm.natureOfBusiness" require="true">
                     </select>
                     <div id="natureOfBusinessHelpBlock" class="help-inline" ng-messages="vm.form.natureOfBusiness.$error" ng-if="vm.form.natureOfBusiness.$dirty">
                         <span ng-message="required">This is required.</span>
@@ -448,7 +448,6 @@
                 </div>
             </div>
         </div>
-        -->
     </div>
 
     <div class="row">
@@ -456,6 +455,10 @@
             <button type="button" class="btn btn-default"
                     ng-click="vm.addOrEditBeneficiary()">
                 {{vm.beneficiaryLabel}} Beneficiary
+            </button>
+            <button type="button" class="btn btn-default"
+                    ng-click="vm.preFill()">
+                PreFill
             </button>
         </div>
         <div class="col-md-4">
@@ -474,7 +477,7 @@
                 Next
             </button>
             &nbsp;&nbsp;&nbsp;
-            <a type="submit" class="btn btn-primary" href="#!/cdd" ng-show="appMode == 'local'">NextX</a>
+            <a type="submit" class="btn btn-primary" href="#!/cdd" ng-show="appMode == 'local'" ng-click="vm.saveX()">NextX</a>
         </div>
     </div>
 </form>

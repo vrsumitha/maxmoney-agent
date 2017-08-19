@@ -574,6 +574,15 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
+    function processNatureOfBusinesses(items) {
+        var titems = service.natureOfBusinesses, counter = 0;
+        _.forOwn(items, function (val, key) {
+            titems[counter] = key;
+            counter += 1;
+        });
+        //console.log(service.sourceOfIncomes);
+    }
+
     service.getNatureOfBusinesses = function () {
         var path = apiBasePath + '/risks/businesses';
         var req = {
@@ -586,7 +595,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         var deferred = $q.defer();
         $http(req).then(function (res) {
             $log.debug(res);
-            service.natureOfBusinesses = res.data;
+            processNatureOfBusinesses(res.data);
             $rootScope.$broadcast('session:natureOfBusinesses', 'Session nature of businesses updated...');
             $log.debug('fetching nature of businesses finished with success.');
             deferred.resolve(res);
@@ -609,6 +618,32 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
                 inputElements[i].setAttribute('autocapitalize', 'off');
             }
         }
+    };
+
+    service.updateSourceOfIncomeAndNatureOfBusinessForUser = function (userId, soi, nob) {
+        var reqData = {'incomeSource' : soi, 'natureOfBusiness' : nob};
+        var path = apiBasePath + '/users/' + userId + '/profile';
+        var req = {
+            method: 'PUT',
+            url: path,
+            headers: {'api-key': $rootScope.sessionId, 'Content-Type': 'application/x-www-form-urlencoded' },
+            transformRequest: function (obj) {
+                var str = [];
+                for (var p in obj) {
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                }
+                return str.join("&");
+            },
+            data: reqData
+        };
+        $log.info(req);
+        var deferred = $q.defer();
+        $http(req).then(function (res) {
+            deferred.resolve(res);
+        }, function (res) {
+            deferred.reject(res);
+        });
+        return deferred.promise;
     };
 
     console.log('Frontend Hostname : ' + window.location.hostname);

@@ -343,20 +343,38 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         }
         $log.info(reqCus);
         sessionService.signUp(reqCus).then(function (res) {
-            $log.info(res);
+            $log.debug(res);
             sessionService.currentCustomer = res.data;
             res.data.password = vm.confirmPassword;
+            res.data.sourceOfIncomeX = vm.sourceOfIncome;
+            res.data.natureOfBusinessX = vm.natureOfBusiness;
             storageService.saveCustomer(res.data);
             wydNotifyService.showSuccess('Successfully signed up...');
             $location.path('/cdd');
-            //reset();
         }, function (res) {
-            $log.info(res);
+            $log.error(res);
             wydNotifyService.showError(res.data.description);
         });
 
         $log.info('saving finished...');
     }
+
+    function preFill() {
+        vm.emailId = 'sample@gmail.com';
+        vm.password = '12345';
+        vm.confirmPassword = '12345';
+        vm.name = 'Sample';
+        vm.mobileNo = '1234567890';
+        vm.accountType = 'personal';
+        vm.idType = 'passport';
+        vm.idNoPassport = '123400';
+        vm.dob = '10-05-1980';
+        vm.address = 'abc address';
+        vm.city = 'Chennai';
+        vm.postalCode = '12345';
+        vm.form.$setSubmitted();
+    }
+
 
     function init() {
         $log.info('init started...');
@@ -384,9 +402,12 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         // if (vm.malasiyaStates && vm.malasiyaStates.length > 0) {
         //     vm.malasiyaStates.unshift(vm.state);
         // }
-
-        sessionService.getSourceOfIncomes();
-        sessionService.getNatureOfBusinesses();
+        if(_.keys(vm.sourceOfIncomes).length === 0) {
+            sessionService.getSourceOfIncomes();
+        }
+        if(_.keys(vm.natureOfBusinesses).length === 0) {
+            sessionService.getNatureOfBusinesses();
+        }
 
         $log.info('init finished...');
     }
@@ -401,7 +422,8 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         onStateChangeX: onStateChangeX,
         onIdTypeChange: onIdTypeChange,
         save: save,
-        reset: reset
+        reset: reset,
+        preFill: preFill
     });
 
     init();
@@ -704,13 +726,7 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
         sessionService.convertCustomer(params).then(function (res) {
             $log.debug(res);
             if (res.status === 201) {
-                // wydNotifyService.showSuccess('Successfully converted...');
-                // alertify.alert('Info', 'Successfully converted...', function () {
-                //     console.log('converted ...');
-                //     $scope.$apply(function () {
-                //         $location.path('/sign-up');
-                //     });
-                // });
+                updateUserInfo();
                 swal({
                     type: 'success',
                     title: 'Customer Created.',
@@ -730,6 +746,12 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
         });
 
         $log.info('convert customer finished...');
+    }
+
+    function updateUserInfo() {
+        $log.debug('update user info started...');
+        sessionService.updateSourceOfIncomeAndNatureOfBusinessForUser(vm.customer.email, vm.customer.sourceOfIncomeX, vm.customer.natureOfBusinessX);
+        $log.debug('update user info finished...');
     }
 
     function init() {
