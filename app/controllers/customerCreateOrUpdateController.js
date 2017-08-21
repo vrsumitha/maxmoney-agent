@@ -156,21 +156,29 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
 
         wydNotifyService.hide();
 
-        if (vm.form.$pristine) {
-            if(vm.password && vm.confirmPassword && vm.sourceOfIncome && vm.natureOfBusiness) {
-                vm.form.$setDirty();
+        if(vm.isEdit) {
+            var value = vm.password;
+            if(!value || value == '') {
+                wydNotifyService.showError('Please provide the password.');
+                return;
             }
-            else{
-                if(!vm.password) {
-                    wydNotifyService.showError('Please fill password');
-                    return;
-                }
-                if(!vm.confirmPassword) {
-                    wydNotifyService.showError('Please fill confirm password');
-                    return;
-                }
+            value = vm.confirmPassword;
+            if(!value || value == '') {
+                wydNotifyService.showError('Please provide the confirm password.');
+                return;
+            }
+            value = vm.sourceOfIncome;
+            if(!value) {
+                wydNotifyService.showError('Please select the source of income.');
+                return;
+            }
+            value = vm.natureOfBusiness;
+            if(!value) {
+                wydNotifyService.showError('Please select the nature of business.');
+                return;
             }
         }
+
         if (vm.password != vm.confirmPassword) {
             wydNotifyService.showError('Password and Confirm password not matched');
             return;
@@ -324,11 +332,11 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
         vm.sourceOfIncome = 'Individual';
         vm.natureOfBusiness = 'Accountants';
 
-        angular.forEach(vm.form.$error, function (type) {
-            angular.forEach(type, function (field) {
-                field.$setDirty();
-            });
-        });
+        // angular.forEach(vm.form.$error, function (type) {
+        //     angular.forEach(type, function (field) {
+        //         field.$setDirty();
+        //     });
+        // });
     }
 
     function init() {
@@ -407,13 +415,13 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
             }
             vm.postalCode = model.postalCode;
 
-            //$scope.$apply(function(){
+            // $timeout(function(){
             //    angular.forEach(vm.form.$error, function (type) {
             //        angular.forEach(type, function (field) {
             //            field.$setDirty();
             //        });
             //    });
-            //});
+            // }, 10000);
         }
 
         $log.info('init finished...');

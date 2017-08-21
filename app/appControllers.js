@@ -28,8 +28,10 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
                 $log.info('Current User Role  : ' + res.role);
 
                 $rootScope.session = res;
-                //$rootScope.homePath = '/sign-up';
-                $location.path('/users');
+                //$rootScope.session.role = 'complianceOfficer';
+                //$rootScope.session.role = 'maxCddOfficer';
+                //$rootScope.session.role = 'cddOfficer';
+                $location.path('/customers');
             });
         }, function (res) {
             console.log(res);

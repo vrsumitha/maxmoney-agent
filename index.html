@@ -46,13 +46,13 @@
                     <!--
                     <li ng-class="{'active' : (viewName == 'Home')}"><a href="#!/home">Home</a></li>
                     -->
-                    <li ng-class="{'active' : (viewName == 'Customers')}" ng-show="(sessionId)">
+                    <li ng-class="{'active' : (viewName == 'Customers')}" ng-if="(session && session.role == 'cddOfficer')">
                         <a href="#!/customers">Customers</a>
                     </li>
-                    <li ng-class="{'active' : (viewName == 'Sign Up')}" ng-show="(sessionId)">
+                    <li ng-class="{'active' : (viewName == 'Sign Up')}" ng-if="(session && session.role == 'maxCddOfficer')">
                         <a href="#!/customers/customer">Customer Registration</a>
                     </li>
-                    <li ng-class="{'active' : (viewName == 'Approve Users')}" ng-show="(sessionId)">
+                    <li ng-class="{'active' : (viewName == 'Approve Users')}" ng-if="(session && session.role == 'complianceOfficer')">
                         <a href="#!/users">Approve User</a>
                         <!--
                         <li><a href="#!/cdd">CDD</a></li>

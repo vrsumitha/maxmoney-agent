@@ -467,7 +467,7 @@
                 &nbsp;&nbsp;&nbsp;
                 <button type="submit" class="btn "
                         ng-class="{'btn-primary' : vm.form.$pristine, 'btn-success' : (vm.form.$dirty && vm.form.$valid), 'btn-danger' : (vm.form.$dirty && vm.form.$invalid) }"
-                        xng-disabled="!(vm.form.$dirty && vm.form.$valid)"
+                        ng-disabled="!(vm.form.$dirty && vm.form.$valid)"
                         ng-click="vm.save()">
                     Next
                 </button>
@@ -476,7 +476,7 @@
     </div>
 </form>
 
-<!--<br/><div><pre>{{vm.form | json}}</pre></div>-->
+<br/><div ng-show="appMode == 'local'"><pre>{{vm.form | json}}</pre></div>
 
 
 
