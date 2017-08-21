@@ -463,8 +463,10 @@
             <a class="btn btn-info" href="#!/cdd" ng-show="appMode == 'local'" ng-click="vm.saveX()">NextX</a>
 
             <span class="pull-right">
+                <!--
                 <button type="reset" class="btn btn-default" ng-click="vm.reset()">Reset</button>
                 &nbsp;&nbsp;&nbsp;
+                -->
                 <button type="submit" class="btn "
                         ng-class="{'btn-primary' : vm.form.$pristine, 'btn-success' : (vm.form.$dirty && vm.form.$valid), 'btn-danger' : (vm.form.$dirty && vm.form.$invalid) }"
                         xng-disabled="!(vm.form.$dirty && vm.form.$valid)"
