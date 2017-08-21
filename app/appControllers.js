@@ -29,7 +29,7 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
 
                 $rootScope.session = res;
                 //$rootScope.homePath = '/sign-up';
-                $location.path('/customers');
+                $location.path('/users');
             });
         }, function (res) {
             console.log(res);
@@ -44,7 +44,7 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
 
         vm.message = 'Sign In';
 
-        if($rootScope.appMode == 'local') {
+        if(window.location.hostname == 'localhost') {
             vm.userId = 'sa@maxmoney.com';
             vm.password = 'MaxMoney@2016';
            // $timeout(signIn, 2000);

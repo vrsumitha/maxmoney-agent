@@ -1,0 +1,145 @@
+<br/>
+<div class="row">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h4><strong>Customer Information</strong></h4>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-3">
+                    Customer Name
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.model.fullName}}</strong>
+                </div>
+                <div class="col-md-3">
+                    Status
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.model.status}}</strong>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-3">
+                    Email
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.model.email}}</strong>
+                </div>
+                <div class="col-md-3">
+                    Date Of Birth
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.model.dob}}</strong>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-3">
+                    ID Type
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.model.idType}}</strong>
+                </div>
+                <div class="col-md-3">
+                    ID Number
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.model.idNo}}</strong>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-3">
+                    Nationality
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.model.nationality}}</strong>
+                </div>
+                <div class="col-md-3">
+                    Country
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.model.country}}</strong>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-3">
+                    Address
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.model.address}}</strong>
+                </div>
+                <div class="col-md-3">
+                    Mobile
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.model.mobile}}</strong>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-3">
+                    State
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.model.state}}</strong>
+                </div>
+                <div class="col-md-3">
+                    City
+                </div>
+                <div class="col-md-3">
+                    <strong>{{vm.model.city}}</strong>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="text-center">
+                <h4><strong>Documents Information</strong></h4>
+            </div>
+            <div class="text-center">
+                <strong>Front</strong>
+            </div>
+            <div class="text-center">
+                <img ng-src="{{vm.customer.imageFrontUrl}}" alt="Front" class="img-thumbnail" style="width: 150px; height: 100px">
+            </div>
+            <div class="text-center">
+                <strong>Back</strong>
+            </div>
+            <div class="text-center">
+                <img ng-src="{{vm.customer.imageBackUrl}}" alt="Back" class="img-thumbnail" style="width: 150px; height: 100px">
+            </div>
+            <!--
+            <div class="text-center">
+                <strong>Signature</strong>
+            </div>
+            <div class="text-center">
+                <img ng-src="{{vm.customer.imageSignatureUrl}}" alt="Back" class="img-thumbnail" style="width: 150px; height: 100px">
+            </div>
+            -->
+        </div>
+    </div>
+</div>
+<br/>
+<div class="text-center">
+    <button type="button" class="btn btn-primary" ng-click="vm.updateStatus('active')">
+        Approve
+    </button>
+    &nbsp;&nbsp;
+    <button type="button" class="btn btn-danger" ng-click="vm.updateStatus('reject')">
+        Reject
+    </button>
+    &nbsp;&nbsp;
+    <button type="button" class="btn btn-warning" ng-click="vm.updateStatus('revisit')">
+        Revisit
+    </button>
+</div>
+<!--
+<br/>
+<pre>{{vm.model | json}}</pre>
+-->
