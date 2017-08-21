@@ -1,0 +1,484 @@
+<br/>
+<form name="vm.form" autocomplete=”off” novalidate="true">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.emailId.$dirty && vm.form.emailId.$invalid), 'has-success' : (vm.form.emailId.$dirty && vm.form.emailId.$valid) }">
+                <label for="emailId">Email Id <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="emailId" placeholder="Email Id" aria-describedby="emailIdHelpBlock"
+                       name="emailId" ng-model="vm.emailId" autofocus="true" required ng-disabled="vm.isEdit">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.emailId.$dirty && vm.form.emailId.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.emailId.$dirty && vm.form.emailId.$valid"></span>
+                <div id="emailIdHelpBlock" class="help-inline" ng-messages="vm.form.emailId.$error" ng-if="vm.form.emailId.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="email">This must be valid email</span>
+                </div>
+                <!--
+                <span ng-show="vm.form.emailId.$dirty && vm.form.emailId.$valid" class="help-line text-warning">
+                    It must be valid email to receive activation info
+                </span>
+                -->
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.password.$dirty && vm.form.password.$invalid), 'has-success' : (vm.form.password.$dirty && vm.form.password.$valid) }">
+                <label for="password">Password <span class="text-danger">*</span></label>
+                <input type="password" class="form-control" id="password" placeholder="password" aria-describedby="passwordHelpBlock"
+                       name="password" ng-model="vm.password"
+                       required ng-minlength="5" ng-maxlength="15">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="vm.form.password.$dirty && vm.form.password.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="vm.form.password.$dirty && vm.form.password.$valid"></span>
+                <div id="passwordHelpBlock" class="help-inline" ng-messages="vm.form.password.$error" ng-if="vm.form.password.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="minlength, maxlength">This should be minimum 5 char</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.confirmPassword.$dirty && vm.form.confirmPassword.$invalid), 'has-success' : (vm.form.confirmPassword.$dirty && vm.form.confirmPassword.$valid) }">
+                <label for="confirmPassword">Confirm Password <span class="text-danger">*</span></label>
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password" aria-describedby="confirmPasswordHelpBlock"
+                       name="confirmPassword" ng-model="vm.confirmPassword" required>
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="(vm.form.confirmPassword.$dirty && vm.form.confirmPassword.$invalid)"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="vm.form.confirmPassword.$dirty && vm.form.confirmPassword.$valid"></span>
+                <div id="confirmPasswordHelpBlock" class="help-inline" ng-messages="vm.form.confirmPassword.$error" ng-if="vm.form.confirmPassword.$dirty">
+                    <span ng-message="required">This is required.</span>
+                </div>
+            </div>
+        </div>
+   </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.name.$dirty && vm.form.name.$invalid), 'has-success' : (vm.form.name.$dirty && vm.form.name.$valid) }">
+                <label for="name" class="control-label">Full Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="name" placeholder="Full Name" aria-describedby="nameHelpBlock"
+                       name="name" ng-model="vm.name"
+                       required ng-minlength="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z\s]*$/">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.name.$dirty && vm.form.name.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.name.$dirty && vm.form.name.$valid"></span>
+                <div id="nameHelpBlock" class="help-inline" ng-messages="vm.form.name.$error"
+                     ng-if="vm.form.name.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="pattern">This should contains alphabets only</span>
+                    <span ng-message="minlength, maxlength">This should have minimum 3 and maximum 30 characters long</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group has-feedback">
+                <div class="form-group has-feedback"
+                     ng-class="{ 'has-error' : (vm.form.nationality.$dirty && vm.form.nationality.$invalid), 'has-success' : (vm.form.nationality.$dirty && vm.form.nationality.$valid) }">
+                    <label for="nationality">Nationality <span class="text-danger">*</span></label>
+                    <select id="nationality" name="nationality" aria-describedby="nationalityHelpBlock" placeholder="Choose Nationality"
+                            selector options="vm.countries" label-attr="nationality" closeAfterSelection="true"
+                            model="vm.nationality" change="vm.onNationalityChangeX(oldValue, newValue)" require="true" disable="vm.isEdit">
+                    </select>
+                    <div id="nationalityHelpBlock" class="help-inline" ng-messages="vm.form.nationality.$error" ng-if="vm.form.nationality.$dirty">
+                        <span ng-message="required">This is required.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.mobileNo.$dirty && vm.form.mobileNo.$invalid), 'has-success' : (vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid) }">
+                <label for="mobileNo">Mobile Number <span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <div class="input-group-addon">{{vm.dialCode}}</div>
+                    <input type="text" class="form-control" id="mobileNo" placeholder="Mobile Number" aria-describedby="mobileNoHelpBlock"
+                           name="mobileNo" ng-model="vm.mobileNo"
+                           required ng-minlength="9" xng-maxlength="15" input-mask="'mask'" mask-option="{'mask':'999999999999999'}" input-phone-number>
+                </div>
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.mobileNo.$dirty && vm.form.mobileNo.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid"></span>
+                <div id="mobileNoHelpBlock" class="help-inline" ng-messages="vm.form.mobileNo.$error" ng-if="vm.form.mobileNo.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="number">This should be minimum 9 digits</span>
+                    <span ng-message="minlength, maxlength">This should be minimum 9 digits</span>
+                </div>
+                <!--
+                <span ng-show="vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid" class="help-line text-warning">
+                    It must be valid number to receive activation info
+                </span>
+                -->
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.accountType.$dirty && vm.form.accountType.$invalid), 'has-success' : (vm.form.accountType.$dirty && vm.form.accountType.$valid) }">
+                <label for="accountType">Account Type <span class="text-danger">*</span></label>
+                <select class="form-control" id="accountType" aria-describedby="accountTypeHelpBlock"
+                        name="accountType" ng-model="vm.accountType" ng-change="vm.onAccountTypeChange()">
+                    <option value="personal" >Personal</option>
+                    <option value="business" hidden>Business</option>
+                </select>
+                <div id="accountTypeHelpBlock" class="help-inline" ng-messages="vm.form.accountType.$error"
+                     ng-if="vm.form.accountType.$dirty">
+                    <span ng-message="required">This is required.</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.idType.$dirty && vm.form.idType.$invalid), 'has-success' : (vm.form.idType.$dirty && vm.form.idType.$valid) }">
+                <label for="idType">ID Type <span class="text-danger">*</span></label>
+                <select class="form-control" id="idType" aria-describedby="idTypeHelpBlock" placeholder="Country"
+                        name="idType" ng-model="vm.idType"
+                        ng-change="vm.onIdTypeChange()" ng-disabled="vm.isEdit">
+                    <option value="nric">NRIC</option>
+                    <option value="passport">Passport</option>
+                </select>
+                <div id="idTypeHelpBlock" class="help-inline" ng-messages="vm.form.idType.$error"
+                     ng-if="vm.form.idType.$dirty">
+                    <span ng-message="required">This is required.</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div ng-show="vm.idType == 'nric'" class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.idNoNric.$dirty && vm.form.idNoNric.$invalid), 'has-success' : (vm.form.idNoNric.$dirty && vm.form.idNoNric.$valid) }">
+                <label for="idNoNric" class="control-label">NRIC Number <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="idNoNric" placeholder="NRIC Number" aria-describedby="idNoNricHelpBlock"
+                       name="idNoNric" ng-model="vm.idNoNric" ng-disabled="vm.isEdit"
+                       ng-required="vm.idType == 'nric'" ng-minlength="12" ng-maxlength="12" input-mask="'mask'" mask-option="{'mask':'999999999999'}" input-mask-number>
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.idNoNric.$dirty && vm.form.idNoNric.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.idNoNric.$dirty && vm.form.idNoNric.$valid"></span>
+                <div id="idNoNricHelpBlock" class="help-inline" ng-messages="vm.form.idNoNric.$error" ng-if="vm.form.idNoNric.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="minlength, maxlength">This should be exactly 12 digits</span>
+                </div>
+            </div>
+            <div ng-show="vm.idType == 'passport'" class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.idNoPassport.$dirty && vm.form.idNoPassport.$invalid), 'has-success' : (vm.form.idNoPassport.$dirty && vm.form.idNoPassport.$valid) }">
+                <label for="idNoPassport" class="control-label">Passport Number <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="idNoPassport" placeholder="Passport Number" aria-describedby="idNoPassportHelpBlock"
+                       name="idNoPassport" ng-model="vm.idNoPassport" ng-disabled="vm.isEdit"
+                       ng-required="vm.idType == 'passport'" ng-minlength="6" ng-maxlength="15">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.idNoPassport.$dirty && vm.form.idNoPassport.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.idNoPassport.$dirty && vm.form.idNoPassport.$valid"></span>
+                <div id="idNoPassportHelpBlock" class="help-inline" ng-messages="vm.form.idNoPassport.$error" ng-if="vm.form.idNoPassport.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="minlength, maxlength">This should be minimum 6 and maximum 15 characters long</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <!-- type1
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.dob.$dirty && vm.form.dob.$invalid), 'has-success' : (vm.form.dob.$dirty && vm.form.dob.$valid) }">
+                <label for="dob" class="control-label">DOB (dd-mm-yyyy) <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="dob" placeholder="Date Of Birth" aria-describedby="dobHelpBlock"
+                       name="dob" ng-model="vm.dob" ng-change="vm.onDobChange()" ng-model-options="{ updateOn: 'blur' }"
+                       required input-mask="{'alias' : 'dd-mm-yyyy'}" input-mask-date>
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.dob.$dirty && vm.form.dob.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.dob.$dirty && vm.form.dob.$valid"></span>
+                <div id="dobHelpBlock" class="help-inline" ng-messages="vm.form.dob.$error" ng-if="vm.form.dob.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="date">This should be valid date.</span>
+                    <span ng-message="min">This should be before {{vm.dobMax}}</span>
+                    <span ng-message="max">This should be after {{vm.dobMin}}</span>
+                </div>
+            </div>
+            -->
+            <!-- type2
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.dob.$dirty && vm.form.dob.$invalid), 'has-success' : (vm.form.dob.$dirty && vm.form.dob.$valid) }">
+                <label for="dob" class="control-label">DOB (dd/mm/yyyy) <span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    <input type="date" class="form-control" id="dob" aria-describedby="dobHelpBlock"
+                           name="dob" ng-model="vm.dob"
+                           required min="{{vm.dobMin}}" max="{{vm.dobMax}}">
+                </div>
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.dob.$dirty && vm.form.dob.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.dob.$dirty && vm.form.dob.$valid"></span>
+                <div id="dobHelpBlock" class="help-inline" ng-messages="vm.form.dob.$error" ng-if="vm.form.dob.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="date">This should be valid date.</span>
+                    <span ng-message="min">This should be before {{vm.dobMax}}</span>
+                    <span ng-message="max">This should be after {{vm.dobMin}}</span>
+                </div>
+            </div>
+            -->
+            <!-- type3 -->
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.dob.$dirty && vm.form.dob.$invalid), 'has-success' : (vm.form.dob.$dirty && vm.form.dob.$valid) }">
+                <label for="dob" class="control-label">DOB (dd-mm-yyyy) <span class="text-danger">*</span></label>
+                <div class="input-group" change="vm.onDobChangeX(newValue, oldValue)"
+                     xmin-date="vm.dobxMin" xmax-date="vm.dobxMax" start-date="vm.dobxMax"
+                     moment-picker="vm.dobx" format="DD-MM-YYYY" start-view="decade" set-on-select="true">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    <input type="text" class="form-control" id="dob" placeholder="Date Of Birth" aria-describedby="dobHelpBlock"
+                           name="dob" ng-model="vm.dob" ng-change="vm.onDobChange()" ng-model-options="{ updateOn: 'blur' }"
+                           required input-mask="{'alias' : 'dd-mm-yyyy'}" input-mask-date>
+                </div>
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.dob.$dirty && vm.form.dob.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.dob.$dirty && vm.form.dob.$valid"></span>
+                <div id="dobHelpBlock" class="help-inline" ng-messages="vm.form.dob.$error" ng-if="vm.form.dob.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="date">This should be valid date.</span>
+                    <span ng-message="min">This should be before {{vm.dobMax}}</span>
+                    <span ng-message="max">This should be after {{vm.dobMin}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" ng-show="vm.accountType != 'personal'">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.companyName.$dirty && vm.form.companyName.$invalid), 'has-success' : (vm.form.companyName.$dirty && vm.form.companyName.$valid) }">
+                <label for="companyName" class="control-label">Company Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="companyName" placeholder="Company Name" aria-describedby="companyNameHelpBlock"
+                       name="companyName" ng-model="vm.companyName"
+                       ng-required="vm.accountType != 'personal'" ng-minlength="5" ng-maxlength="50" ng-pattern="/^[a-zA-Z\s]*$/">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.companyName.$dirty && vm.form.companyName.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.companyName.$dirty && vm.form.companyName.$valid"></span>
+                <div id="companyNameHelpBlock" class="help-inline" ng-messages="vm.form.companyName.$error"
+                     ng-if="vm.form.companyName.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="pattern">This should contains alphabets only</span>
+                    <span ng-message="minlength, maxlength">This should have minimum 5 and maximum 50 characters long</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" ng-show="vm.accountType != 'personal'">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.nameOfBusiness.$dirty && vm.form.nameOfBusiness.$invalid), 'has-success' : (vm.form.nameOfBusiness.$dirty && vm.form.nameOfBusiness.$valid) }">
+                <label for="nameOfBusiness" class="control-label">Name Of Business <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="nameOfBusiness" placeholder="Name Of Business" aria-describedby="nameOfBusinessHelpBlock"
+                       name="nameOfBusiness" ng-model="vm.nameOfBusiness"
+                       ng-required="vm.accountType != 'personal'" ng-minlength="5" ng-maxlength="30" ng-pattern="/^[a-zA-Z\s]*$/">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.nameOfBusiness.$dirty && vm.form.nameOfBusiness.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.nameOfBusiness.$dirty && vm.form.nameOfBusiness.$valid"></span>
+                <div id="nameOfBusinessHelpBlock" class="help-inline" ng-messages="vm.form.nameOfBusiness.$error" ng-if="vm.form.nameOfBusiness.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="pattern">This should contains alphabets only</span>
+                    <span ng-message="minlength, maxlength">This should have minimum 5 and maximum 30 characters long</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="vm.accountType != 'personal'">
+        <div class="col-md-4">
+            <div class="form-group has-feedback">
+                <div class="form-group has-feedback"
+                     ng-class="{ 'has-error' : (vm.form.companyType.$dirty && vm.form.companyType.$invalid), 'has-success' : (vm.form.companyType.$dirty && vm.form.companyType.$valid) }">
+                    <label for="companyType">Company Type <span class="text-danger">*</span></label>
+                    <select class="form-control" id="companyType" aria-describedby="companyTypeHelpBlock"
+                            name="companyType" ng-model="vm.companyType" ng-required="vm.accountType != 'personal'">
+                        <option value="company">Company</option>
+                        <option value="firm">Firm</option>
+                        <option value="society">Society</option>
+                    </select>
+                    <div id="companyTypeHelpBlock" class="help-inline" ng-messages="vm.form.companyType.$error" ng-if="vm.form.companyType.$dirty">
+                        <span ng-message="required">This is required.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.contactPerson.$dirty && vm.form.contactPerson.$invalid), 'has-success' : (vm.form.contactPerson.$dirty && vm.form.contactPerson.$valid) }">
+                <label for="contactPerson" class="control-label">Contact Person <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="contactPerson" placeholder="Contact Person" aria-describedby="contactPersonHelpBlock"
+                       name="contactPerson" ng-model="vm.contactPerson"
+                       ng-required="vm.accountType != 'personal'" ng-minlength="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z\s]*$/">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.contactPerson.$dirty && vm.form.contactPerson.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.contactPerson.$dirty && vm.form.contactPerson.$valid"></span>
+                <div id="contactPersonHelpBlock" class="help-inline" ng-messages="vm.form.contactPerson.$error"
+                     ng-if="vm.form.contactPerson.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="pattern">This should contains alphabets only</span>
+                    <span ng-message="minlength, maxlength">This should have minimum 3 and maximum 30 characters long</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.address.$dirty && vm.form.address.$invalid), 'has-success' : (vm.form.address.$dirty && vm.form.address.$valid) }">
+                <label for="address" class="control-label">Address <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="address" placeholder="Address" aria-describedby="addressHelpBlock"
+                       name="address" ng-model="vm.address"
+                       required ng-minlength="5" ng-maxlength="100">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.address.$dirty && vm.form.address.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.address.$dirty && vm.form.address.$valid"></span>
+                <div id="addressHelpBlock" class="help-inline" ng-messages="vm.form.address.$error" ng-if="vm.form.address.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="minlength, maxlength">This should have minimum 5 and maximum 100 characters long</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group has-feedback">
+                <div class="form-group has-feedback"
+                     ng-class="{ 'has-error' : (vm.form.city.$dirty && vm.form.city.$invalid), 'has-success' : (vm.form.city.$dirty && vm.form.city.$valid) }">
+                    <label for="city">City <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="city" placeholder="City" aria-describedby="cityHelpBlock"
+                           name="city" ng-model="vm.city"
+                           required ng-minlength="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z\s]*$/">
+                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                          ng-if="vm.form.city.$dirty && vm.form.city.$invalid"></span>
+                    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                          ng-if="vm.form.city.$dirty && vm.form.city.$valid"></span>
+                    <div id="cityHelpBlock" class="help-inline" ng-messages="vm.form.city.$error"
+                         ng-if="vm.form.city.$dirty">
+                        <span ng-message="required">This is required.</span>
+                        <span ng-message="pattern">This should contains alphabets only</span>
+                        <span ng-message="minlength, maxlength">This should have minimum 3 and maximum 30 characters long</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!--
+            <div class="form-group has-feedback">
+                <div class="form-group has-feedback"
+                     ng-class="{ 'has-error' : (vm.form.state.$dirty && vm.form.state.$invalid), 'has-success' : (vm.form.state.$dirty && vm.form.state.$valid) }">
+                    <label for="state">State <span class="text-danger">*</span></label>
+                    <select class="form-control" id="state" aria-describedby="stateHelpBlock"
+                            ng-options="item as item for item in vm.malasiyaStates"
+                            name="state" ng-model="vm.state" required>
+                    </select>
+                    <div id="stateHelpBlock" class="help-inline" ng-messages="vm.form.state.$error" ng-if="vm.form.state.$dirty">
+                        <span ng-message="required">This is required.</span>
+                    </div>
+                </div>
+            </div>
+            -->
+            <div class="form-group has-feedback">
+                <div class="form-group has-feedback"
+                     ng-class="{ 'has-error' : (vm.form.state.$dirty && vm.form.state.$invalid), 'has-success' : (vm.form.state.$dirty && vm.form.state.$valid) }">
+                    <label for="state">State <span class="text-danger">*</span></label>
+                    <select id="state" name="state" aria-describedby="stateHelpBlock" placeholder="Choose State"
+                            selector options="vm.malasiyaStates" label-attr="state" closeAfterSelection="true"
+                            model="vm.state" change="vm.onStateChangeX(oldValue, newValue)" require="true">
+                    </select>
+                    <div id="stateHelpBlock" class="help-inline" ng-messages="vm.form.state.$error" ng-if="vm.form.state.$dirty">
+                        <span ng-message="required">This is required.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.postalCode.$dirty && vm.form.postalCode.$invalid), 'has-success' : (vm.form.postalCode.$dirty && vm.form.postalCode.$valid) }">
+                <label for="postalCode" class="control-label">Postal Code <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="postalCode" placeholder="Postal Code" aria-describedby="postalCodeHelpBlock"
+                       name="postalCode" ng-model="vm.postalCode"
+                       required ng-minlength="5" ng-maxlength="5" input-mask="'mask'" mask-option="{'mask':'99999'}" input-mask-number>
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.postalCode.$dirty && vm.form.postalCode.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                      ng-if="vm.form.postalCode.$dirty && vm.form.postalCode.$valid"></span>
+                <div id="postalCodeHelpBlock" class="help-inline" ng-messages="vm.form.postalCode.$error"
+                     ng-if="vm.form.postalCode.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="minlength, maxlength">This should be exactly 5 digits</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group has-feedback">
+                <div class="form-group has-feedback"
+                     ng-class="{ 'has-error' : (vm.form.sourceOfIncome.$dirty && vm.form.sourceOfIncome.$invalid), 'has-success' : (vm.form.sourceOfIncome.$dirty && vm.form.sourceOfIncome.$valid) }">
+                    <label for="sourceOfIncome">Source Of Income <span class="text-danger">*</span></label>
+                    <select class="form-control" id="sourceOfIncome" name="sourceOfIncome" aria-describedby="sourceOfIncomeHelpBlock" placeholder="Choose Source Of Income"
+                            ng-options="item for item in vm.sourceOfIncomes"
+                            ng-model="vm.sourceOfIncome" require="true">
+                    </select>
+                    <div id="sourceOfIncomeHelpBlock" class="help-inline" ng-messages="vm.form.sourceOfIncome.$error" ng-if="vm.form.sourceOfIncome.$dirty">
+                        <span ng-message="required">This is required.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group has-feedback">
+                <div class="form-group has-feedback"
+                     ng-class="{ 'has-error' : (vm.form.natureOfBusiness.$dirty && vm.form.natureOfBusiness.$invalid), 'has-success' : (vm.form.natureOfBusiness.$dirty && vm.form.natureOfBusiness.$valid) }">
+                    <label for="natureOfBusiness">Nature Of Business <span class="text-danger">*</span></label>
+                    <select class="form-control" id="natureOfBusiness" name="natureOfBusiness" aria-describedby="natureOfBusinessHelpBlock" placeholder="Choose Nature Of Business"
+                            ng-options="item for item in vm.natureOfBusinesses"
+                            ng-model="vm.natureOfBusiness" require="true">
+                    </select>
+                    <div id="natureOfBusinessHelpBlock" class="help-inline" ng-messages="vm.form.natureOfBusiness.$error" ng-if="vm.form.natureOfBusiness.$dirty">
+                        <span ng-message="required">This is required.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <span class="pull-left">
+                <button type="button" class="btn btn-default" ng-click="vm.addOrEditBeneficiary()">
+                    {{vm.beneficiaryLabel}} Beneficiary
+                </button>
+            </span>
+
+            <button type="button" class="btn btn-info" ng-show="appMode == 'local'" ng-click="vm.preFill()">PreFill</button>
+            &nbsp;&nbsp;&nbsp;
+            <a class="btn btn-info" href="#!/cdd" ng-show="appMode == 'local'" ng-click="vm.saveX()">NextX</a>
+
+            <span class="pull-right">
+                <button type="reset" class="btn btn-default" ng-click="vm.reset()">Reset</button>
+                &nbsp;&nbsp;&nbsp;
+                <button type="submit" class="btn "
+                        ng-class="{'btn-primary' : vm.form.$pristine, 'btn-success' : (vm.form.$dirty && vm.form.$valid), 'btn-danger' : (vm.form.$dirty && vm.form.$invalid) }"
+                        xng-disabled="!(vm.form.$dirty && vm.form.$valid)"
+                        ng-click="vm.save()">
+                    Next
+                </button>
+            </span>
+        </div>
+    </div>
+</form>
+
+<br/><div ng-show="appMode == 'local'"><pre>{{vm.form | json}}</pre></div>
+
+
+
+
+

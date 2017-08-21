@@ -274,7 +274,7 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
                  res.data.natureOfBusinessX = vm.natureOfBusiness;
                  storageService.saveCustomer(res.data);
                  wydNotifyService.showSuccess('Successfully signed up...');
-                 $location.path('/cdd');
+                 $location.path('/customers/customer/' + res.data.idNo + '/cdd');
              }, function (res) {
                  $log.error(res);
                  wydNotifyService.showError(res.data.description);
@@ -288,7 +288,7 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
                  res.data.natureOfBusinessX = vm.natureOfBusiness;
                  storageService.saveCustomer(res.data);
                  wydNotifyService.showSuccess('Successfully signed up...');
-                 $location.path('/cdd');
+                 $location.path('/customers/customer/' + res.data.idNo + '/cdd');
              }, function (res) {
                  $log.error(res);
                  wydNotifyService.showError(res.data.description);
