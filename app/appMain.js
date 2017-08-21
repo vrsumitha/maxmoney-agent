@@ -112,10 +112,16 @@ function appConfig($routeProvider, $locationProvider) {
         resolve: convertController.resolve
     });
 
-    $routeProvider.when('/users/user', {
+    $routeProvider.when('/users', {
         templateUrl: 'app/views/userListing.html',
         controller: 'userListingController as vm',
         resolve: userListingController.resolve
+    });
+
+    $routeProvider.when('/users/user/:id', {
+        templateUrl: 'app/views/userView.html',
+        controller: 'userViewController as vm',
+        resolve: userViewController.resolve
     });
 
     $routeProvider.when('/not-found', {
