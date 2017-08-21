@@ -6,7 +6,7 @@
                  ng-class="{ 'has-error' : (vm.form.emailId.$dirty && vm.form.emailId.$invalid), 'has-success' : (vm.form.emailId.$dirty && vm.form.emailId.$valid) }">
                 <label for="emailId">Email Id <span class="text-danger">*</span></label>
                 <input type="email" class="form-control" id="emailId" placeholder="Email Id" aria-describedby="emailIdHelpBlock"
-                       name="emailId" ng-model="vm.emailId" autofocus="true" required>
+                       name="emailId" ng-model="vm.emailId" autofocus="true" required ng-disabled="vm.isEdit">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.emailId.$dirty && vm.form.emailId.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -79,7 +79,7 @@
                     <label for="nationality">Nationality <span class="text-danger">*</span></label>
                     <select id="nationality" name="nationality" aria-describedby="nationalityHelpBlock" placeholder="Choose Nationality"
                             selector options="vm.countries" label-attr="nationality" closeAfterSelection="true"
-                            model="vm.nationality" change="vm.onNationalityChangeX(oldValue, newValue)" require="true" >
+                            model="vm.nationality" change="vm.onNationalityChangeX(oldValue, newValue)" require="true" disable="vm.isEdit">
                     </select>
                     <div id="nationalityHelpBlock" class="help-inline" ng-messages="vm.form.nationality.$error" ng-if="vm.form.nationality.$dirty">
                         <span ng-message="required">This is required.</span>
@@ -138,7 +138,7 @@
                 <label for="idType">ID Type <span class="text-danger">*</span></label>
                 <select class="form-control" id="idType" aria-describedby="idTypeHelpBlock" placeholder="Country"
                         name="idType" ng-model="vm.idType"
-                        ng-change="vm.onIdTypeChange()">
+                        ng-change="vm.onIdTypeChange()" ng-disabled="vm.isEdit">
                     <option value="nric">NRIC</option>
                     <option value="passport">Passport</option>
                 </select>
@@ -153,7 +153,7 @@
                  ng-class="{ 'has-error' : (vm.form.idNoNric.$dirty && vm.form.idNoNric.$invalid), 'has-success' : (vm.form.idNoNric.$dirty && vm.form.idNoNric.$valid) }">
                 <label for="idNoNric" class="control-label">NRIC Number <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="idNoNric" placeholder="NRIC Number" aria-describedby="idNoNricHelpBlock"
-                       name="idNoNric" ng-model="vm.idNoNric"
+                       name="idNoNric" ng-model="vm.idNoNric" ng-disabled="vm.isEdit"
                        ng-required="vm.idType == 'nric'" ng-minlength="12" ng-maxlength="12" input-mask="'mask'" mask-option="{'mask':'999999999999'}" input-mask-number>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.idNoNric.$dirty && vm.form.idNoNric.$invalid"></span>
@@ -168,7 +168,7 @@
                  ng-class="{ 'has-error' : (vm.form.idNoPassport.$dirty && vm.form.idNoPassport.$invalid), 'has-success' : (vm.form.idNoPassport.$dirty && vm.form.idNoPassport.$valid) }">
                 <label for="idNoPassport" class="control-label">Passport Number <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="idNoPassport" placeholder="Passport Number" aria-describedby="idNoPassportHelpBlock"
-                       name="idNoPassport" ng-model="vm.idNoPassport"
+                       name="idNoPassport" ng-model="vm.idNoPassport" ng-disabled="vm.isEdit"
                        ng-required="vm.idType == 'passport'" ng-minlength="6" ng-maxlength="15">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.idNoPassport.$dirty && vm.form.idNoPassport.$invalid"></span>
@@ -458,7 +458,7 @@
                 </button>
             </span>
 
-            <button type="button" class="btn btn-info" ng-show="appMode == 'local'" ng-click="vm.preFill()">PreFill</button>
+            <button type="submit" class="btn btn-info" ng-show="appMode == 'local'" ng-click="vm.preFill()">PreFill</button>
             &nbsp;&nbsp;&nbsp;
             <a class="btn btn-info" href="#!/cdd" ng-show="appMode == 'local'" ng-click="vm.saveX()">NextX</a>
 
@@ -476,7 +476,7 @@
     </div>
 </form>
 
-<br/><div><pre>{{vm.form | json}}</pre></div>
+<br/><div ng-show="appMode == 'local'"><pre>{{vm.form | json}}</pre></div>
 
 
 

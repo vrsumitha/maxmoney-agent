@@ -1,0 +1,27 @@
+<br/>
+<div class="form-inline text-center">
+    <div class="form-group">
+        <input class="form-control" type="text" id="searchCustomer" placeholder="Search by name"
+            name="searchCustomer" ng-model="vm.searchName" autofocus="true">
+            &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default" ng-click="vm.reload()">Search</button>
+    </div>
+</div>
+<br>
+<table class="table table-bordered text-nowrap">
+<thead>
+    <tr>
+        <td><b>Customer Name</b></td>
+        <td><b>Registration Time</b></td>
+        <td><b>Mobile</b></td>
+        <td><b>Address</b></td>
+    </tr>
+</thead>
+<tbody>
+    <tr ng-repeat="item in vm.customers">
+        <td><a ng-href="#!/customers/customer/{{item.idNo}}">{{item.customerName}}</a></td>
+        <td>{{ item.created  | date:'dd-MM-yyyy hh:mm:ss a'}}</td>
+        <td>{{ item.mobile }}</td>
+        <td>{{ item.address }}</td>
+    </tr>
+</tbody>
+</table>

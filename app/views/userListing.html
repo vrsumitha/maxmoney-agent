@@ -1,0 +1,19 @@
+<br/>
+<table class="table table-bordered text-nowrap">
+    <thead>
+    <tr>
+        <td><b>Id Number</b></td>
+        <td><b>Username/Email</b></td>
+        <td><b>Name</b></td>
+        <td><b>Mobile</b></td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in vm.users">
+        <td><a ng-href="#!/users/user/{{item.idNo}}">{{ item.idNo }}</a></td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.mobile }}</td>
+    </tr>
+    </tbody>
+</table>

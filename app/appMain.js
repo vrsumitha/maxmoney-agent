@@ -1,7 +1,8 @@
 function rootController($log, $rootScope, $scope, $window, sessionService) {
     $log.debug('rootController...');
 
-    $scope.lodash = _; $rootScope.homePath = '/sign-in';
+    $scope.lodash = _;
+    $rootScope.homePath = '/sign-in';
 
     $scope.historyBack = function () {
         $window.history.back();
@@ -75,22 +76,46 @@ function appConfig($routeProvider, $locationProvider) {
         controller: 'signOutController as vm'
     });
 
-    $routeProvider.when('/sign-up', {
-        templateUrl: 'app/views/signUp.html',
-        controller: 'signUpController as vm',
-        resolve: signUpController.resolve
+    $routeProvider.when('/customers', {
+        templateUrl: 'app/views/customerListing.html',
+        controller: 'customerListingController as vm',
+        resolve: customerListingController.resolve
     });
 
-    $routeProvider.when('/cdd', {
-        templateUrl: 'app/views/cdd.html',
-        controller: 'cddController as vm',
-        resolve: cddController.resolve
+    $routeProvider.when('/customers/customer', {
+        templateUrl: 'app/views/customerCreateOrUpdate.html',
+        controller: 'customerCreateOrUpdateController as vm',
+        resolve: customerCreateOrUpdateController.resolve
     });
 
-    $routeProvider.when('/convert', {
-        templateUrl: 'app/views/convert.html',
-        controller: 'convertController as vm',
-        resolve: convertController.resolve
+    $routeProvider.when('/customers/customer/:id', {
+        templateUrl: 'app/views/customerCreateOrUpdateX.html',
+        controller: 'customerCreateOrUpdateController as vm',
+        resolve: customerCreateOrUpdateController.resolve
+    });
+
+    $routeProvider.when('/customers/customer/:id/cdd', {
+        templateUrl: 'app/views/customerCdd.html',
+        controller: 'customerCddController as vm',
+        resolve: customerCddController.resolve
+    });
+
+    $routeProvider.when('/customers/customer/:id/convert', {
+        templateUrl: 'app/views/customerConvert.html',
+        controller: 'customerConvertController as vm',
+        resolve: customerConvertController.resolve
+    });
+
+    $routeProvider.when('/users', {
+        templateUrl: 'app/views/userListing.html',
+        controller: 'userListingController as vm',
+        resolve: userListingController.resolve
+    });
+
+    $routeProvider.when('/users/user/:id', {
+        templateUrl: 'app/views/userView.html',
+        controller: 'userViewController as vm',
+        resolve: userViewController.resolve
     });
 
     $routeProvider.when('/not-found', {
@@ -116,7 +141,7 @@ function appInit($log, $rootScope, $location, $sessionStorage) {
     console.log('Application Mode : ' + $rootScope.appMode);
 
     var path = '/sign-in';
-    //path = '/convert';
+    //path = '/sign-up';
     $log.info('Start Path : ' + path);
     $location.path(path);
 
