@@ -239,7 +239,6 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         vm.nationality = null;
         vm.state = null;
 
-
         $log.info('reset finished...');
     }
 
@@ -342,39 +341,57 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
             reqCus.beneficiaryId = vm.beneficiary.id;
         }
         $log.info(reqCus);
-        sessionService.signUp(reqCus).then(function (res) {
-            $log.debug(res);
-            sessionService.currentCustomer = res.data;
-            res.data.password = vm.confirmPassword;
-            res.data.sourceOfIncomeX = vm.sourceOfIncome;
-            res.data.natureOfBusinessX = vm.natureOfBusiness;
-            storageService.saveCustomer(res.data);
-            wydNotifyService.showSuccess('Successfully signed up...');
-            $location.path('/cdd');
-        }, function (res) {
-            $log.error(res);
-            wydNotifyService.showError(res.data.description);
-        });
+        // sessionService.signUp(reqCus).then(function (res) {
+        //     $log.debug(res);
+        //     sessionService.currentCustomer = res.data;
+        //     res.data.password = vm.confirmPassword;
+        //     res.data.sourceOfIncomeX = vm.sourceOfIncome;
+        //     res.data.natureOfBusinessX = vm.natureOfBusiness;
+        //     storageService.saveCustomer(res.data);
+        //     wydNotifyService.showSuccess('Successfully signed up...');
+        //     $location.path('/cdd');
+        // }, function (res) {
+        //     $log.error(res);
+        //     wydNotifyService.showError(res.data.description);
+        // });
 
         $log.info('saving finished...');
     }
 
     function preFill() {
+
         vm.emailId = 'sample@gmail.com';
         vm.password = '12345';
         vm.confirmPassword = '12345';
         vm.name = 'Sample';
+
+        vm.nationality = vm.countries[1];
+
         vm.mobileNo = '1234567890';
         vm.accountType = 'personal';
         vm.idType = 'passport';
         vm.idNoPassport = '123400';
+
         vm.dob = '10-05-1980';
+        vm.form.dob.$setValidity('date', true);
+
         vm.address = 'abc address';
         vm.city = 'Chennai';
-        vm.postalCode = '12345';
-        vm.form.$setSubmitted();
-    }
 
+        vm.state = vm.malasiyaStates[0];
+
+        vm.postalCode = '12345';
+        vm.sourceOfIncome = 'Individual';
+        vm.natureOfBusiness = 'Accountants';
+
+        angular.forEach(vm.form.$error, function(type) {
+            angular.forEach(type, function(field) {
+                field.$setDirty();
+            });
+        });
+
+        console.log(vm.nationality);
+    }
 
     function init() {
         $log.info('init started...');

@@ -451,36 +451,32 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4">
-            <button type="button" class="btn btn-default"
-                    ng-click="vm.addOrEditBeneficiary()">
-                {{vm.beneficiaryLabel}} Beneficiary
-            </button>
-            <button type="button" class="btn btn-default"
-                    ng-click="vm.preFill()">
-                PreFill
-            </button>
-        </div>
-        <div class="col-md-4">
-            &nbsp;<!-- <br/>&nbsp;<strong>Note : <span class="text-danger">*</span> indicates mandatory fields</strong> -->
-        </div>
-        <div class="col-md-4 text-right">
-            <button type="reset" class="btn btn-default"
-                    ng-click="vm.reset()">
-                Reset
-            </button>
+        <div class="col-md-12 text-center">
+            <span class="pull-left">
+                <button type="button" class="btn btn-default" ng-click="vm.addOrEditBeneficiary()">
+                    {{vm.beneficiaryLabel}} Beneficiary
+                </button>
+            </span>
+
+            <button type="button" class="btn btn-info" ng-show="appMode == 'local'" ng-click="vm.preFill()">PreFill</button>
             &nbsp;&nbsp;&nbsp;
-            <button type="submit" class="btn "
-                    ng-class="{'btn-primary' : vm.form.$pristine, 'btn-success' : (vm.form.$dirty && vm.form.$valid), 'btn-danger' : (vm.form.$dirty && vm.form.$invalid) }"
-                    ng-disabled="!(vm.form.$dirty && vm.form.$valid)"
-                    ng-click="vm.save()">
-                Next
-            </button>
-            &nbsp;&nbsp;&nbsp;
-            <a type="submit" class="btn btn-primary" href="#!/cdd" ng-show="appMode == 'local'" ng-click="vm.saveX()">NextX</a>
+            <a class="btn btn-info" href="#!/cdd" ng-show="appMode == 'local'" ng-click="vm.saveX()">NextX</a>
+
+            <span class="pull-right">
+                <button type="reset" class="btn btn-default" ng-click="vm.reset()">Reset</button>
+                &nbsp;&nbsp;&nbsp;
+                <button type="submit" class="btn "
+                        ng-class="{'btn-primary' : vm.form.$pristine, 'btn-success' : (vm.form.$dirty && vm.form.$valid), 'btn-danger' : (vm.form.$dirty && vm.form.$invalid) }"
+                        xng-disabled="!(vm.form.$dirty && vm.form.$valid)"
+                        ng-click="vm.save()">
+                    Next
+                </button>
+            </span>
         </div>
     </div>
 </form>
+
+<br/><div><pre>{{vm.form | json}}</pre></div>
 
 
 

@@ -93,6 +93,12 @@ function appConfig($routeProvider, $locationProvider) {
         resolve: convertController.resolve
     });
 
+    $routeProvider.when('/approve-user', {
+        templateUrl: 'app/views/approveUserListing.html',
+        controller: 'approveUserListingController as vm',
+        resolve: approveUserListingController.resolve
+    });
+
     $routeProvider.when('/not-found', {
         template: '<p>Not Found</p>'
     });
@@ -116,7 +122,7 @@ function appInit($log, $rootScope, $location, $sessionStorage) {
     console.log('Application Mode : ' + $rootScope.appMode);
 
     var path = '/sign-in';
-    //path = '/convert';
+    //path = '/sign-up';
     $log.info('Start Path : ' + path);
     $location.path(path);
 
