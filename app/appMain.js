@@ -112,10 +112,10 @@ function appConfig($routeProvider, $locationProvider) {
         resolve: convertController.resolve
     });
 
-    $routeProvider.when('/approve-user', {
-        templateUrl: 'app/views/approveUserListing.html',
-        controller: 'approveUserListingController as vm',
-        resolve: approveUserListingController.resolve
+    $routeProvider.when('/users/user', {
+        templateUrl: 'app/views/userListing.html',
+        controller: 'userListingController as vm',
+        resolve: userListingController.resolve
     });
 
     $routeProvider.when('/not-found', {

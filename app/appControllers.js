@@ -1,4 +1,4 @@
-function signInController($log, $rootScope, $scope, wydNotifyService, storageService, sessionService, $location) {
+function signInController($log, $rootScope, $scope, wydNotifyService, storageService, sessionService, $location, $timeout) {
     var cmpId = 'signInController', cmpName = 'Sign In';
     $log.info(cmpId + ' started ...');
 
@@ -44,6 +44,12 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
 
         vm.message = 'Sign In';
 
+        if($rootScope.appMode == 'local') {
+            vm.userId = 'sa@maxmoney.com';
+            vm.password = 'MaxMoney@2016';
+            $timeout(signIn, 2000);
+        }
+
         $log.info('init finished...');
     }
 
@@ -56,11 +62,8 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
     init();
 
     $log.info(cmpId + 'finished...');
-
-
-    $log.info(cmpId + 'finished...');
 }
-signInController.$inject = ['$log', '$rootScope', '$scope', 'wydNotifyService', 'storageService', 'sessionService', '$location'];
+signInController.$inject = ['$log', '$rootScope', '$scope', 'wydNotifyService', 'storageService', 'sessionService', '$location', '$timeout'];
 appControllers.controller('signInController', signInController);
 
 function signOutController($log, $rootScope, $scope, sessionService, $location) {
