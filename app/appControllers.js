@@ -44,11 +44,11 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
 
         vm.message = 'Sign In';
 
-        if($rootScope.appMode == 'local') {
-            vm.userId = 'sa@maxmoney.com';
-            vm.password = 'MaxMoney@2016';
-            $timeout(signIn, 2000);
-        }
+        //if($rootScope.appMode == 'local') {
+        //    vm.userId = 'sa@maxmoney.com';
+        //    vm.password = 'MaxMoney@2016';
+        //    $timeout(signIn, 2000);
+        //}
 
         $log.info('init finished...');
     }

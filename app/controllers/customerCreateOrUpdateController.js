@@ -396,13 +396,13 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
             }
             vm.postalCode = model.postalCode;
 
-            $scope.$apply(function(){
-                angular.forEach(vm.form.$error, function (type) {
-                    angular.forEach(type, function (field) {
-                        field.$setDirty();
-                    });
-                });
-            });
+            //$scope.$apply(function(){
+            //    angular.forEach(vm.form.$error, function (type) {
+            //        angular.forEach(type, function (field) {
+            //            field.$setDirty();
+            //        });
+            //    });
+            //});
         }
 
         $log.info('init finished...');
