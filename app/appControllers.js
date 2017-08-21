@@ -28,8 +28,8 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
                 $log.info('Current User Role  : ' + res.role);
 
                 $rootScope.session = res;
-                $rootScope.homePath = '/sign-up';
-                $location.path('/sign-up');
+                //$rootScope.homePath = '/sign-up';
+                $location.path('/customers');
             });
         }, function (res) {
             console.log(res);
@@ -102,6 +102,8 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
 
     vm.countries = sessionService.countries;
     vm.malasiyaStates = sessionService.malasiyaStates;
+    vm.sourceOfIncomes = sessionService.sourceOfIncomes;
+    vm.natureOfBusinesses = sessionService.natureOfBusinesses;
 
     $scope.$on('session:countries', function (event, data) {
         vm.countries = sessionService.countries;
@@ -115,6 +117,14 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         // if (vm.malasiyaStates && vm.malasiyaStates.length > 0) {
         //     vm.malasiyaStates.unshift(vm.state);
         // }
+    });
+
+    $scope.$on('session:sourceOfIncomes', function (event, data) {
+        vm.sourceOfIncomes = sessionService.sourceOfIncomes;
+    });
+
+    $scope.$on('session:natureOfBusinesses', function (event, data) {
+        vm.natureOfBusinesses = sessionService.natureOfBusinesses;
     });
 
     function addOrEditBeneficiary() {
@@ -229,7 +239,6 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         vm.nationality = null;
         vm.state = null;
 
-
         $log.info('reset finished...');
     }
 
@@ -332,20 +341,56 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
             reqCus.beneficiaryId = vm.beneficiary.id;
         }
         $log.info(reqCus);
-        sessionService.signUp(reqCus).then(function (res) {
-            $log.info(res);
-            sessionService.currentCustomer = res.data;
-            res.data.password = vm.confirmPassword;
-            storageService.saveCustomer(res.data);
-            wydNotifyService.showSuccess('Successfully signed up...');
-            $location.path('/cdd');
-            //reset();
-        }, function (res) {
-            $log.info(res);
-            wydNotifyService.showError(res.data.description);
-        });
+        // sessionService.signUp(reqCus).then(function (res) {
+        //     $log.debug(res);
+        //     sessionService.currentCustomer = res.data;
+        //     res.data.password = vm.confirmPassword;
+        //     res.data.sourceOfIncomeX = vm.sourceOfIncome;
+        //     res.data.natureOfBusinessX = vm.natureOfBusiness;
+        //     storageService.saveCustomer(res.data);
+        //     wydNotifyService.showSuccess('Successfully signed up...');
+        //     $location.path('/cdd');
+        // }, function (res) {
+        //     $log.error(res);
+        //     wydNotifyService.showError(res.data.description);
+        // });
 
         $log.info('saving finished...');
+    }
+
+    function preFill() {
+
+        vm.emailId = 'sample@gmail.com';
+        vm.password = '12345';
+        vm.confirmPassword = '12345';
+        vm.name = 'Sample';
+
+        vm.nationality = vm.countries[1];
+
+        vm.mobileNo = '1234567890';
+        vm.accountType = 'personal';
+        vm.idType = 'passport';
+        vm.idNoPassport = '123400';
+
+        vm.dob = '10-05-1980';
+        vm.form.dob.$setValidity('date', true);
+
+        vm.address = 'abc address';
+        vm.city = 'Chennai';
+
+        vm.state = vm.malasiyaStates[0];
+
+        vm.postalCode = '12345';
+        vm.sourceOfIncome = 'Individual';
+        vm.natureOfBusiness = 'Accountants';
+
+        angular.forEach(vm.form.$error, function(type) {
+            angular.forEach(type, function(field) {
+                field.$setDirty();
+            });
+        });
+
+        console.log(vm.nationality);
     }
 
     function init() {
@@ -374,6 +419,12 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         // if (vm.malasiyaStates && vm.malasiyaStates.length > 0) {
         //     vm.malasiyaStates.unshift(vm.state);
         // }
+        if(_.keys(vm.sourceOfIncomes).length === 0) {
+            sessionService.getSourceOfIncomes();
+        }
+        if(_.keys(vm.natureOfBusinesses).length === 0) {
+            sessionService.getNatureOfBusinesses();
+        }
 
         $log.info('init finished...');
     }
@@ -388,7 +439,8 @@ function signUpController($log, $rootScope, $scope, _session, wydNotifyService, 
         onStateChangeX: onStateChangeX,
         onIdTypeChange: onIdTypeChange,
         save: save,
-        reset: reset
+        reset: reset,
+        preFill: preFill
     });
 
     init();
@@ -691,13 +743,7 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
         sessionService.convertCustomer(params).then(function (res) {
             $log.debug(res);
             if (res.status === 201) {
-                // wydNotifyService.showSuccess('Successfully converted...');
-                // alertify.alert('Info', 'Successfully converted...', function () {
-                //     console.log('converted ...');
-                //     $scope.$apply(function () {
-                //         $location.path('/sign-up');
-                //     });
-                // });
+                updateUserInfo();
                 swal({
                     type: 'success',
                     title: 'Customer Created.',
@@ -717,6 +763,12 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
         });
 
         $log.info('convert customer finished...');
+    }
+
+    function updateUserInfo() {
+        $log.debug('update user info started...');
+        sessionService.updateSourceOfIncomeAndNatureOfBusinessForUser(vm.customer.email, vm.customer.sourceOfIncomeX, vm.customer.natureOfBusinessX);
+        $log.debug('update user info finished...');
     }
 
     function init() {
@@ -766,6 +818,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
     vm.relationships = sessionService.relationships;
     vm.orderPurposes = _.keys(sessionService.orderPurposes);
     vm.agentCountries = sessionService.agentDetail.agents;
+
 
     vm.payBy = 'CP';
     vm.isCountryInitialized = false;

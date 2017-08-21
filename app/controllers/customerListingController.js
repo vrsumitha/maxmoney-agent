@@ -17,12 +17,12 @@ function customerListingController($log, $rootScope, $scope, wydNotifyService, s
         $log.info('reload finished...');
     }
 
-    function gotoCDD (id) {
-        $log.info('gotoCDD started...');
+    function gotoCustomerUpdate (id) {
+        $log.info('gotoCustomerUpdate started...');
         sessionService.currentCustomer = _.find(vm.customers, function(item) { return item.idNo === id });
        // storageService.saveCustomer(res.data);
-        $location.path('/cdd');
-        $log.info('gotoCDD finished...');
+        $location.path('/customers/' + id);
+        $log.info('gotoCustomerUpdate finished...');
     }
 
     function init() {
@@ -34,7 +34,7 @@ function customerListingController($log, $rootScope, $scope, wydNotifyService, s
     angular.extend(this, {
         uiState: uiState,
         reload: reload,
-        gotoCDD: gotoCDD
+        gotoCDD: gotoCustomerUpdate
     });
 
     init();

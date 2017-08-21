@@ -1,7 +1,8 @@
 function rootController($log, $rootScope, $scope, $window, sessionService) {
     $log.debug('rootController...');
 
-    $scope.lodash = _; $rootScope.homePath = '/sign-in';
+    $scope.lodash = _;
+    $rootScope.homePath = '/sign-in';
 
     $scope.historyBack = function () {
         $window.history.back();
@@ -75,6 +76,24 @@ function appConfig($routeProvider, $locationProvider) {
         controller: 'signOutController as vm'
     });
 
+    $routeProvider.when('/customers', {
+        templateUrl: 'app/views/customerListing.html',
+        controller: 'customerListingController as vm',
+        resolve: customerListingController.resolve
+    });
+
+    $routeProvider.when('/customers/customer', {
+        templateUrl: 'app/views/signUp.html',
+        controller: 'customerCreateOrUpdateController as vm',
+        resolve: customerCreateOrUpdateController.resolve
+    });
+
+    $routeProvider.when('/customers/customer/:id', {
+       templateUrl: 'app/views/customerCreateOrUpdate.html',
+       controller: 'customerCreateOrUpdateController as vm',
+       resolve: customerCreateOrUpdateController.resolve
+    });
+
     $routeProvider.when('/sign-up', {
         templateUrl: 'app/views/signUp.html',
         controller: 'signUpController as vm',
@@ -93,17 +112,11 @@ function appConfig($routeProvider, $locationProvider) {
         resolve: convertController.resolve
     });
 
-    $routeProvider.when('/customers', {
-        templateUrl: 'app/views/customerListing.html',
-        controller: 'customerListingController as vm',
-        resolve: customerListingController.resolve
+    $routeProvider.when('/approve-user', {
+        templateUrl: 'app/views/approveUserListing.html',
+        controller: 'approveUserListingController as vm',
+        resolve: approveUserListingController.resolve
     });
-
-    //$routeProvider.when('/customers/:id', {
-    //    templateUrl: 'app/views/customerUpdate.html',
-    //    controller: 'customerUpdateController as vm',
-    //    resolve: customerUpdateController.resolve
-    //});
 
     $routeProvider.when('/not-found', {
         template: '<p>Not Found</p>'
@@ -128,7 +141,7 @@ function appInit($log, $rootScope, $location, $sessionStorage) {
     console.log('Application Mode : ' + $rootScope.appMode);
 
     var path = '/sign-in';
-   // path = '/customers';
+    //path = '/sign-up';
     $log.info('Start Path : ' + path);
     $location.path(path);
 

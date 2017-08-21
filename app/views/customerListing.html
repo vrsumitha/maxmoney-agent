@@ -9,7 +9,7 @@
 </thead>
 <tbody>
     <tr ng-repeat="item in vm.customers">
-        <td><button type="button" class="btn btn-link" ng-click="vm.gotoCDD(id)">{{ item.customerName }}</button></td>
+        <td><a ng-href="#!/customers/customer/{{item.idNo}}">{{item.customerName}}</a></td>
         <td>{{ item.created  | date:'dd-MM-yyyy hh:mm:ss a'}}</td>
         <td>{{ item.mobile }}</td>
         <td>{{ item.address }}</td>
