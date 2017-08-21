@@ -1,4 +1,4 @@
-function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $uibModal, $location, $routeParams) {
+function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $uibModal, $location, $routeParams, $timeout) {
     var cmpId = 'signUpController', cmpName = 'Create Customer';
     $log.info(cmpId + ' started ...');
 
@@ -249,6 +249,9 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
         if (vm.beneficiary.id != 'NA') {
             reqCus.beneficiaryId = vm.beneficiary.id;
         }
+        if(!$routeParams.id) {
+            reqCus.registeredThrough = 'agent';
+        }
         $log.info(reqCus);
 
         if($routeParams.id) {
@@ -315,8 +318,6 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
                 field.$setDirty();
             });
         });
-
-        console.log(vm.nationality);
     }
 
     function init() {
@@ -394,6 +395,14 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
                 });
             }
             vm.postalCode = model.postalCode;
+
+            $scope.$apply(function(){
+                angular.forEach(vm.form.$error, function (type) {
+                    angular.forEach(type, function (field) {
+                        field.$setDirty();
+                    });
+                });
+            });
         }
 
         $log.info('init finished...');
@@ -417,7 +426,7 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
 
     $log.info(cmpId + 'finished...');
 }
-customerCreateOrUpdateController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$uibModal', '$location', '$routeParams'];
+customerCreateOrUpdateController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$uibModal', '$location', '$routeParams', '$timeout'];
 customerCreateOrUpdateController.resolve = {
     '_session': ['sessionService', function (sessionService) {
         //sessionService.switchOffAutoComplete();
