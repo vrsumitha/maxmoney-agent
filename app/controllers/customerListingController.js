@@ -8,8 +8,8 @@ function customerListingController($log, $rootScope, $scope, wydNotifyService, s
 
     function reload() {
         $log.info('reload started...');
-
-        sessionService.getCustomers().then(function (res) {
+        console.log(vm.searchName);
+        sessionService.getCustomers(vm.searchName).then(function (res) {
             vm.customers = res.data.customers;
            // $log.info(vm.customers);
         });

@@ -418,8 +418,11 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
-    service.getCustomers = function () {
+    service.getCustomers = function (name) {
         var path = apiBasePath + '/customers?size=100&page=1&status=Unapproved';
+        if(name && name != '') {
+            path += '&customerName=' + name;
+        }
         var req = {
             method: 'GET',
             headers: {'api-key': $rootScope.sessionId},
