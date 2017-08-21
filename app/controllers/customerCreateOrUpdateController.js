@@ -157,8 +157,19 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
         wydNotifyService.hide();
 
         if (vm.form.$pristine) {
-            wydNotifyService.showError('There is no change. Hence, nothing to save.');
-            return;
+            if(vm.password && vm.confirmPassword && vm.sourceOfIncome && vm.natureOfBusiness) {
+                vm.form.$setDirty();
+            }
+            else{
+                if(!vm.password) {
+                    wydNotifyService.showError('Please fill password');
+                    return;
+                }
+                if(!vm.confirmPassword) {
+                    wydNotifyService.showError('Please fill confirm password');
+                    return;
+                }
+            }
         }
         if (vm.password != vm.confirmPassword) {
             wydNotifyService.showError('Password and Confirm password not matched');
