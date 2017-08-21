@@ -340,6 +340,26 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
             var model = _.find(sessionService.customers, function(item) { return item.idNo === $routeParams.id });
             console.log(model);
             vm.emailId = model.email;
+            vm.name =  model.customerName;
+            vm.nationality = model.nationality;
+            vm.mobileNo = model.mobile;
+            if(model.type === 'Individual') {
+                vm.accountType = 'personal';
+            }
+            console.log(model.idType);
+            if(model.idType === 'NRIC') {
+                vm.idType = 'nric';
+                vm.idNoNric = model.idNo;
+            }
+            if(model.idType === 'Passport') {
+                vm.idType = 'passport';
+                vm.idNoPassport = model.idNo;
+            }
+            vm.dob =  moment(model.dob).format('DD-MM-YYYY');
+            vm.address = model.address;
+            vm.city = model.city;
+           // vm.state = model.state;
+            vm.postalCode = model.postalCode;
         }
 
         $log.info('init finished...');

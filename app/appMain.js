@@ -94,11 +94,11 @@ function appConfig($routeProvider, $locationProvider) {
        resolve: customerCreateOrUpdateController.resolve
     });
 
-    $routeProvider.when('/sign-up', {
-        templateUrl: 'app/views/signUp.html',
-        controller: 'signUpController as vm',
-        resolve: signUpController.resolve
-    });
+    //$routeProvider.when('/sign-up', {
+    //    templateUrl: 'app/views/signUp.html',
+    //    controller: 'signUpController as vm',
+    //    resolve: signUpController.resolve
+    //});
 
     $routeProvider.when('/cdd', {
         templateUrl: 'app/views/cdd.html',
