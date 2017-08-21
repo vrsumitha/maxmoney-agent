@@ -755,7 +755,7 @@ function convertController($log, $rootScope, $scope, _session, wydNotifyService,
                 }).then(
                     function () {
                         $scope.$apply(function () {
-                            $location.path('/sign-up');
+                            $location.path($rootScope.customerConvertBackUrl);
                         });
                     }
                 );

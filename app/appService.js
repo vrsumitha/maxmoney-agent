@@ -463,6 +463,49 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
+    service.createCustomer = function (params) {
+        var path = apiBasePath + '/customers';
+        var req = {
+            method: 'POST',
+            url: path,
+            params: params
+        };
+        //$log.info(req);
+        var deferred = $q.defer();
+        $http(req).then(function (res) {
+            deferred.resolve(res);
+        }, function (res) {
+            deferred.reject(res);
+        });
+        return deferred.promise;
+    };
+
+    service.updateCustomer = function (params) {
+        var path = apiBasePath + '/customers/' + params.idNo;
+        delete params.idNo;
+        var req = {
+            method: 'PUT',
+            url: path,
+            headers: {'api-key': $rootScope.sessionId, 'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function (obj) {
+                var str = [];
+                for (var p in obj) {
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                }
+                return str.join("&");
+            },
+            data: params
+        };
+        //$log.info(req);
+        var deferred = $q.defer();
+        $http(req).then(function (res) {
+            deferred.resolve(res);
+        }, function (res) {
+            deferred.reject(res);
+        });
+        return deferred.promise;
+    };
+
     service.approve = function (id) {
         var path = apiBasePath + '/customers/' + id + '/approve';
         var req = {
