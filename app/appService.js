@@ -11,6 +11,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         beneficiaries: [],
         sourceOfIncomes: {},
         natureOfBusinesses: {},
+        users: [],
         currentUser: {}
     };
 
@@ -417,7 +418,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
-    service.getCustomers = function (id) {
+    service.getCustomers = function () {
         var path = apiBasePath + '/customers?size=100&page=1&status=Unapproved';
         var req = {
             method: 'GET',
@@ -653,6 +654,29 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
             deferred.resolve(res);
         }, function (res) {
             deferred.reject(res);
+        });
+        return deferred.promise;
+    };
+
+    service.getUsers = function () {
+        var path = apiBasePath + '/users?size=100&page=1&status=inactive';
+        var req = {
+            method: 'GET',
+            headers: {'api-key': $rootScope.sessionId},
+            url: path
+        };
+        //$log.info(req);
+        $log.debug('fetching users started...');
+        var deferred = $q.defer();
+        $http(req).then(function (res) {
+            $log.debug(res);
+            $log.debug('fetching users finished with success.');
+            service.users = res.data.users;
+            deferred.resolve(res);
+        }, function (res) {
+            $log.error(res.data);
+            $log.debug('fetching users finished with failure.');
+            deferred.reject(res.data);
         });
         return deferred.promise;
     };
