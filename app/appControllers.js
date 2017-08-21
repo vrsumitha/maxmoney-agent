@@ -47,7 +47,7 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
         if(window.location.hostname == 'localhost') {
             vm.userId = 'sa@maxmoney.com';
             vm.password = 'MaxMoney@2016';
-            $timeout(signIn, 2000);
+            //$timeout(signIn, 2000);
         }
 
         $log.info('init finished...');
@@ -93,6 +93,7 @@ function signOutController($log, $rootScope, $scope, sessionService, $location) 
 signOutController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$location'];
 appControllers.controller('signOutController', signOutController);
 
+/*
 function signUpController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $uibModal, $location) {
     var cmpId = 'signUpController', cmpName = 'Customer Registration';
     $log.info(cmpId + ' started ...');
@@ -807,6 +808,7 @@ convertController.resolve = {
     }]
 };
 appControllers.controller('convertController', convertController);
+*/
 
 function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService, $uibModalInstance, model, country) {
     var cmpId = 'beneficiaryAddOrEditController', cmpName = 'Add/Edit Beneficiary';

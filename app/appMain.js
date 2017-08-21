@@ -89,27 +89,21 @@ function appConfig($routeProvider, $locationProvider) {
     });
 
     $routeProvider.when('/customers/customer/:id', {
-       templateUrl: 'app/views/customerCreateOrUpdate.html',
-       controller: 'customerCreateOrUpdateController as vm',
-       resolve: customerCreateOrUpdateController.resolve
+        templateUrl: 'app/views/customerCreateOrUpdate.html',
+        controller: 'customerCreateOrUpdateController as vm',
+        resolve: customerCreateOrUpdateController.resolve
     });
 
-    $routeProvider.when('/sign-up', {
-        templateUrl: 'app/views/signUp.html',
-        controller: 'signUpController as vm',
-        resolve: signUpController.resolve
+    $routeProvider.when('/customers/customer/:id/cdd', {
+        templateUrl: 'app/views/customerCdd.html',
+        controller: 'customerCddController as vm',
+        resolve: customerCddController.resolve
     });
 
-    $routeProvider.when('/cdd', {
-        templateUrl: 'app/views/cdd.html',
-        controller: 'cddController as vm',
-        resolve: cddController.resolve
-    });
-
-    $routeProvider.when('/convert', {
-        templateUrl: 'app/views/convert.html',
-        controller: 'convertController as vm',
-        resolve: convertController.resolve
+    $routeProvider.when('/customers/customer/:id/convert', {
+        templateUrl: 'app/views/customerConvert.html',
+        controller: 'customerConvertController as vm',
+        resolve: customerConvertController.resolve
     });
 
     $routeProvider.when('/users', {
