@@ -50,7 +50,7 @@
                         <a href="#!/customers">Customers</a>
                     </li>
                     <li ng-class="{'active' : (viewName == 'Sign Up')}" ng-show="(sessionId)">
-                        <a href="#!/sign-up">Customer Registration</a>
+                        <a href="#!/customers/customer">Customer Registration</a>
                     </li>
                     <li ng-class="{'active' : (viewName == 'Approve Users')}" ng-show="(sessionId)">
                         <a href="#!/users">Approve User</a>
@@ -146,6 +146,8 @@
 <script src="app/appControllers.js"></script>
 <script src="app/controllers/customerListingController.js"></script>
 <script src="app/controllers/customerCreateOrUpdateController.js"></script>
+<script src="app/controllers/customerCddController.js"></script>
+<script src="app/controllers/customerConvertController.js"></script>
 <script src="app/controllers/userListingController.js"></script>
 <script src="app/controllers/userViewController.js"></script>
 <script src="app/appMain.js"></script>

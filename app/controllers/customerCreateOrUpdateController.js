@@ -1,10 +1,11 @@
-function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $uibModal, $location, $routeParams) {
+function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $uibModal, $location, $routeParams, $timeout) {
     var cmpId = 'signUpController', cmpName = 'Create Customer';
     $log.info(cmpId + ' started ...');
 
     $rootScope.viewName = cmpName;
 
     var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
+    vm.isEdit = false;
 
     var dnationality = {name: '-', dial_code: '-', code: '-', nationality: '<Select Nationality>'};
 
@@ -248,20 +249,40 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
         if (vm.beneficiary.id != 'NA') {
             reqCus.beneficiaryId = vm.beneficiary.id;
         }
+        if(!$routeParams.id) {
+            reqCus.registeredThrough = 'agent';
+        }
         $log.info(reqCus);
-        // sessionService.signUp(reqCus).then(function (res) {
-        //     $log.debug(res);
-        //     sessionService.currentCustomer = res.data;
-        //     res.data.password = vm.confirmPassword;
-        //     res.data.sourceOfIncomeX = vm.sourceOfIncome;
-        //     res.data.natureOfBusinessX = vm.natureOfBusiness;
-        //     storageService.saveCustomer(res.data);
-        //     wydNotifyService.showSuccess('Successfully signed up...');
-        //     $location.path('/cdd');
-        // }, function (res) {
-        //     $log.error(res);
-        //     wydNotifyService.showError(res.data.description);
-        // });
+
+        if($routeParams.id) {
+             sessionService.updateCustomer(reqCus).then(function (res) {
+                 $log.debug(res);
+                 sessionService.currentCustomer = res.data;
+                 res.data.password = vm.confirmPassword;
+                 res.data.sourceOfIncomeX = vm.sourceOfIncome;
+                 res.data.natureOfBusinessX = vm.natureOfBusiness;
+                 storageService.saveCustomer(res.data);
+                 wydNotifyService.showSuccess('Successfully signed up...');
+                 $location.path('/customers/customer/' + res.data.idNo + '/cdd');
+             }, function (res) {
+                 $log.error(res);
+                 wydNotifyService.showError(res.data.description);
+             });
+        } else {
+             sessionService.createCustomer(reqCus).then(function (res) {
+                 $log.debug(res);
+                 sessionService.currentCustomer = res.data;
+                 res.data.password = vm.confirmPassword;
+                 res.data.sourceOfIncomeX = vm.sourceOfIncome;
+                 res.data.natureOfBusinessX = vm.natureOfBusiness;
+                 storageService.saveCustomer(res.data);
+                 wydNotifyService.showSuccess('Successfully signed up...');
+                 $location.path('/customers/customer/' + res.data.idNo + '/cdd');
+             }, function (res) {
+                 $log.error(res);
+                 wydNotifyService.showError(res.data.description);
+             });
+        }
 
         $log.info('saving finished...');
     }
@@ -292,18 +313,17 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
         vm.sourceOfIncome = 'Individual';
         vm.natureOfBusiness = 'Accountants';
 
-        angular.forEach(vm.form.$error, function(type) {
-            angular.forEach(type, function(field) {
+        angular.forEach(vm.form.$error, function (type) {
+            angular.forEach(type, function (field) {
                 field.$setDirty();
             });
         });
-
-        console.log(vm.nationality);
     }
 
     function init() {
         $log.info('init started...');
 
+        $rootScope.customerConvertBackUrl = '/customers/customer';
         vm.customer = {};
 
         vm.beneficiaryLabel = 'Add';
@@ -329,17 +349,60 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
         // if (vm.malasiyaStates && vm.malasiyaStates.length > 0) {
         //     vm.malasiyaStates.unshift(vm.state);
         // }
-        if(_.keys(vm.sourceOfIncomes).length === 0) {
+        if (_.keys(vm.sourceOfIncomes).length === 0) {
             sessionService.getSourceOfIncomes();
         }
-        if(_.keys(vm.natureOfBusinesses).length === 0) {
+        if (_.keys(vm.natureOfBusinesses).length === 0) {
             sessionService.getNatureOfBusinesses();
         }
 
-        if($routeParams.id) {
-            var model = _.find(sessionService.customers, function(item) { return item.idNo === $routeParams.id });
+        if ($routeParams.id) {
+            vm.isEdit = true;
+            $rootScope.customerConvertBackUrl = '/customers';
+            var model = _.find(sessionService.customers, function (item) {
+                return item.idNo === $routeParams.id
+            });
             console.log(model);
             vm.emailId = model.email;
+            vm.name = model.customerName;
+            if (model.nationality) {
+                vm.nationality = _.find(vm.countries, function (item) {
+                    return model.nationality == item.nationality;
+                });
+                vm.mobileNo = model.mobile.substring(vm.nationality.dial_code.length);
+            }
+            //vm.mobileNo = model.mobile;
+
+            if (model.type === 'Individual') {
+                vm.accountType = 'personal';
+            }
+            if (model.idType === 'NRIC') {
+                vm.idType = 'nric';
+                vm.idNoNric = model.idNo;
+            }
+            if (model.idType === 'Passport') {
+                vm.idType = 'passport';
+                vm.idNoPassport = model.idNo;
+            }
+            vm.dob = moment(model.dob).format('DD-MM-YYYY');
+            vm.address = model.address;
+            vm.city = model.city;
+
+            if (model.state) {
+                var state = model.state.replace('_', ' ').toLowerCase();
+                vm.state = _.find(vm.malasiyaStates, function (item) {
+                    return state == item.toLowerCase();
+                });
+            }
+            vm.postalCode = model.postalCode;
+
+            //$scope.$apply(function(){
+            //    angular.forEach(vm.form.$error, function (type) {
+            //        angular.forEach(type, function (field) {
+            //            field.$setDirty();
+            //        });
+            //    });
+            //});
         }
 
         $log.info('init finished...');
@@ -363,7 +426,7 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
 
     $log.info(cmpId + 'finished...');
 }
-customerCreateOrUpdateController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$uibModal', '$location', '$routeParams'];
+customerCreateOrUpdateController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$uibModal', '$location', '$routeParams', '$timeout'];
 customerCreateOrUpdateController.resolve = {
     '_session': ['sessionService', function (sessionService) {
         //sessionService.switchOffAutoComplete();
