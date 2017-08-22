@@ -5,6 +5,7 @@ function userViewController($log, $rootScope, $scope, wydNotifyService, sessionS
     $rootScope.viewName = cmpName;
 
     var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
+    vm.model = {};
 
     function computeImageUrls() {
         if (vm.model.images.Front) {
@@ -78,10 +79,43 @@ function userViewController($log, $rootScope, $scope, wydNotifyService, sessionS
 
         if($routeParams.id) {
             var model = _.find(sessionService.users, function(item) { return item.idNo === $routeParams.id });
+            _.assign(vm.model, model);
             console.log(model);
-            vm.model = model;
             computeImageUrls();
         }
+
+        // https://api-staging.maxmoney.com/v1/risks/peps/ABDUL%20HALIMI%20TAIFOR?country=Malaysia
+        var path = sessionService.getApiBasePath() + '/risks/peps/' + vm.model.fullName.trim() + '?country=' + vm.model.riskProfile.cdd.nationalityCountry;
+        var req = {
+            method: 'GET',
+            url: path,
+            headers: {'api-key': $rootScope.sessionId}
+        };
+        //$log.info(req);
+        $http(req).then(function (res) {
+            $log.debug(res);
+            if(res.status === 200) {
+                vm.model.isInPEP = res.data.total > 0 ? 'Yes' : 'No';
+            }
+        }, function (res) {
+            $log.error(res);
+        });
+        // https://api-staging.maxmoney.com/v1/risks/ofac/ABDUL%20HALIMI%20TAIFOR
+        path = sessionService.getApiBasePath() + '/risks/ofac/' + vm.model.fullName.trim();
+        req = {
+            method: 'GET',
+            url: path,
+            headers: {'api-key': $rootScope.sessionId}
+        };
+        //$log.info(req);
+        $http(req).then(function (res) {
+            $log.debug(res);
+            if(res.status === 200) {
+                vm.model.isInOFAC = res.data.total > 0 ? 'Yes' : 'No';
+            }
+        }, function (res) {
+            $log.error(res);
+        });
 
         $log.info(cmpId + ' init finished...');
     }
