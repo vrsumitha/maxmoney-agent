@@ -28,10 +28,10 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
                 $log.info('Current User Role  : ' + res.role);
 
                 $rootScope.session = res;
-                //$rootScope.session.role = 'complianceOfficer';
+                //$rootScope.session.role = 'complianceManager';
                 //$rootScope.session.role = 'maxCddOfficer';
                 //$rootScope.session.role = 'cddOfficer';
-                $location.path('/customers');
+                $location.path('/users');
             });
         }, function (res) {
             console.log(res);
@@ -46,11 +46,11 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
 
         vm.message = 'Sign In';
 
-        // if(window.location.hostname == 'localhost') {
-        //     vm.userId = 'sa@maxmoney.com';
-        //     vm.password = 'MaxMoney@2016';
-        //     //$timeout(signIn, 2000);
-        // }
+        if(window.location.hostname == 'localhost') {
+            vm.userId = 'kamilcm@maxmoney.com';
+            //vm.password = 'moos';
+            //$timeout(signIn, 2000);
+        }
 
         $log.info('init finished...');
     }

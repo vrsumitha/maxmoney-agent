@@ -8,7 +8,7 @@ function userViewController($log, $rootScope, $scope, wydNotifyService, sessionS
 
     function computeImageUrls() {
         if (vm.model.images.Front) {
-            var imgUrl = sessionService.getApiBasePath() + '/users/';
+            var imgUrl = sessionService.getApiBasePath() + '/customers/';
             imgUrl += vm.model.idNo + '/images/';
             imgUrl += vm.model.images.Front;
             imgUrl += '?api-key=' + $rootScope.sessionId;
@@ -16,7 +16,7 @@ function userViewController($log, $rootScope, $scope, wydNotifyService, sessionS
             console.log(vm.model.imageFrontUrl);
         }
         if (vm.model.images.Back) {
-            var imgUrl = sessionService.getApiBasePath() + '/users/';
+            var imgUrl = sessionService.getApiBasePath() + '/customers/';
             imgUrl += vm.model.idNo + '/images/';
             imgUrl += vm.model.images.Back;
             imgUrl += '?api-key=' + $rootScope.sessionId;
@@ -24,7 +24,7 @@ function userViewController($log, $rootScope, $scope, wydNotifyService, sessionS
             console.log(vm.model.imageBackUrl);
         }
         //if (vm.model.images.Signature) {
-        //    var imgUrl = sessionService.getApiBasePath() + '/users/';
+        //    var imgUrl = sessionService.getApiBasePath() + '/customers/';
         //    imgUrl += vm.model.idNo + '/images/';
         //    imgUrl += vm.model.images.Signature;
         //    imgUrl += '?api-key=' + $rootScope.sessionId;
@@ -48,8 +48,24 @@ function userViewController($log, $rootScope, $scope, wydNotifyService, sessionS
         $http(req).then(function (res) {
             $log.debug(res);
             $log.debug('updateStatus finished with success.');
-            wydNotifyService.showSuccess('Successfully approved...');
-            $location.path('/users');
+            var msg = 'Successfully ';
+            if(status == 'active') {
+                msg += 'activated.';
+            }
+            if(status == 'removed') {
+                msg += 'rejected.';
+            }
+            swal({
+                type: 'success',
+                text: msg,
+                allowOutsideClick: false
+            }).then(
+                function () {
+                    $scope.$apply(function () {
+                        $location.path('/users');
+                    });
+                }
+            );
         }, function (res) {
             $log.error(res);
             $log.debug('updateStatus finished with failure.');

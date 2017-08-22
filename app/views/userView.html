@@ -34,7 +34,7 @@
                     Date Of Birth
                 </div>
                 <div class="col-md-3">
-                    <strong>{{vm.model.dob}}</strong>
+                    <strong>{{vm.model.riskProfile.cdd.DOB | date : 'dd - MM - yyyy'}}</strong>
                 </div>
             </div>
             <br/>
@@ -58,13 +58,13 @@
                     Nationality
                 </div>
                 <div class="col-md-3">
-                    <strong>{{vm.model.nationality}}</strong>
+                    <strong>{{vm.model.riskProfile.cdd.nationality}}</strong>
                 </div>
                 <div class="col-md-3">
                     Country
                 </div>
                 <div class="col-md-3">
-                    <strong>{{vm.model.country}}</strong>
+                    <strong>{{vm.model.riskProfile.cdd.nationalityCountry}}</strong>
                 </div>
             </div>
             <br/>
@@ -73,7 +73,7 @@
                     Address
                 </div>
                 <div class="col-md-3">
-                    <strong>{{vm.model.address}}</strong>
+                    <strong>{{vm.model.riskProfile.cdd.address}}</strong>
                 </div>
                 <div class="col-md-3">
                     Mobile
@@ -88,13 +88,13 @@
                     State
                 </div>
                 <div class="col-md-3">
-                    <strong>{{vm.model.state}}</strong>
+                    <strong>{{vm.model.riskProfile.cdd.state}}</strong>
                 </div>
                 <div class="col-md-3">
                     City
                 </div>
                 <div class="col-md-3">
-                    <strong>{{vm.model.city}}</strong>
+                    <strong>{{vm.model.riskProfile.cdd.city}}</strong>
                 </div>
             </div>
         </div>
@@ -106,13 +106,13 @@
                 <strong>Front</strong>
             </div>
             <div class="text-center">
-                <img ng-src="{{vm.customer.imageFrontUrl}}" alt="Front" class="img-thumbnail" style="width: 150px; height: 100px">
+                <img ng-src="{{vm.model.imageFrontUrl}}" alt="Front" class="img-thumbnail" style="width: 150px; height: 100px">
             </div>
             <div class="text-center">
                 <strong>Back</strong>
             </div>
             <div class="text-center">
-                <img ng-src="{{vm.customer.imageBackUrl}}" alt="Back" class="img-thumbnail" style="width: 150px; height: 100px">
+                <img ng-src="{{vm.model.imageBackUrl}}" alt="Back" class="img-thumbnail" style="width: 150px; height: 100px">
             </div>
             <!--
             <div class="text-center">
@@ -131,15 +131,17 @@
         Approve
     </button>
     &nbsp;&nbsp;
-    <button type="button" class="btn btn-danger" ng-click="vm.updateStatus('reject')">
+    <button type="button" class="btn btn-danger" ng-click="vm.updateStatus('removed')">
         Reject
     </button>
+    <!--
     &nbsp;&nbsp;
     <button type="button" class="btn btn-warning" ng-click="vm.updateStatus('revisit')">
         Revisit
     </button>
+    -->
 </div>
-<!--
-<br/>
-<pre>{{vm.model | json}}</pre>
--->
+
+<div ng-if="window.location.hostname == 'localhost'">
+<br/><pre>{{vm.model | json}}</pre>
+</div>
