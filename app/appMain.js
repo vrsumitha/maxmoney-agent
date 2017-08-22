@@ -89,7 +89,7 @@ function appConfig($routeProvider, $locationProvider) {
     });
 
     $routeProvider.when('/customers/customer/:id', {
-        templateUrl: 'app/views/customerCreateOrUpdate.html',
+        templateUrl: 'app/views/customerCreateOrUpdateX.html',
         controller: 'customerCreateOrUpdateController as vm',
         resolve: customerCreateOrUpdateController.resolve
     });

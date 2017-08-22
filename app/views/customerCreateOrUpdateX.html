@@ -458,16 +458,18 @@
                 </button>
             </span>
 
-            <button type="button" class="btn btn-info" ng-show="appMode == 'local'" ng-click="vm.preFill()">PreFill</button>
+            <button type="submit" class="btn btn-info" ng-show="appMode == 'local'" ng-click="vm.preFill()">PreFill</button>
             &nbsp;&nbsp;&nbsp;
             <a class="btn btn-info" href="#!/cdd" ng-show="appMode == 'local'" ng-click="vm.saveX()">NextX</a>
 
             <span class="pull-right">
+                <!--
                 <button type="reset" class="btn btn-default" ng-click="vm.reset()">Reset</button>
                 &nbsp;&nbsp;&nbsp;
+                -->
                 <button type="submit" class="btn "
                         ng-class="{'btn-primary' : vm.form.$pristine, 'btn-success' : (vm.form.$dirty && vm.form.$valid), 'btn-danger' : (vm.form.$dirty && vm.form.$invalid) }"
-                        ng-disabled="!(vm.form.$dirty && vm.form.$valid)"
+                        xng-disabled="!(vm.form.$dirty && vm.form.$valid)"
                         ng-click="vm.save()">
                     Next
                 </button>
