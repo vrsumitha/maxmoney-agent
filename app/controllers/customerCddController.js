@@ -21,8 +21,8 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         var path = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
         var reqData = {'idType': vm.customer.idType};
         if (vm.customer.idType == 'Passport') {
-            if (!vm.passportFront && !vm.passportBack) {
-                wydNotifyService.showWarning('There is nothing to update...');
+            if (!vm.passportFront || !vm.passportBack) {
+                wydNotifyService.showWarning('Please provide the missing documents...');
                 return;
             }
             if (vm.passportFront) {
@@ -33,8 +33,8 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
             }
         }
         if (vm.customer.idType == 'NRIC') {
-            if (!vm.nricFront && !vm.nricBack) {
-                wydNotifyService.showWarning('There is nothing to update...');
+            if (!vm.nricFront || !vm.nricBack) {
+                wydNotifyService.showWarning('Please provide the missing documents...');
                 return;
             }
             if (vm.nricFront) {
@@ -48,6 +48,30 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         //    reqData['signature'] = vm.signature;
         //}
 
+        if (vm.customer.type == 'SME') {
+            if (!vm.br || !vm.form24_1 || !vm.form24_2 || !vm.form24_3 || !vm.form49_1 || !vm.form49_2) {
+                wydNotifyService.showWarning('Please provide the missing documents...');
+                return;
+            }
+            if (vm.br) {
+                reqData['br'] = vm.br;
+            }
+            if (vm.form24_1) {
+                reqData['form24_1'] = vm.form24_1;
+            }
+            if (vm.form24_2) {
+                reqData['form24_2'] = vm.form24_2;
+            }
+            if (vm.form24_3) {
+                reqData['form24_3'] = vm.form24_3;
+            }
+            if (vm.form49_1) {
+                reqData['form24_1'] = vm.form49_1;
+            }
+            if (vm.form49_2) {
+                reqData['form24_1'] = vm.form49_2;
+            }
+        }
         $log.info(reqData);
         Upload.upload({
             url: path,
@@ -76,34 +100,15 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
             }
             //vm.signature.progress = pp;
             //$log.info('Progress: ' + pp + '% ');
+            if (vm.customer.type == 'SME') {
+                vm.br.progress = pp;
+                vm.form24_1.progress = pp;
+                vm.form24_2.progress = pp;
+                vm.form24_3.progress = pp;
+                vm.form49_1.progress = pp;
+                vm.form49_2.progress = pp;
+            }
         });
-
-        // var reqData = { 'customerName' : vm.name};
-        // var req = {
-        //     method: 'PUT',
-        //     url: path,
-        //     headers: { 'api-key' : $rootScope.sessionId},
-        //     params: reqData
-        // };
-
-        //console.log(vm.passportFrontX);
-        // var reqData = new FormData();
-        // reqData.append('front', vm.passportFrontX);
-        // reqData.append('customerName', vm.name);
-        // var req = {
-        //     method: 'PUT',
-        //     url: path,
-        //     headers: { 'api-key' : $rootScope.sessionId, 'Content-Type': undefined},
-        //     transformRequest: angular.identity,
-        //     data: reqData
-        // };
-
-        // $log.info(req);
-        // $http(req).then(function (res) {
-        //     console.log(res);
-        // }, function (res) {
-        //     console.log(res);
-        // });
 
         $log.info('update finished...');
     }
@@ -123,60 +128,6 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         $log.info('approve finished...');
     }
 
-    function loadImage() {
-        var basePath = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
-        if (vm.customer.idType == 'Passport') {
-            var path = basePath + 'images/' + vm.customer.images.Front;
-            var req = {
-                method: 'GET',
-                url: path,
-                headers: {'api-key': $rootScope.sessionId}
-            };
-            //$log.info(req);
-            $http(req).then(function (res) {
-                $log.info(res);
-                if (res.status === 200) {
-                    vm.passportFrontImage = res.data;
-                }
-            }, function (res) {
-                $log.error(res);
-            });
-        }
-        if (vm.customer.idType == 'NRIC') {
-            var path = basePath + 'images/' + vm.customer.images.Front;
-            var req = {
-                method: 'GET',
-                url: path,
-                headers: {'api-key': $rootScope.sessionId}
-            };
-            //$log.info(req);
-            $http(req).then(function (res) {
-                $log.info(res);
-                if (res.status === 200) {
-                    vm.nricFrontImage = res.data;
-                }
-            }, function (res) {
-                $log.error(res);
-            });
-
-            var path = basePath + 'images/' + vm.customer.images.Back;
-            req = {
-                method: 'GET',
-                url: path,
-                headers: {'api-key': $rootScope.sessionId}
-            };
-            //$log.info(req);
-            $http(req).then(function (res) {
-                $log.info(res);
-                if (res.status === 200) {
-                    vm.nricBackImage = res.data;
-                }
-            }, function (res) {
-                $log.error(res);
-            });
-        }
-    }
-
     function init() {
         $log.info('init started...');
         vm.customers = storageService.getCustomers();
@@ -184,7 +135,6 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         if (!vm.customer) {
             vm.customer = vm.customers[vm.customers.length - 1];
             vm.name = vm.customer.customerName;
-            //loadImage();
             onCustomerChange();
         }
         console.log(vm.customer);
@@ -211,3 +161,31 @@ customerCddController.resolve = {
     }]
 };
 appControllers.controller('customerCddController', customerCddController);
+
+
+// var reqData = { 'customerName' : vm.name};
+// var req = {
+//     method: 'PUT',
+//     url: path,
+//     headers: { 'api-key' : $rootScope.sessionId},
+//     params: reqData
+// };
+
+//console.log(vm.passportFrontX);
+// var reqData = new FormData();
+// reqData.append('front', vm.passportFrontX);
+// reqData.append('customerName', vm.name);
+// var req = {
+//     method: 'PUT',
+//     url: path,
+//     headers: { 'api-key' : $rootScope.sessionId, 'Content-Type': undefined},
+//     transformRequest: angular.identity,
+//     data: reqData
+// };
+
+// $log.info(req);
+// $http(req).then(function (res) {
+//     console.log(res);
+// }, function (res) {
+//     console.log(res);
+// });

@@ -141,6 +141,7 @@ function appInit($log, $rootScope, $location, $sessionStorage) {
     console.log('Application Mode : ' + $rootScope.appMode);
 
     var path = '/sign-in';
+    path = '/customers/customer/:12356/cdd';
     $log.info('Start Path : ' + path);
     $location.path(path);
 

@@ -21,6 +21,7 @@
             &nbsp;
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-4" ng-if="vm.customer.idType == 'Passport'">
             <div><img ng-show="vm.form.passportFront.$valid" ngf-thumbnail="vm.passportFront" class="img-thumbnail" style="width: 250px; height: 200px"></div>
@@ -28,7 +29,7 @@
                 <label for="passportFront" class="control-label">Passport Front <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="passportFront" placeholder="" aria-describedby="passportFrontHelpBlock"
                        name="passportFront" ng-model="vm.passportFront" accept="image/*" ngf-select
-                       xng-required="vm.customer.idType == 'Passport'" ngf-max-size="1MB" ngf-model-invalid="vm.passportFrontError">
+                       xng-required="vm.customer.idType == 'Passport'" ngf-max-size="2MB" ngf-model-invalid="vm.passportFrontError">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.passportFront.$dirty && vm.form.passportFront.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -43,14 +44,13 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-4" ng-if="vm.customer.idType == 'Passport'">
             <div><img ng-show="vm.form.passportBack.$valid" ngf-thumbnail="vm.passportBack" class="img-thumbnail" style="width: 250px; height: 200px"></div>
             <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.passportBack.$dirty && vm.form.passportBack.$invalid), 'has-success' : (vm.form.passportBack.$dirty && vm.form.passportBack.$valid) }">
                 <label for="passportBack" class="control-label">Passport Back <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="passportBack" placeholder="" aria-describedby="passportBackHelpBlock"
                        name="passportBack" ng-model="vm.passportBack" accept="image/*" ngf-select
-                       xng-required="vm.customer.idType == 'Passport'" ngf-max-size="1MB" ngf-model-invalid="vm.passportBackError">
+                       xng-required="vm.customer.idType == 'Passport'" ngf-max-size="2MB" ngf-model-invalid="vm.passportBackError">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.passportBack.$dirty && vm.form.passportBack.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -65,8 +65,6 @@
                 </div>
             </div>
         </div>
-
-  <!--  <div class="row" ng-if="vm.customer.idType == 'NRIC'"> -->
         <div class="col-md-4" ng-if="vm.customer.idType == 'NRIC'">
             <div><img ng-show="vm.form.nricFront.$valid" ngf-thumbnail="vm.nricFront" class="img-thumbnail" style="width: 250px; height: 200px"></div>
             <div class="form-group has-feedback"
@@ -74,7 +72,7 @@
                 <label for="nricFront" class="control-label">NRIC Front <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="nricFront" placeholder="" aria-describedby="nricFrontHelpBlock"
                        name="nricFront" ng-model="vm.nricFront" ngf-select
-                       xng-required="vm.customer.idType == 'NRIC'" accept="image/*" ngf-max-size="1MB" ngf-model-invalid="vm.nricFrontError">
+                       xng-required="vm.customer.idType == 'NRIC'" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="vm.nricFrontError">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.nricFront.$dirty && vm.form.nricFront.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -89,16 +87,14 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-4" ng-if="vm.customer.idType == 'NRIC'">
-            <!--  <div><img ng-src="{{vm.nricFrontImage}}" class="img-thumbnail"></div> -->
             <div><img ng-show="vm.form.nricBack.$valid" ngf-thumbnail="vm.nricBack" class="img-thumbnail" style="width: 250px; height: 200px"></div>
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.nricBack.$dirty && vm.form.nricBack.$invalid), 'has-success' : (vm.form.nricBack.$dirty && vm.form.nricBack.$valid) }">
                 <label for="nricBack" class="control-label">NRIC Back <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="nricBack" placeholder="" aria-describedby="nricBackHelpBlock"
                        name="nricBack" ng-model="vm.nricBack" ngf-select
-                       xng-required="vm.customer.idType == 'NRIC'" accept="image/*" ngf-max-size="1MB" ngf-model-invalid="vm.nricBackError">
+                       xng-required="vm.customer.idType == 'NRIC'" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="vm.nricBackError">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.nricBack.$dirty && vm.form.nricBack.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -113,14 +109,14 @@
                 </div>
             </div>
         </div>
-<!--
+        <!--
         <div class="col-md-4">
             <div><img ng-show="vm.form.signature.$valid" ngf-thumbnail="vm.signature" class="img-thumbnail" style="width: 250px; height: 200px"></div>
             <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.signature.$dirty && vm.form.signature.$invalid), 'has-success' : (vm.form.signature.$dirty && vm.form.signature.$valid) }">
                 <label for="signature" class="control-label">Signature <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="signature" placeholder="" aria-describedby="signatureHelpBlock"
                        name="signature" ng-model="vm.signature" accept="image/*" ngf-select
-                       ngf-max-size="1MB" ngf-model-invalid="vm.signatureError">
+                       ngf-max-size="2MB" ngf-model-invalid="vm.signatureError">
                     <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                           ng-if="vm.form.signature.$dirty && vm.form.signature.$invalid"></span>
                     <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -136,6 +132,141 @@
             </div>
         </div>
         -->
+    </div>
+
+    <div class="row" ng-if="vm.customer.type == 'SME'">
+        <div class="col-md-4">
+            <div><img ng-show="vm.form.br.$valid" ngf-thumbnail="vm.br" class="img-thumbnail" style="width: 250px; height: 200px"></div>
+            <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.br.$dirty && vm.form.br.$invalid), 'has-success' : (vm.form.br.$dirty && vm.form.br.$valid) }">
+                <label for="br" class="control-label">Business Registration Form <span class="text-danger">*</span></label>
+                <input type="file" class="form-control" id="br" placeholder="" aria-describedby="brHelpBlock"
+                       name="br" ng-model="vm.br" ngf-select
+                       accept="image/*" ngf-max-size="2MB" ngf-model-invalid="vm.brError">
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                              ng-if="vm.form.br.$dirty && vm.form.br.$invalid"></span>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                              ng-if="vm.form.br.$dirty && vm.form.br.$valid"></span>
+                <div id="brHelpBlock" class="help-inline" ng-if="vm.form.br.$dirty">
+                    <span ng-show="vm.form.br.$error.required">This is required.</span>
+                    <span ng-show="vm.form.br.$error.maxSize">File too large {{vm.brError.size / 1000000 | number:1}}MB: max 1MB</span>
+                </div>
+                <div class="progress" ng-show="vm.br.progress >= 0">
+                    <div class="progress-bar progress-bar-info progress-bar-striped"
+                         style="width:{{vm.br.progress}}%" ng-bind="vm.br.progress + '%'"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div><img ng-show="vm.form.form24_1.$valid" ngf-thumbnail="vm.form24_1" class="img-thumbnail" style="width: 250px; height: 200px"></div>
+            <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.br.$dirty && vm.form.br.$invalid), 'has-success' : (vm.form.br.$dirty && vm.form.br.$valid) }">
+                <label for="form24_1" class="control-label">Form 24_1 <span class="text-danger">*</span></label>
+                <input type="file" class="form-control" id="form24_1" placeholder="" aria-describedby="form24_1HelpBlock"
+                       name="form24_1" ng-model="vm.form24_1" ngf-select
+                       accept="image/*" ngf-max-size="2MB" ngf-model-invalid="vm.form24_1Error">
+                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                          ng-if="vm.form.form24_1.$dirty && vm.form.form24_1.$invalid"></span>
+                    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                          ng-if="vm.form.form24_1.$dirty && vm.form.form24_1.$valid"></span>
+                <div id="form24_1HelpBlock" class="help-inline" ng-if="vm.form.form24_1.$dirty">
+                    <span ng-show="vm.form.form24_1.$error.required">This is required.</span>
+                    <span ng-show="vm.form.form24_1.$error.maxSize">File too large {{vm.form24_1Error.size / 1000000 | number:1}}MB: max 1MB</span>
+                </div>
+                <div class="progress" ng-show="vm.form24_1.progress >= 0">
+                    <div class="progress-bar progress-bar-info progress-bar-striped"
+                         style="width:{{vm.form24_1.progress}}%" ng-bind="vm.form24_1.progress + '%'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-if="vm.customer.type == 'SME'">
+        <div class="col-md-4">
+            <div><img ng-show="vm.form.form24_2.$valid" ngf-thumbnail="vm.form24_2" class="img-thumbnail" style="width: 250px; height: 200px"></div>
+            <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.br.$dirty && vm.form.br.$invalid), 'has-success' : (vm.form.br.$dirty && vm.form.br.$valid) }">
+                <label for="form24_2" class="control-label">Form 24_2 <span class="text-danger">*</span></label>
+                <input type="file" class="form-control" id="form24_2" placeholder="" aria-describedby="form24_2HelpBlock"
+                       name="form24_2" ng-model="vm.form24_2" ngf-select
+                       accept="image/*" ngf-max-size="2MB" ngf-model-invalid="vm.form24_2Error">
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                              ng-if="vm.form.form24_2.$dirty && vm.form.form24_2.$invalid"></span>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                              ng-if="vm.form.form24_2.$dirty && vm.form.form24_2.$valid"></span>
+                <div id="form24_2HelpBlock" class="help-inline" ng-if="vm.form.form24_2.$dirty">
+                    <span ng-show="vm.form.form24_2.$error.required">This is required.</span>
+                    <span ng-show="vm.form.form24_2.$error.maxSize">File too large {{vm.form24_2Error.size / 1000000 | number:1}}MB: max 1MB</span>
+                </div>
+                <div class="progress" ng-show="vm.form24_2.progress >= 0">
+                    <div class="progress-bar progress-bar-info progress-bar-striped"
+                         style="width:{{vm.form24_2.progress}}%" ng-bind="vm.form24_2.progress + '%'"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div><img ng-show="vm.form.form24_3.$valid" ngf-thumbnail="vm.form24_3" class="img-thumbnail" style="width: 250px; height: 200px"></div>
+            <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.br.$dirty && vm.form.br.$invalid), 'has-success' : (vm.form.br.$dirty && vm.form.br.$valid) }">
+                <label for="form24_3" class="control-label">Form 24_3 <span class="text-danger">*</span></label>
+                <input type="file" class="form-control" id="form24_3" placeholder="" aria-describedby="form24_3HelpBlock"
+                       name="form24_3" ng-model="vm.form24_3" ngf-select
+                       accept="image/*" ngf-max-size="2MB" ngf-model-invalid="vm.form24_3Error">
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                              ng-if="vm.form.form24_3.$dirty && vm.form.form24_3.$invalid"></span>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                              ng-if="vm.form.form24_3.$dirty && vm.form.form24_3.$valid"></span>
+                <div id="form24_3HelpBlock" class="help-inline" ng-if="vm.form.form24_3.$dirty">
+                    <span ng-show="vm.form.form24_3.$error.required">This is required.</span>
+                    <span ng-show="vm.form.form24_3.$error.maxSize">File too large {{vm.form24_3Error.size / 1000000 | number:1}}MB: max 1MB</span>
+                </div>
+                <div class="progress" ng-show="vm.form24_3.progress >= 0">
+                    <div class="progress-bar progress-bar-info progress-bar-striped"
+                         style="width:{{vm.form24_3.progress}}%" ng-bind="vm.form24_3.progress + '%'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-if="vm.customer.type == 'SME'">
+        <div class="col-md-4">
+            <div><img ng-show="vm.form.form49_1.$valid" ngf-thumbnail="vm.form49_1" class="img-thumbnail" style="width: 250px; height: 200px"></div>
+            <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.br.$dirty && vm.form.br.$invalid), 'has-success' : (vm.form.br.$dirty && vm.form.br.$valid) }">
+                <label for="form49_1" class="control-label">Form 49_1 <span class="text-danger">*</span></label>
+                <input type="file" class="form-control" id="form49_1" placeholder="" aria-describedby="form49_1HelpBlock"
+                       name="form49_1" ng-model="vm.form49_1" ngf-select
+                       accept="image/*" ngf-max-size="2MB" ngf-model-invalid="vm.form49_1Error">
+                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                          ng-if="vm.form.form49_1.$dirty && vm.form.form49_1.$invalid"></span>
+                    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                          ng-if="vm.form.form49_1.$dirty && vm.form.form49_1.$valid"></span>
+                <div id="form49_1HelpBlock" class="help-inline" ng-if="vm.form.form49_1.$dirty">
+                    <span ng-show="vm.form.form49_1.$error.required">This is required.</span>
+                    <span ng-show="vm.form.form49_1.$error.maxSize">File too large {{vm.form49_1Error.size / 1000000 | number:1}}MB: max 1MB</span>
+                </div>
+                <div class="progress" ng-show="vm.form49_1.progress >= 0">
+                    <div class="progress-bar progress-bar-info progress-bar-striped"
+                         style="width:{{vm.form49_1.progress}}%" ng-bind="vm.form49_1.progress + '%'"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div><img ng-show="vm.form.form49_2.$valid" ngf-thumbnail="vm.form49_2" class="img-thumbnail" style="width: 250px; height: 200px"></div>
+            <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.br.$dirty && vm.form.br.$invalid), 'has-success' : (vm.form.br.$dirty && vm.form.br.$valid) }">
+                <label for="form49_2" class="control-label">Form 49_2 <span class="text-danger">*</span></label>
+                <input type="file" class="form-control" id="form49_2" placeholder="" aria-describedby="form49_2HelpBlock"
+                       name="form49_2" ng-model="vm.form49_2" ngf-select
+                       accept="image/*" ngf-max-size="2MB" ngf-model-invalid="vm.form49_2Error">
+                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                          ng-if="vm.form.form49_2.$dirty && vm.form.form49_2.$invalid"></span>
+                    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                          ng-if="vm.form.form49_2.$dirty && vm.form.form49_2.$valid"></span>
+                <div id="form49_2HelpBlock" class="help-inline" ng-if="vm.form.form49_2.$dirty">
+                    <span ng-show="vm.form.form49_2.$error.required">This is required.</span>
+                    <span ng-show="vm.form.form49_2.$error.maxSize">File too large {{vm.form49_2Error.size / 1000000 | number:1}}MB: max 1MB</span>
+                </div>
+                <div class="progress" ng-show="vm.form49_2.progress >= 0">
+                    <div class="progress-bar progress-bar-info progress-bar-striped"
+                         style="width:{{vm.form49_2.progress}}%" ng-bind="vm.form49_2.progress + '%'"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row">
