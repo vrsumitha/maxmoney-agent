@@ -1,6 +1,6 @@
 
 <form name="vm.form" autocomplete="off" novalidate="true">
-    <div class="row" ng-show="appMode == 'local'">
+    <div class="row" ng-if="window.location.hostname == 'localhost'">
         <div class="col-md-4">
             <div class="form-group" ng-if="appMode == 'local'">
                 <label for="customer">Customers <span class="text-danger">*</span></label>
@@ -152,7 +152,7 @@
                 Next
             </button>
             &nbsp;&nbsp;&nbsp;
-            <a type="submit" class="btn btn-primary" href="#!/convert" ng-show="appMode == 'local'">NextX</a>
+            <a type="submit" class="btn btn-primary" href="#!/convert" ng-if="window.location.hostname == 'localhost'">NextX</a>
         </div>
     </div>
 
