@@ -28,10 +28,21 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
                 $log.info('Current User Role  : ' + res.role);
 
                 $rootScope.session = res;
+
+                if(res.role == 'complianceManager'){
+                    $location.path('/users'); // user listing
+                }
+                if(res.role == 'maxCddOfficer'){
+                    $location.path('/customers/customer'); // customer registration
+
+                }
+                if(res.role == 'cddOfficer'){
+                    $location.path('/customers'); // customer listing
+                }
+
                 //$rootScope.session.role = 'complianceManager';
                 //$rootScope.session.role = 'maxCddOfficer';
                 //$rootScope.session.role = 'cddOfficer';
-                $location.path('/users');
             });
         }, function (res) {
             console.log(res);
