@@ -1,147 +1,190 @@
+<style>
+    img {
+        transition:transform 0.25s ease;
+    }
+    img:hover {
+        -webkit-transform:scale(2.25);
+        transform:scale(2.25);
+    }
+</style>
 <br/>
 <div class="row">
-    <div class="row">
-        <div class="col-md-7">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <h4><strong>Customer Information</strong></h4>
-                </div>
-            </div>
-            <br/>
-            <div class="row">
-                <div class="col-md-3">
-                    Customer Name
-                </div>
-                <div class="col-md-3">
-                    <strong>{{vm.model.fullName}}</strong>
-                </div>
-                <div class="col-md-3">
-                    Status
-                </div>
-                <div class="col-md-3">
-                    <strong>{{vm.model.status}}</strong>
-                </div>
-            </div>
-            <br/>
-            <div class="row">
-                <div class="col-md-3">
-                    Email
-                </div>
-                <div class="col-md-3">
-                    <strong>{{vm.model.email}}</strong>
-                </div>
-                <div class="col-md-3">
-                    Date Of Birth
-                </div>
-                <div class="col-md-3">
-                    <strong>{{vm.model.riskProfile.cdd.DOB | date : 'dd - MM - yyyy'}}</strong>
-                </div>
-            </div>
-            <br/>
-            <div class="row">
-                <div class="col-md-3">
-                    ID Type
-                </div>
-                <div class="col-md-3">
-                    <strong>{{vm.model.idType}}</strong>
-                </div>
-                <div class="col-md-3">
-                    ID Number
-                </div>
-                <div class="col-md-3">
-                    <strong>{{vm.model.idNo}}</strong>
-                </div>
-            </div>
-            <br/>
-            <div class="row">
-                <div class="col-md-3">
-                    Nationality
-                </div>
-                <div class="col-md-3">
-                    <strong>{{vm.model.riskProfile.cdd.nationality}}</strong>
-                </div>
-                <div class="col-md-3">
-                    Country
-                </div>
-                <div class="col-md-3">
-                    <strong>{{vm.model.riskProfile.cdd.nationalityCountry}}</strong>
-                </div>
-            </div>
-            <br/>
-            <div class="row">
-                <div class="col-md-3">
-                    Address
-                </div>
-                <div class="col-md-3">
-                    <strong>{{vm.model.riskProfile.cdd.address}}</strong>
-                </div>
-                <div class="col-md-3">
-                    Mobile
-                </div>
-                <div class="col-md-3">
-                    <strong>{{vm.model.mobile}}</strong>
-                </div>
-            </div>
-            <br/>
-            <div class="row">
-                <div class="col-md-3">
-                    State
-                </div>
-                <div class="col-md-3">
-                    <strong>{{vm.model.riskProfile.cdd.state}}</strong>
-                </div>
-                <div class="col-md-3">
-                    City
-                </div>
-                <div class="col-md-3">
-                    <strong>{{vm.model.riskProfile.cdd.city}}</strong>
-                </div>
+    <div class="col-md-4">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h4><strong>Customer Information</strong></h4>
             </div>
         </div>
-        <div class="col-md-5">
-            <div class="text-center">
-                <h4><strong>Documents Information</strong></h4>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                Customer Name
             </div>
-            <div class="text-center">
-                <strong>Front</strong>
+            <div class="col-md-6">
+                <strong>{{vm.model.fullName}}</strong>
             </div>
-            <div class="text-center">
-                <img ng-src="{{vm.model.imageFrontUrl}}" alt="Front" class="img-thumbnail" style="width: 200px; height: 350px">
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                Status
             </div>
-            <div class="text-center">
-                <strong>Back</strong>
+            <div class="col-md-6">
+                <strong>{{vm.model.status}}</strong>
             </div>
-            <div class="text-center">
-                <img ng-src="{{vm.model.imageBackUrl}}" alt="Back" class="img-thumbnail" style="width: 200px; height: 350px">
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                Email
             </div>
-            <!--
-            <div class="text-center">
-                <strong>Signature</strong>
+            <div class="col-md-6">
+                <strong>{{vm.model.email}}</strong>
             </div>
-            <div class="text-center">
-                <img ng-src="{{vm.customer.imageSignatureUrl}}" alt="Back" class="img-thumbnail" style="width: 200px; height: 350px">
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                Date Of Birth
             </div>
-            -->
+            <div class="col-md-6">
+                <strong>{{vm.model.riskProfile.cdd.DOB | date : 'dd - MM - yyyy'}}</strong>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                ID Type
+            </div>
+            <div class="col-md-6">
+                <strong>{{vm.model.idType}}</strong>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                ID Number
+            </div>
+            <div class="col-md-6">
+                <strong>{{vm.model.idNo}}</strong>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                Nationality
+            </div>
+            <div class="col-md-6">
+                <strong>{{vm.model.riskProfile.cdd.nationality}}</strong>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                Country
+            </div>
+            <div class="col-md-6">
+                <strong>{{vm.model.riskProfile.cdd.nationalityCountry}}</strong>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                Address
+            </div>
+            <div class="col-md-6">
+                <strong>{{vm.model.riskProfile.cdd.address}}</strong>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                Mobile
+            </div>
+            <div class="col-md-6">
+                <strong>{{vm.model.mobile}}</strong>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                State
+            </div>
+            <div class="col-md-6">
+                <strong>{{vm.model.riskProfile.cdd.state}}</strong>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                City
+            </div>
+            <div class="col-md-6">
+                <strong>{{vm.model.riskProfile.cdd.city}}</strong>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                Is In PEP?
+            </div>
+            <div class="col-md-6">
+                <span ng-class="vm.model.isInPEP == 'Yes' ? 'text-danger' : 'text-info'"><strong>{{vm.model.isInPEP}}</strong></span>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                Is In OFAC?
+            </div>
+            <div class="col-md-6">
+                <span ng-class="vm.model.isInOFAC == 'Yes' ? 'text-danger' : 'text-info'"><strong>{{vm.model.isInOFAC}}</strong></span>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn btn-primary" ng-click="vm.updateStatus('active')">
+                    Approve
+                </button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-danger" ng-click="vm.updateStatus('removed')">
+                    Reject
+                </button>
+                <!--
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-warning" ng-click="vm.updateStatus('revisit')">
+                    Revisit
+                </button>
+                -->
+            </div>
         </div>
     </div>
-</div>
-<br/>
-<div class="text-center">
-    <button type="button" class="btn btn-primary" ng-click="vm.updateStatus('active')">
-        Approve
-    </button>
-    &nbsp;&nbsp;
-    <button type="button" class="btn btn-danger" ng-click="vm.updateStatus('removed')">
-        Reject
-    </button>
-    <!--
-    &nbsp;&nbsp;
-    <button type="button" class="btn btn-warning" ng-click="vm.updateStatus('revisit')">
-        Revisit
-    </button>
-    -->
+    <div class="col-md-8">
+        <div class="text-center">
+            <h4><strong>Documents Information</strong></h4>
+        </div>
+        <div class="text-center">
+            <strong>Front</strong>
+        </div>
+        <div class="text-center">
+            <img ng-src="{{vm.model.imageFrontUrl}}" alt="Front" class="img-thumbnail" style="width: 400px; height: 400px">
+        </div>
+        <div class="text-center">
+            <strong>Back</strong>
+        </div>
+        <div class="text-center">
+            <img ng-src="{{vm.model.imageBackUrl}}" alt="Back" class="img-thumbnail" style="width: 400px; height: 400px">
+        </div>
+        <!--
+        <div class="text-center">
+            <strong>Signature</strong>
+        </div>
+        <div class="text-center">
+            <img ng-src="{{vm.customer.imageSignatureUrl}}" alt="Back" class="img-thumbnail" style="width: 400px; height: 400px">
+        </div>
+        -->
+    </div>
 </div>
 
-<div ng-if="window.location.hostname == 'localhost'">
-<br/><pre>{{vm.model | json}}</pre>
-</div>
+<div ng-if="appMode == 'local'"><br/><pre>{{vm.model | json}}</pre></div>

@@ -1,8 +1,8 @@
-
+<br/>
 <form name="vm.form" autocomplete=”off” novalidate="true">
-    <div class="row" ng-if="window.location.hostname == 'localhost'">
+    <div class="row" ng-if="appMode == 'local'">
         <div class="col-md-4">
-            <div class="form-group" ng-if="appMode == 'local'">
+            <div class="form-group">
                 <label for="customer">Customers <span class="text-danger">*</span></label>
                 <select class="form-control"id="customer" aria-describedby="customerHelpBlock"
                         name="customer" ng-model="vm.customer" ng-change="vm.onCustomerChange()"
@@ -14,7 +14,7 @@
                 </div>
                 -->
             </div>
-            <div ng-if="appMode != 'local'"><strong>{{vm.customer.email}}&nbsp;&nbsp;&nbsp;{{vm.customer.mobile}}</strong></div>
+            <div><strong>{{vm.customer.email}}&nbsp;&nbsp;&nbsp;{{vm.customer.mobile}}</strong></div>
         </div>
         <div class="col-md-4">
             &nbsp;
