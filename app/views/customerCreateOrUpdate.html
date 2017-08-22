@@ -458,9 +458,11 @@
                 </button>
             </span>
 
-            <button type="button" class="btn btn-info" ng-show="appMode == 'local'" ng-click="vm.preFill()">PreFill</button>
-            &nbsp;&nbsp;&nbsp;
-            <a class="btn btn-info" href="#!/cdd" ng-show="appMode == 'local'" ng-click="vm.saveX()">NextX</a>
+            <span ng-if="window.location.hostname == 'localhost'">
+                <button type="submit" class="btn btn-info" ng-show="appMode == 'local'" ng-click="vm.preFill()">PreFill</button>
+                &nbsp;&nbsp;&nbsp;
+                <a class="btn btn-info" href="#!/cdd" ng-show="appMode == 'local'" ng-click="vm.saveX()">NextX</a>
+            </span>
 
             <span class="pull-right">
                 <button type="reset" class="btn btn-default" ng-click="vm.reset()">Reset</button>
@@ -476,7 +478,9 @@
     </div>
 </form>
 
-<!--<br/><div ng-show="appMode == 'local'"><pre>{{vm.form | json}}</pre></div>-->
+<div ng-if="window.location.hostname == 'localhost'">
+<br/><pre>{{vm.form | json}}</pre>
+</div>
 
 
 
