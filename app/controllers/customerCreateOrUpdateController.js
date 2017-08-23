@@ -1,5 +1,5 @@
 function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $uibModal, $location, $routeParams, $timeout) {
-    var cmpId = 'signUpController', cmpName = 'Create Customer';
+    var cmpId = 'customerCreateOrUpdateController', cmpName = 'Create Customer';
     $log.info(cmpId + ' started ...');
 
     $rootScope.viewName = cmpName;
