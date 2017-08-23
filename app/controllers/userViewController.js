@@ -1,5 +1,5 @@
 function userViewController($log, $rootScope, $scope, wydNotifyService, sessionService, $routeParams, $http, $location) {
-    var cmpId = 'userViewController', cmpName = 'Approve Users';
+    var cmpId = 'userViewController', cmpName = 'Approve User';
     $log.info(cmpId + ' started ...');
 
     $rootScope.viewName = cmpName;
@@ -37,7 +37,7 @@ function userViewController($log, $rootScope, $scope, wydNotifyService, sessionS
     function updateStatus(status) {
         $log.debug('updateStatus started...');
 
-        var reqData = {'status': status};
+        var reqData = {'status': status, 'requestSource' : 'agent'};
         var path = sessionService.getApiBasePath() + '/users/' + vm.model.email;
         var req = {
             method: 'PUT',
