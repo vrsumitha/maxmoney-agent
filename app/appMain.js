@@ -119,7 +119,7 @@ function appConfig($routeProvider, $locationProvider) {
     });
 
     $routeProvider.when('/not-found', {
-        template: '<p>Not Found</p>'
+        templateUrl: 'app/views/notFound.html'
     });
 
     $routeProvider.otherwise({
@@ -137,10 +137,22 @@ function appInit($log, $rootScope, $location, $sessionStorage) {
         $rootScope.appMode = 'local';
     } else {
         $rootScope.appMode = 'prod';
-    }
-    console.log('Application Mode : ' + $rootScope.appMode);
 
-    var path = '/sign-in';
+    }
+    $log.info('App Mode : ' + $rootScope.appMode);
+
+    $rootScope.sessionId = $sessionStorage.sessionId;
+    if($rootScope.sessionId) {
+        $rootScope.session = $sessionStorage.session;
+        $log.info('Current Session Id : ' + $rootScope.sessionId);
+        $log.info('Current User Id    : ' + $rootScope.session.username);
+        $log.info('Current User Role  : ' + $rootScope.session.role);
+    }
+
+    var path = $location.path().trim();
+    if(!path || path == '' || path == '/not-found' || path == '/sign-out' || !$rootScope.sessionId) {
+        var path = '/sign-in';
+    }
     $log.info('Start Path : ' + path);
     $location.path(path);
 

@@ -6,6 +6,10 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
 
     var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
 
+    function onSignIn() {
+
+    }
+
     function reset() {
         $log.info('reset started...');
 
@@ -21,32 +25,30 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
         vm.message = 'Sign In';
         var params = {userId: vm.userId, password: vm.password};
         sessionService.signIn(params).then(function (res) {
-            sessionService.getCurrentSession().then(function (res) {
-                //console.log(res);
-                $log.info('Current Session Id : ' + $rootScope.sessionId);
-                $log.info('Current User Id    : ' + res.username);
-                $log.info('Current User Role  : ' + res.role);
-
-                $rootScope.session = res;
-
-                if(res.role == 'complianceManager'){
-                    $location.path('/users'); // user listing
-                }
-                if(res.role == 'maxCddOfficer'){
-                    $location.path('/customers/customer'); // customer registration
-
-                }
-                if(res.role == 'cddOfficer'){
-                    $location.path('/customers'); // customer listing
-                }
-
-                //$rootScope.session.role = 'complianceManager';
-                //$rootScope.session.role = 'maxCddOfficer';
-                //$rootScope.session.role = 'cddOfficer';
-            });
+            if (res.status > 199) {
+                sessionService.getCurrentSession().then(function (res) {
+                    $log.info('Current Session Id : ' + $rootScope.sessionId);
+                    $log.info('Current User Id    : ' + $rootScope.session.username);
+                    $log.info('Current User Role  : ' + $rootScope.session.role);
+                    var path = '/not-found';
+                    if ($rootScope.session.role == 'complianceManager') {
+                        path = '/users'; // user listing
+                    }
+                    if ($rootScope.session.role == 'maxCddOfficer') {
+                        path = '/customers/customer'; // customer registration
+                    }
+                    if ($rootScope.session.role == 'cddOfficer') {
+                        path = '/customers'; // customer listing
+                    }
+                    $rootScope.homePath = path;
+                    $log.info('Current Home Path : ' + $rootScope.homePath);
+                    $location.path($rootScope.homePath);
+                }, function(res) {
+                    wydNotifyService.showError('Fetching current session failed : ' + res.data.message);
+                });
+            }
         }, function (res) {
-            console.log(res);
-            wydNotifyService.showError(res.message);
+            wydNotifyService.showError(res.data.message);
         });
 
         $log.info('signIn finished...');
@@ -79,7 +81,7 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
 signInController.$inject = ['$log', '$rootScope', '$scope', 'wydNotifyService', 'storageService', 'sessionService', '$location', '$timeout'];
 appControllers.controller('signInController', signInController);
 
-function signOutController($log, $rootScope, $scope, sessionService, $location) {
+function signOutController($log, $rootScope, $scope, sessionService, $sessionStroage, $location) {
     var cmpId = 'signOutController', cmpName = 'Sign Out';
     $log.info(cmpId + ' started ...');
 
@@ -92,18 +94,19 @@ function signOutController($log, $rootScope, $scope, sessionService, $location) 
         $rootScope.session = null;
         $rootScope.sessionId = null;
         $rootScope.homePath = '/sign-in';
+        $sessionStroage.$reset();
     }
 
     sessionService.signOut().then(function (res) {
         onSignOut();
-        $location.path('/sign-in');
+        $location.path($rootScope.homePath);
     }, function (res) {
         onSignOut();
-        $location.path('/sign-in');
+        $location.path($rootScope.homePath);
     });
 
 }
-signOutController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$location'];
+signOutController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$sessionStorage', '$location'];
 appControllers.controller('signOutController', signOutController);
 
 function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService, $uibModalInstance, model, country) {
