@@ -157,17 +157,7 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
         wydNotifyService.hide();
 
         if(vm.isEdit) {
-            var value = vm.password;
-            if(!value || value == '') {
-                wydNotifyService.showError('Please provide the password.');
-                return;
-            }
-            value = vm.confirmPassword;
-            if(!value || value == '') {
-                wydNotifyService.showError('Please provide the confirm password.');
-                return;
-            }
-            value = vm.sourceOfIncome;
+            var value = vm.sourceOfIncome;
             if(!value) {
                 wydNotifyService.showError('Please select the source of income.');
                 return;
@@ -177,11 +167,6 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
                 wydNotifyService.showError('Please select the nature of business.');
                 return;
             }
-        }
-
-        if (vm.password != vm.confirmPassword) {
-            wydNotifyService.showError('Password and Confirm password not matched');
-            return;
         }
 
         var reqCus = {};
@@ -277,7 +262,6 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
              sessionService.updateCustomer(reqCus).then(function (res) {
                  $log.debug(res);
                  sessionService.currentCustomer = res.data;
-                 res.data.password = vm.confirmPassword;
                  res.data.sourceOfIncomeX = vm.sourceOfIncome;
                  res.data.natureOfBusinessX = vm.natureOfBusiness;
                  storageService.saveCustomer(res.data);
@@ -291,7 +275,6 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
              sessionService.createCustomer(reqCus).then(function (res) {
                  $log.debug(res);
                  sessionService.currentCustomer = res.data;
-                 res.data.password = vm.confirmPassword;
                  res.data.sourceOfIncomeX = vm.sourceOfIncome;
                  res.data.natureOfBusinessX = vm.natureOfBusiness;
                  storageService.saveCustomer(res.data);
@@ -309,8 +292,6 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
     function preFill() {
 
         vm.emailId = 'sample@gmail.com';
-        vm.password = '12345';
-        vm.confirmPassword = '12345';
         vm.name = 'Sample';
 
         vm.nationality = vm.countries[1];

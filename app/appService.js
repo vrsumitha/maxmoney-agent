@@ -556,12 +556,10 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
 
     service.convertCustomer = function (params) {
         $log.debug('convert customer service started...');
-        var reqData = {'password': params.password};
         var path = apiBasePath + '/customers/' + params.id + '/convert-by-agent';
         var req = {
             method: 'POST',
             url: path,
-            params: reqData,
             headers: {'api-key': $rootScope.sessionId}
         };
         //$log.info(req);
@@ -582,7 +580,6 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
 
     service.convertCustomerX = function (params) {
         $log.debug('convert customer service started...');
-        var reqData = {'password': params.password};
         var path = apiBasePath + '/customers/' + params.id + '/convert-by-agent';
         var req = {
             method: 'POST',
@@ -594,8 +591,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
                     str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
                 }
                 return str.join("&");
-            },
-            data: reqData
+            }
         };
         //$log.info(req);
         $log.debug('convert customer started...');
@@ -608,7 +604,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         }, function (res) {
             $log.error(res);
             deferred.reject(res);
-            $log.debug('convert customer finished with failure.');
+            $log.debug('convert customer finished with failure...');
         });
         return deferred.promise;
     };
