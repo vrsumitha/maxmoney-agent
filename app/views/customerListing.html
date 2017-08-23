@@ -1,13 +1,13 @@
 <br/>
 <div class="form-inline text-center">
     <div class="form-group">
-        <input class="form-control" type="text" id="searchCustomer" placeholder="Search by name"
-            name="searchCustomer" ng-model="vm.searchName" autofocus="true">
+        <input class="form-control" type="text" id="searchCustomer" placeholder="Search IC/Passport .No"
+            name="searchCustomer" ng-model="vm.searchId" autofocus="true">
             &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default" ng-click="vm.reload()">Search</button>
     </div>
 </div>
 <br>
-<table class="table table-bordered text-nowrap">
+<table class="table table-bordered text-nowrap" id="customerTable">
 <thead>
     <tr>
         <td><b>Customer Name</b></td>

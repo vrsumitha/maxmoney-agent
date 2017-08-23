@@ -377,12 +377,14 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
 
         if ($routeParams.id) {
             $rootScope.viewName = 'Edit Customer';
+            console.log($routeParams.id);
 
             vm.isEdit = true;
             $rootScope.customerConvertBackUrl = '/customers';
-            var model = _.find(sessionService.customers, function (item) {
-                return item.idNo === $routeParams.id
-            });
+            //var model = _.find(sessionService.customers, function (item) {
+            //    return item.idNo === $routeParams.id
+            //});
+            var model = sessionService.currentCustomer;
             console.log(model);
             vm.emailId = model.email;
             vm.name = model.customerName;
