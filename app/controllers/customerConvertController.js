@@ -1,5 +1,5 @@
 function customerConvertController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $http, $location) {
-    var cmpId = 'customerConvertController', cmpName = 'Convert Customer';
+    var cmpId = 'customerConvertController', cmpName = 'Create Customer';
     $log.info(cmpId + ' started ...');
 
     $rootScope.viewName = cmpName;
@@ -72,7 +72,7 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
                 swal({
                     type: 'success',
                     title: 'Customer Created.',
-                    text: 'Your MaxMoney Id is ' + res.data.maxMoneyId,
+                   // text: 'Your MaxMoney Id is ' + res.data.maxMoneyId,
                     allowOutsideClick: false
                 }).then(
                     function () {
