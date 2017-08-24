@@ -10,8 +10,8 @@
     </thead>
     <tbody>
     <tr ng-repeat="item in vm.users">
-        <td><a ng-href="#!/users/user/{{item.idNo}}">{{ item.idNo }}</a></td>
-        <td>{{ item.email }}</td>
+        <td>{{ item.idNo }}</td>
+        <td><a ng-href="#!/users/user/{{item.email}}">{{ item.email }}</a></td>
         <td>{{ item.name }}</td>
         <td>{{ item.mobile }}</td>
     </tr>

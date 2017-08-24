@@ -22,6 +22,8 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
     function signIn() {
         $log.info('signIn started...');
 
+        wydNotifyService.hide();
+
         vm.message = 'Sign In';
         var params = {userId: vm.userId, password: vm.password};
         sessionService.signIn(params).then(function (res) {
@@ -60,7 +62,7 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
         vm.message = 'Sign In';
 
         if(window.location.hostname == 'localhost') {
-            vm.userId = 'maxcdd@maxmoney.com';
+            vm.userId = 'kamilcm@maxmoney.com';
             //vm.password = 'moos';
             //$timeout(signIn, 2000);
         }
