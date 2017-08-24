@@ -6,6 +6,10 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
 
     var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
 
+    function onSignIn() {
+
+    }
+
     function reset() {
         $log.info('reset started...');
 
@@ -17,6 +21,8 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
 
     function signIn() {
         $log.info('signIn started...');
+
+        wydNotifyService.hide();
 
         vm.message = 'Sign In';
         var params = {userId: vm.userId, password: vm.password};
@@ -56,7 +62,7 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
         vm.message = 'Sign In';
 
         if(window.location.hostname == 'localhost') {
-            vm.userId = 'maxcdd@maxmoney.com';
+            vm.userId = 'kamilcm@maxmoney.com';
             //vm.password = 'moos';
             //$timeout(signIn, 2000);
         }
@@ -77,7 +83,7 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
 signInController.$inject = ['$log', '$rootScope', '$scope', 'wydNotifyService', 'storageService', 'sessionService', '$location', '$timeout'];
 appControllers.controller('signInController', signInController);
 
-function signOutController($log, $rootScope, $scope, sessionService, $location) {
+function signOutController($log, $rootScope, $scope, sessionService, $sessionStroage, $location) {
     var cmpId = 'signOutController', cmpName = 'Sign Out';
     $log.info(cmpId + ' started ...');
 
@@ -102,7 +108,7 @@ function signOutController($log, $rootScope, $scope, sessionService, $location) 
     });
 
 }
-signOutController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$location'];
+signOutController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$sessionStorage', '$location'];
 appControllers.controller('signOutController', signOutController);
 
 function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService, $uibModalInstance, model, country) {

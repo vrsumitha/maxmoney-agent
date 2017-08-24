@@ -34,6 +34,44 @@ function userViewController($log, $rootScope, $scope, wydNotifyService, sessionS
         //}
     }
 
+    function updatePep() {
+        // https://api-staging.maxmoney.com/v1/risks/peps/ABDUL%20HALIMI%20TAIFOR?country=Malaysia
+        var path = sessionService.getApiBasePath() + '/risks/peps/' + vm.model.fullName.trim() + '?country=' + vm.model.riskProfile.cdd.nationalityCountry;
+        var req = {
+            method: 'GET',
+            url: path,
+            headers: {'api-key': $rootScope.sessionId}
+        };
+        //$log.info(req);
+        $http(req).then(function (res) {
+            $log.debug(res);
+            if(res.status === 200) {
+                vm.model.isInPEP = res.data.total > 0 ? 'Yes' : 'No';
+            }
+        }, function (res) {
+            $log.error(res);
+        });
+    }
+
+    function updateOfac() {
+        // https://api-staging.maxmoney.com/v1/risks/ofac/ABDUL%20HALIMI%20TAIFOR
+        var path = sessionService.getApiBasePath() + '/risks/ofac/' + vm.model.fullName.trim();
+        var req = {
+            method: 'GET',
+            url: path,
+            headers: {'api-key': $rootScope.sessionId}
+        };
+        //$log.info(req);
+        $http(req).then(function (res) {
+            $log.debug(res);
+            if(res.status === 200) {
+                vm.model.isInOFAC = res.data.total > 0 ? 'Yes' : 'No';
+            }
+        }, function (res) {
+            $log.error(res);
+        });
+    }
+
     function updateStatus(status) {
         $log.debug('updateStatus started...');
 
@@ -78,44 +116,27 @@ function userViewController($log, $rootScope, $scope, wydNotifyService, sessionS
         $log.info(cmpId + ' init started...');
 
         if($routeParams.id) {
-            var model = _.find(sessionService.users, function(item) { return item.idNo === $routeParams.id });
-            _.assign(vm.model, model);
-            console.log(model);
-            computeImageUrls();
+            var model = _.find(sessionService.users, function(item) { return item.email === $routeParams.id });
+            if(model) {
+                _.assign(vm.model, model);
+                $log.debug(model);
+                computeImageUrls();
+                updatePep();
+                updateOfac();
+                vm.isReady = true;
+            } else {
+                sessionService.getUser($routeParams.id).then(function(res) {
+                    _.assign(vm.model, res.data);
+                    $log.debug(model);
+                    computeImageUrls();
+                    updatePep();
+                    updateOfac();
+                    vm.isReady = true;
+                }, function(res) {
+                    wydNotifyService.showError("User '" + $routeParams.id + "' doesn't exist...");
+                });
+            }
         }
-
-        // https://api-staging.maxmoney.com/v1/risks/peps/ABDUL%20HALIMI%20TAIFOR?country=Malaysia
-        var path = sessionService.getApiBasePath() + '/risks/peps/' + vm.model.fullName.trim() + '?country=' + vm.model.riskProfile.cdd.nationalityCountry;
-        var req = {
-            method: 'GET',
-            url: path,
-            headers: {'api-key': $rootScope.sessionId}
-        };
-        //$log.info(req);
-        $http(req).then(function (res) {
-            $log.debug(res);
-            if(res.status === 200) {
-                vm.model.isInPEP = res.data.total > 0 ? 'Yes' : 'No';
-            }
-        }, function (res) {
-            $log.error(res);
-        });
-        // https://api-staging.maxmoney.com/v1/risks/ofac/ABDUL%20HALIMI%20TAIFOR
-        path = sessionService.getApiBasePath() + '/risks/ofac/' + vm.model.fullName.trim();
-        req = {
-            method: 'GET',
-            url: path,
-            headers: {'api-key': $rootScope.sessionId}
-        };
-        //$log.info(req);
-        $http(req).then(function (res) {
-            $log.debug(res);
-            if(res.status === 200) {
-                vm.model.isInOFAC = res.data.total > 0 ? 'Yes' : 'No';
-            }
-        }, function (res) {
-            $log.error(res);
-        });
 
         $log.info(cmpId + ' init finished...');
     }

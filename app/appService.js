@@ -689,6 +689,28 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
+    service.getUser = function (userId) {
+        var path = apiBasePath + '/users/' + userId;
+        var req = {
+            method: 'GET',
+            headers: {'api-key': $rootScope.sessionId},
+            url: path
+        };
+        //$log.info(req);
+        $log.debug('fetching user by userId started...');
+        var deferred = $q.defer();
+        $http(req).then(function (res) {
+            //$log.debug(res);
+            $log.debug('fetching user by userId finished with success.');
+            deferred.resolve(res);
+        }, function (res) {
+            $log.error(res);
+            $log.debug('fetching user by userId finished with failure.');
+            deferred.reject(res.data);
+        });
+        return deferred.promise;
+    };
+
     service.switchOffAutoComplete = function () {
         if (document.getElementsByTagName) {
             var inputElements = document.getElementsByTagName('input');
@@ -703,7 +725,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
     };
 
     // console.log('Frontend Hostname : ' + window.location.hostname);
-    // if (window.location.hostname == 'maxmoney.com') {
+    // if (window.location.hostname == 'www.maxmoney.com') {
     //     apiBasePath = 'https://api.maxmoney.com/v1';
     // }
     // console.log('Backend URL : ' + apiBasePath);
