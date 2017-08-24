@@ -20,6 +20,58 @@
             &nbsp;
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="name" class="control-label">Full Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="name" placeholder="Full Name"
+                       name="name" ng-model="vm.customer.customerName" required readonly>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="idNo" class="control-label">IC/Passport No. <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="idNo" placeholder="NRIC Number"
+                       name="idNo" ng-model="vm.customer.idNo" required readonly>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group has-feedback">
+                <div class="form-group has-feedback"
+                     ng-class="{ 'has-error' : (vm.form.sourceOfIncome.$dirty && vm.form.sourceOfIncome.$invalid), 'has-success' : (vm.form.sourceOfIncome.$dirty && vm.form.sourceOfIncome.$valid) }">
+                    <label for="sourceOfIncome">Source Of Income <span class="text-danger">*</span></label>
+                    <select class="form-control" id="sourceOfIncome" name="sourceOfIncome" aria-describedby="sourceOfIncomeHelpBlock" placeholder="Choose Source Of Income"
+                            ng-options="item for item in vm.sourceOfIncomes"
+                            ng-model="vm.sourceOfIncome" require="true">
+                    </select>
+                    <div id="sourceOfIncomeHelpBlock" class="help-inline" ng-messages="vm.form.sourceOfIncome.$error" ng-if="vm.form.sourceOfIncome.$dirty">
+                        <span ng-message="required">This is required.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group has-feedback">
+                <div class="form-group has-feedback"
+                     ng-class="{ 'has-error' : (vm.form.natureOfBusiness.$dirty && vm.form.natureOfBusiness.$invalid), 'has-success' : (vm.form.natureOfBusiness.$dirty && vm.form.natureOfBusiness.$valid) }">
+                    <label for="natureOfBusiness">Nature Of Business <span class="text-danger">*</span></label>
+                    <select class="form-control" id="natureOfBusiness" name="natureOfBusiness" aria-describedby="natureOfBusinessHelpBlock" placeholder="Choose Nature Of Business"
+                            ng-options="item for item in vm.natureOfBusinesses"
+                            ng-model="vm.natureOfBusiness" require="true">
+                    </select>
+                    <div id="natureOfBusinessHelpBlock" class="help-inline" ng-messages="vm.form.natureOfBusiness.$error" ng-if="vm.form.natureOfBusiness.$dirty">
+                        <span ng-message="required">This is required.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-4" ng-if="vm.customer.idType == 'Passport'">
             <div><img ng-show="vm.form.passportFront.$valid" ngf-thumbnail="vm.passportFront" class="img-thumbnail" style="width: 250px; height: 200px"></div>

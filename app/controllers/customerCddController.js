@@ -6,6 +6,17 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
 
     var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
 
+    vm.sourceOfIncomes = sessionService.sourceOfIncomes;
+    vm.natureOfBusinesses = sessionService.natureOfBusinesses;
+
+    $scope.$on('session:sourceOfIncomes', function (event, data) {
+        vm.sourceOfIncomes = sessionService.sourceOfIncomes;
+    });
+
+    $scope.$on('session:natureOfBusinesses', function (event, data) {
+        vm.natureOfBusinesses = sessionService.natureOfBusinesses;
+    });
+
     function onCustomerChange() {
         sessionService.getCustomer(vm.customer.idNo).then(function (res) {
             _.assign(vm.customer, res);
@@ -17,6 +28,17 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         $log.info('update started...');
 
         wydNotifyService.hide();
+
+        var value = vm.sourceOfIncome;
+        if(!value) {
+            wydNotifyService.showError('Please select the source of income.');
+            return;
+        }
+        value = vm.natureOfBusiness;
+        if(!value) {
+            wydNotifyService.showError('Please select the nature of business.');
+            return;
+        }
 
         var path = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
         var reqData = {'idType': vm.customer.idType};
@@ -57,7 +79,7 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
             data: reqData
         }).then(function (res) {
             $log.debug(res);
-            wydNotifyService.showSuccess('Images Uploaded Succesfully...');
+            wydNotifyService.showSuccess('Images Uploaded Successfully...');
             approve();
         }, function (res) {
             $log.debug(res);
@@ -113,6 +135,9 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
 
         sessionService.approve(vm.customer.idNo).then(function (res) {
             $log.debug(res);
+            sessionService.currentCustomer.sourceOfIncomeX = vm.sourceOfIncome;
+            sessionService.currentCustomer.natureOfBusinessX = vm.natureOfBusiness;
+            console.log(sessionService.currentCustomer);
             wydNotifyService.showSuccess('Successfully approved...');
             $location.path('/customers/customer/' + vm.customer.idNo + '/convert');
         }, function (res) {
@@ -123,60 +148,6 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         $log.info('approve finished...');
     }
 
-    function loadImage() {
-        var basePath = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
-        if (vm.customer.idType == 'Passport') {
-            var path = basePath + 'images/' + vm.customer.images.Front;
-            var req = {
-                method: 'GET',
-                url: path,
-                headers: {'api-key': $rootScope.sessionId}
-            };
-            //$log.info(req);
-            $http(req).then(function (res) {
-                $log.info(res);
-                if (res.status === 200) {
-                    vm.passportFrontImage = res.data;
-                }
-            }, function (res) {
-                $log.error(res);
-            });
-        }
-        if (vm.customer.idType == 'NRIC') {
-            var path = basePath + 'images/' + vm.customer.images.Front;
-            var req = {
-                method: 'GET',
-                url: path,
-                headers: {'api-key': $rootScope.sessionId}
-            };
-            //$log.info(req);
-            $http(req).then(function (res) {
-                $log.info(res);
-                if (res.status === 200) {
-                    vm.nricFrontImage = res.data;
-                }
-            }, function (res) {
-                $log.error(res);
-            });
-
-            var path = basePath + 'images/' + vm.customer.images.Back;
-            req = {
-                method: 'GET',
-                url: path,
-                headers: {'api-key': $rootScope.sessionId}
-            };
-            //$log.info(req);
-            $http(req).then(function (res) {
-                $log.info(res);
-                if (res.status === 200) {
-                    vm.nricBackImage = res.data;
-                }
-            }, function (res) {
-                $log.error(res);
-            });
-        }
-    }
-
     function init() {
         $log.info('init started...');
         vm.customers = storageService.getCustomers();
@@ -184,9 +155,16 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         if (!vm.customer) {
             vm.customer = vm.customers[vm.customers.length - 1];
             vm.name = vm.customer.customerName;
-            //loadImage();
             onCustomerChange();
         }
+
+        if (_.keys(vm.sourceOfIncomes).length === 0) {
+            sessionService.getSourceOfIncomes();
+        }
+        if (_.keys(vm.natureOfBusinesses).length === 0) {
+            sessionService.getNatureOfBusinesses();
+        }
+
         console.log(vm.customer);
         $log.info('init finished...');
     }

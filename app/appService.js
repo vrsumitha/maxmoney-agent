@@ -19,6 +19,10 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return apiBasePath;
     };
 
+    service.setApiBasePath = function (basePath) {
+        apiBasePath = basePath;
+    };
+
     function addOrUpdateCache(propName, objectx) {
         //var objectsLst = service[propName]
         var objectsMap = service[propName + 'Map'];
@@ -284,23 +288,6 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
-    service.signUp = function (params) {
-        var path = apiBasePath + '/customers';
-        var req = {
-            method: 'POST',
-            url: path,
-            params: params
-        };
-        //$log.info(req);
-        var deferred = $q.defer();
-        $http(req).then(function (res) {
-            deferred.resolve(res);
-        }, function (res) {
-            deferred.reject(res);
-        });
-        return deferred.promise;
-    };
-
     service.signIn = function (params) {
         var reqData = {'username': params.userId, 'password': params.password};
         var path = apiBasePath + '/sessions/current';
@@ -321,38 +308,15 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         $log.debug('signIn started...');
         var deferred = $q.defer();
         $http(req).then(function (res) {
-            //$log.info(res);
+            $log.debug(res);
             $log.debug('signIn finished with success.');
             $sessionStorage.sessionId = res.data.session;
             $rootScope.sessionId = $sessionStorage.sessionId;
-            deferred.resolve(res.data);
+            deferred.resolve(res);
         }, function (res) {
             $log.error(res);
             $log.debug('signIn finished with failure.');
             deferred.reject(res);
-        });
-        return deferred.promise;
-    };
-
-    service.getCurrentUser = function () {
-        var path = apiBasePath + '/users/current';
-        var req = {
-            method: 'GET',
-            url: path
-        };
-        //$log.info(req);
-        $log.debug('fetching current user started...');
-        var deferred = $q.defer();
-        $http(req).then(function (res) {
-            $log.debug(res);
-            _.assign(service.currentUser, res);
-            $rootScope.$broadcast('session:currentUser', 'Session current user updated...');
-            deferred.resolve(res);
-            $log.debug('fetching current user finished with success.');
-        }, function (res) {
-            $log.debug(res);
-            deferred.reject(res);
-            $log.debug('fetching current user finished with failure.');
         });
         return deferred.promise;
     };
@@ -381,16 +345,18 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         $log.debug('fetching current session started...');
         var deferred = $q.defer();
         $http(req).then(function (res) {
-            //$log.debug(res);
+            $log.debug(res);
+            $rootScope.session = res.data;
+            $sessionStorage.session = $rootScope.session;
             $log.debug('fetching current session finished with success.');
-            deferred.resolve(res.data);
+            deferred.resolve(res);
         }, function (res) {
             $log.error(res);
             $log.debug('fetching current session finished with failure.');
             deferred.reject(res.data);
         });
         return deferred.promise;
-    };
+    }
 
     service.signOut = function () {
         var path = apiBasePath + '/sessions/current';
@@ -455,13 +421,13 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         $log.debug('fetching customer by id started...');
         var deferred = $q.defer();
         $http(req).then(function (res) {
-            //$log.debug(res);
+            $log.debug(res);
             $log.debug('fetching customer by id finished with success.');
-            deferred.resolve(res.data);
+            deferred.resolve(res);
         }, function (res) {
             $log.error(res);
             $log.debug('fetching customer by id finished with failure.');
-            deferred.reject(res.data);
+            deferred.reject(res);
         });
         return deferred.promise;
     };
@@ -723,6 +689,28 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
+    service.getUser = function (userId) {
+        var path = apiBasePath + '/users/' + userId;
+        var req = {
+            method: 'GET',
+            headers: {'api-key': $rootScope.sessionId},
+            url: path
+        };
+        //$log.info(req);
+        $log.debug('fetching user by userId started...');
+        var deferred = $q.defer();
+        $http(req).then(function (res) {
+            //$log.debug(res);
+            $log.debug('fetching user by userId finished with success.');
+            deferred.resolve(res);
+        }, function (res) {
+            $log.error(res);
+            $log.debug('fetching user by userId finished with failure.');
+            deferred.reject(res.data);
+        });
+        return deferred.promise;
+    };
+
     service.switchOffAutoComplete = function () {
         if (document.getElementsByTagName) {
             var inputElements = document.getElementsByTagName('input');
@@ -737,7 +725,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
     };
 
     // console.log('Frontend Hostname : ' + window.location.hostname);
-    // if (window.location.hostname == 'maxmoney.com') {
+    // if (window.location.hostname == 'www.maxmoney.com') {
     //     apiBasePath = 'https://api.maxmoney.com/v1';
     // }
     // console.log('Backend URL : ' + apiBasePath);

@@ -8,22 +8,28 @@ function customerListingController($log, $rootScope, $scope, wydNotifyService, s
 
     function reload() {
         $log.info('reload started...');
-        console.log(vm.searchId);
-       if (vm.searchId) {
+
+        vm.customers = [];
+        wydNotifyService.hide();
+        if (vm.searchId) {
             sessionService.getCustomer(vm.searchId).then(function (res) {
+                sessionService.currentCustomer = res.data;
+                vm.customers = [res.data];
+            }, function (res) {
                 console.log(res);
-                sessionService.currentCustomer = res;
-                vm.customers = [res];
+                wydNotifyService.showError(res.data.message);
             });
         }
 
         $log.info('reload finished...');
     }
 
-    function gotoCustomerUpdate (id) {
+    function gotoCustomerUpdate(id) {
         $log.info('gotoCustomerUpdate started...');
-        sessionService.currentCustomer = _.find(vm.customers, function(item) { return item.idNo === id });
-       // storageService.saveCustomer(res.data);
+        sessionService.currentCustomer = _.find(vm.customers, function (item) {
+            return item.idNo === id
+        });
+        // storageService.saveCustomer(res.data);
         $location.path('/customers/' + id);
         $log.info('gotoCustomerUpdate finished...');
     }
@@ -40,7 +46,7 @@ function customerListingController($log, $rootScope, $scope, wydNotifyService, s
         gotoCDD: gotoCustomerUpdate
     });
 
-   // init();
+    // init();
 
     $log.info(cmpId + 'finished...');
 
