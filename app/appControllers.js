@@ -17,32 +17,34 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
 
     function signIn() {
         $log.info('signIn started...');
-        wydNotifyService.hide();
+
         vm.message = 'Sign In';
         var params = {userId: vm.userId, password: vm.password};
         sessionService.signIn(params).then(function (res) {
-            sessionService.getCurrentSession().then(function (res) {
-                //console.log(res);
-                $rootScope.session = res;
-                $log.info('Current Session Id : ' + $rootScope.sessionId);
-                $log.info('Current User Id    : ' + $rootScope.session.username);
-                $log.info('Current User Role  : ' + $rootScope.session.role);
-                var path = '/not-found';
-                if ($rootScope.session.role == 'complianceManager') {
-                    path = '/users'; // user listing
-                }
-                if ($rootScope.session.role == 'maxCddOfficer') {
-                    path = '/customers/customer'; // customer registration
-                }
-                if ($rootScope.session.role == 'cddOfficer') {
-                    path = '/customers'; // customer listing
-                }
-                $rootScope.homePath = path;
-                $log.info('Current Home Path : ' + $rootScope.homePath);
-                $location.path($rootScope.homePath);
-            });
+            if (res.status > 199) {
+                sessionService.getCurrentSession().then(function (res) {
+                    $log.info('Current Session Id : ' + $rootScope.sessionId);
+                    $log.info('Current User Id    : ' + $rootScope.session.username);
+                    $log.info('Current User Role  : ' + $rootScope.session.role);
+                    var path = '/not-found';
+                    if ($rootScope.session.role == 'complianceManager') {
+                        path = '/users'; // user listing
+                    }
+                    if ($rootScope.session.role == 'maxCddOfficer') {
+                        path = '/customers/customer'; // customer registration
+                    }
+                    if ($rootScope.session.role == 'cddOfficer') {
+                        path = '/customers'; // customer listing
+                    }
+                    $rootScope.homePath = path;
+                    $log.info('Current Home Path : ' + $rootScope.homePath);
+                    $location.path($rootScope.homePath);
+                }, function(res) {
+                    wydNotifyService.showError('Fetching current session failed : ' + res.data.message);
+                });
+            }
         }, function (res) {
-            wydNotifyService.showError('Invalid username or password.');
+            wydNotifyService.showError(res.data.message);
         });
 
         $log.info('signIn finished...');
@@ -88,14 +90,15 @@ function signOutController($log, $rootScope, $scope, sessionService, $location) 
         $rootScope.session = null;
         $rootScope.sessionId = null;
         $rootScope.homePath = '/sign-in';
+        $sessionStroage.$reset();
     }
 
     sessionService.signOut().then(function (res) {
         onSignOut();
-        $location.path('/sign-in');
+        $location.path($rootScope.homePath);
     }, function (res) {
         onSignOut();
-        $location.path('/sign-in');
+        $location.path($rootScope.homePath);
     });
 
 }
