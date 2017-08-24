@@ -17,36 +17,32 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
 
     function signIn() {
         $log.info('signIn started...');
-
+        wydNotifyService.hide();
         vm.message = 'Sign In';
         var params = {userId: vm.userId, password: vm.password};
         sessionService.signIn(params).then(function (res) {
             sessionService.getCurrentSession().then(function (res) {
                 //console.log(res);
-                $log.info('Current Session Id : ' + $rootScope.sessionId);
-                $log.info('Current User Id    : ' + res.username);
-                $log.info('Current User Role  : ' + res.role);
-
                 $rootScope.session = res;
-
-                if(res.role == 'complianceManager'){
-                    $location.path('/users'); // user listing
+                $log.info('Current Session Id : ' + $rootScope.sessionId);
+                $log.info('Current User Id    : ' + $rootScope.session.username);
+                $log.info('Current User Role  : ' + $rootScope.session.role);
+                var path = '/not-found';
+                if ($rootScope.session.role == 'complianceManager') {
+                    path = '/users'; // user listing
                 }
-                if(res.role == 'maxCddOfficer'){
-                    $location.path('/customers/customer'); // customer registration
-
+                if ($rootScope.session.role == 'maxCddOfficer') {
+                    path = '/customers/customer'; // customer registration
                 }
-                if(res.role == 'cddOfficer'){
-                    $location.path('/customers'); // customer listing
+                if ($rootScope.session.role == 'cddOfficer') {
+                    path = '/customers'; // customer listing
                 }
-
-                //$rootScope.session.role = 'complianceManager';
-                //$rootScope.session.role = 'maxCddOfficer';
-                //$rootScope.session.role = 'cddOfficer';
+                $rootScope.homePath = path;
+                $log.info('Current Home Path : ' + $rootScope.homePath);
+                $location.path($rootScope.homePath);
             });
         }, function (res) {
-            console.log(res);
-            wydNotifyService.showError(res.message);
+            wydNotifyService.showError(res.data.message + '. Invalid username or password.');
         });
 
         $log.info('signIn finished...');
