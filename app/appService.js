@@ -421,13 +421,13 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         $log.debug('fetching customer by id started...');
         var deferred = $q.defer();
         $http(req).then(function (res) {
-            //$log.debug(res);
+            $log.debug(res);
             $log.debug('fetching customer by id finished with success.');
-            deferred.resolve(res.data);
+            deferred.resolve(res);
         }, function (res) {
             $log.error(res);
             $log.debug('fetching customer by id finished with failure.');
-            deferred.reject(res.data);
+            deferred.reject(res);
         });
         return deferred.promise;
     };

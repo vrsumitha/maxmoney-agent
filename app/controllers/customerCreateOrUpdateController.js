@@ -11,8 +11,6 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
 
     vm.countries = sessionService.countries;
     vm.malasiyaStates = sessionService.malasiyaStates;
-    vm.sourceOfIncomes = sessionService.sourceOfIncomes;
-    vm.natureOfBusinesses = sessionService.natureOfBusinesses;
 
     $scope.$on('session:countries', function (event, data) {
         vm.countries = sessionService.countries;
@@ -26,14 +24,6 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
         // if (vm.malasiyaStates && vm.malasiyaStates.length > 0) {
         //     vm.malasiyaStates.unshift(vm.state);
         // }
-    });
-
-    $scope.$on('session:sourceOfIncomes', function (event, data) {
-        vm.sourceOfIncomes = sessionService.sourceOfIncomes;
-    });
-
-    $scope.$on('session:natureOfBusinesses', function (event, data) {
-        vm.natureOfBusinesses = sessionService.natureOfBusinesses;
     });
 
     function addOrEditBeneficiary() {
@@ -156,19 +146,6 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
 
         wydNotifyService.hide();
 
-        if(vm.isEdit) {
-            var value = vm.sourceOfIncome;
-            if(!value) {
-                wydNotifyService.showError('Please select the source of income.');
-                return;
-            }
-            value = vm.natureOfBusiness;
-            if(!value) {
-                wydNotifyService.showError('Please select the nature of business.');
-                return;
-            }
-        }
-
         var reqCus = {};
 
         var value = vm.name;
@@ -262,8 +239,6 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
              sessionService.updateCustomer(reqCus).then(function (res) {
                  $log.debug(res);
                  sessionService.currentCustomer = res.data;
-                 res.data.sourceOfIncomeX = vm.sourceOfIncome;
-                 res.data.natureOfBusinessX = vm.natureOfBusiness;
                  storageService.saveCustomer(res.data);
                  wydNotifyService.showSuccess('Successfully signed up...');
                  $location.path('/customers/customer/' + res.data.idNo + '/cdd');
@@ -275,8 +250,6 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
              sessionService.createCustomer(reqCus).then(function (res) {
                  $log.debug(res);
                  sessionService.currentCustomer = res.data;
-                 res.data.sourceOfIncomeX = vm.sourceOfIncome;
-                 res.data.natureOfBusinessX = vm.natureOfBusiness;
                  storageService.saveCustomer(res.data);
                  wydNotifyService.showSuccess('Successfully signed up...');
                  $location.path('/customers/customer/' + res.data.idNo + '/cdd');
@@ -349,12 +322,6 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
         // if (vm.malasiyaStates && vm.malasiyaStates.length > 0) {
         //     vm.malasiyaStates.unshift(vm.state);
         // }
-        if (_.keys(vm.sourceOfIncomes).length === 0) {
-            sessionService.getSourceOfIncomes();
-        }
-        if (_.keys(vm.natureOfBusinesses).length === 0) {
-            sessionService.getNatureOfBusinesses();
-        }
 
         if ($routeParams.id) {
             $rootScope.viewName = 'Edit Customer';
