@@ -38,7 +38,7 @@
                  ng-class="{ 'has-error' : (vm.form.mobileNo.$dirty && vm.form.mobileNo.$invalid), 'has-success' : (vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid) }">
                 <label for="mobileNo">Mobile Number <span class="text-danger">*</span></label>
                 <div class="input-group">
-                    <div class="input-group-addon">{{vm.dialCode}}</div>
+                    <div class="input-group-addon">+6</div>
                     <input type="text" class="form-control" id="mobileNo" placeholder="Mobile Number" aria-describedby="mobileNoHelpBlock"
                            name="mobileNo" ng-model="vm.mobileNo"
                            required ng-minlength="9" xng-maxlength="15" input-mask="'mask'" mask-option="{'mask':'999999999999999'}" input-phone-number>
