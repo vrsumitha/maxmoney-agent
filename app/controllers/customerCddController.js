@@ -21,7 +21,7 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         var path = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
         var reqData = {'idType': vm.customer.idType};
         if (vm.customer.idType == 'Passport') {
-            if (!vm.passportFront && !vm.passportBack) {
+            if (!vm.passportFront || !vm.passportBack) {
                 wydNotifyService.showWarning('There is nothing to update...');
                 return;
             }
@@ -33,7 +33,7 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
             }
         }
         if (vm.customer.idType == 'NRIC') {
-            if (!vm.nricFront && !vm.nricBack) {
+            if (!vm.nricFront || !vm.nricBack) {
                 wydNotifyService.showWarning('There is nothing to update...');
                 return;
             }
@@ -57,12 +57,12 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
             data: reqData
         }).then(function (res) {
             $log.debug(res);
-            wydNotifyService.showSuccess('Successfully updated...');
+            wydNotifyService.showSuccess('Images Uploaded Succesfully...');
             approve();
         }, function (res) {
             $log.debug(res);
             $log.error('Error Status: ' + res.status);
-            wydNotifyService.showError('Update failed. ' + res.description);
+            wydNotifyService.showError('image Upload failed. ' + res.description);
         }, function (evt) {
             $log.info(evt);
             var pp = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
