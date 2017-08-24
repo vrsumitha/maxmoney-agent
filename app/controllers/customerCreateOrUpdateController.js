@@ -88,7 +88,7 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
         if (nv) {
             vm.dialCode = nv.dial_code;
             vm.form.nationality.$setValidity('required', false);
-            $log.info('ov value is : ', nv);
+            //$log.info('ov value is : ', nv);
             if (nv.code == 'MY') {
                 vm.idType = 'nric';
             } else {
@@ -156,7 +156,7 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
 
         value = vm.mobileNo;
         value = value.replace(new RegExp('_', 'g'), ' ').trim();
-        reqCus.mobile = '+60' + value;
+        reqCus.mobile = '+6' + value;
 
         if (vm.idType == 'nric') {
             value = vm.idNoNric;
@@ -340,9 +340,9 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
                 vm.nationality = _.find(vm.countries, function (item) {
                     return model.nationality == item.nationality;
                 });
-                vm.mobileNo = model.mobile.substring(vm.nationality.dial_code.length);
+                //vm.mobileNo = model.mobile.substring(vm.nationality.dial_code.length);
             }
-            //vm.mobileNo = model.mobile;
+            vm.mobileNo = model.mobile.substring(2);
 
             if (model.type === 'Individual') {
                 vm.accountType = 'personal';
