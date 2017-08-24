@@ -1,5 +1,14 @@
 <br/>
-<table class="table table-bordered text-nowrap">
+<div class="form-inline text-center">
+    <div class="form-group">
+        <strong>Username : </strong>&nbsp;&nbsp;&nbsp;
+        <input class="form-control" type="text" id="searchUser" placeholder="Search by username"
+               name="searchCustomer" ng-model="vm.searchId" autofocus="true">
+        &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default" ng-click="vm.reload()">Search</button>
+    </div>
+</div>
+<br/>
+<table class="table table-bordered text-nowrap" ng-show="vm.users.length != 0">
     <thead>
     <tr>
         <td><b>Id Number</b></td>

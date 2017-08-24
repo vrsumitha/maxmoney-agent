@@ -9,14 +9,14 @@ function customerListingController($log, $rootScope, $scope, wydNotifyService, s
     function reload() {
         $log.info('reload started...');
 
-        vm.customers = [];
         wydNotifyService.hide();
+        vm.customers = [];
+
         if (vm.searchId) {
             sessionService.getCustomer(vm.searchId).then(function (res) {
                 sessionService.currentCustomer = res.data;
                 vm.customers = [res.data];
             }, function (res) {
-                console.log(res);
                 wydNotifyService.showError(res.data.message);
             });
         }
