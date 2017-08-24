@@ -42,7 +42,7 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
                 $location.path($rootScope.homePath);
             });
         }, function (res) {
-            wydNotifyService.showError(res.data.message + '. Invalid username or password.');
+            wydNotifyService.showError('Invalid username or password.');
         });
 
         $log.info('signIn finished...');
