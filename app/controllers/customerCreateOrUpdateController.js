@@ -179,7 +179,7 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
 
         value = vm.mobileNo;
         value = value.replace(new RegExp('_', 'g'), ' ').trim();
-        reqCus.mobile = '+60' + value;
+        reqCus.mobile = '+6' + value;
 
         if (vm.idType == 'nric') {
             value = vm.idNoNric;
@@ -369,13 +369,13 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
             console.log(model);
             vm.emailId = model.email;
             vm.name = model.customerName;
-            if (model.nationality) {
-                vm.nationality = _.find(vm.countries, function (item) {
-                    return model.nationality == item.nationality;
-                });
-                vm.mobileNo = model.mobile.substring(vm.nationality.dial_code.length);
-            }
-            //vm.mobileNo = model.mobile;
+            // if (model.nationality) {
+            //     vm.nationality = _.find(vm.countries, function (item) {
+            //         return model.nationality == item.nationality;
+            //     });
+            //     vm.mobileNo = model.mobile.substring(vm.nationality.dial_code.length);
+            // }
+            vm.mobileNo = model.mobile.substring(2);
 
             if (model.type === 'Individual') {
                 vm.accountType = 'personal';
