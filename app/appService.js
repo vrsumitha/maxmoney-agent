@@ -706,7 +706,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         }, function (res) {
             $log.error(res);
             $log.debug('fetching user by userId finished with failure.');
-            deferred.reject(res.data);
+            deferred.reject(res);
         });
         return deferred.promise;
     };
