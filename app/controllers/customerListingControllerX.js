@@ -8,14 +8,11 @@ function customerListingController($log, $rootScope, $scope, wydNotifyService, s
 
     function reload() {
         $log.info('reload started...');
-        console.log(vm.searchId);
-       if (vm.searchId) {
-            sessionService.getCustomer(vm.searchId).then(function (res) {
-                console.log(res);
-                sessionService.currentCustomer = res;
-                vm.customers = [res];
-            });
-        }
+        console.log(vm.searchName);
+        sessionService.getCustomers(vm.searchName).then(function (res) {
+            vm.customers = res.data.customers;
+           // $log.info(vm.customers);
+        });
 
         $log.info('reload finished...');
     }
@@ -40,7 +37,7 @@ function customerListingController($log, $rootScope, $scope, wydNotifyService, s
         gotoCDD: gotoCustomerUpdate
     });
 
-   // init();
+    init();
 
     $log.info(cmpId + 'finished...');
 

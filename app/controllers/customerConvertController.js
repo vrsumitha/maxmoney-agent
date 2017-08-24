@@ -64,8 +64,7 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
     function convertCustomer() {
         $log.info('convert customer started...');
 
-        var params = {id: vm.customer.idNo, password: vm.customer.password};
-        //var params = {id: vm.customer.idNo, password: '123456'};
+        var params = {id: vm.customer.idNo};
         sessionService.convertCustomer(params).then(function (res) {
             $log.debug(res);
             if (res.status === 201) {
