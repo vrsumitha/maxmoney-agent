@@ -8,7 +8,7 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
 
     function onCustomerChange() {
         sessionService.getCustomer(vm.customer.idNo).then(function (res) {
-            _.assign(vm.customer, res);
+            _.assign(vm.customer, res.data);
             $log.info(vm.customer);
             computeImageUrls();
         });
