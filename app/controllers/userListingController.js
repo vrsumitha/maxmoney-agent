@@ -13,12 +13,14 @@ function userListingController($log, $rootScope, $scope, wydNotifyService, sessi
         vm.users = [];
 
         if(vm.searchId && vm.searchId.trim() != '') {
+            console.log(1);
             sessionService.getUser(vm.searchId).then(function(res) {
                 vm.users = [res.data];
             }, function(res) {
                 wydNotifyService.showError(res.data.message);
             });
         } else {
+            console.log(2);
             sessionService.getUsers().then(function (res) {
                 vm.users = res.data.users;
             });
