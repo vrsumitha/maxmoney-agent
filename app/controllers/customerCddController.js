@@ -29,16 +29,16 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
 
         wydNotifyService.hide();
 
-        // var value = vm.sourceOfIncome;
-        // if(!value) {
-        //     wydNotifyService.showError('Please select the source of income.');
-        //     return;
-        // }
-        // value = vm.natureOfBusiness;
-        // if(!value) {
-        //     wydNotifyService.showError('Please select the nature of business.');
-        //     return;
-        // }
+        var value = vm.sourceOfIncome;
+        if (!value) {
+            wydNotifyService.showError('Please select the source of income.');
+            return;
+        }
+        value = vm.natureOfBusiness;
+        if (!value) {
+            wydNotifyService.showError('Please select the nature of business.');
+            return;
+        }
 
         var path = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
         var reqData = {'idType': vm.customer.idType}, msg = null;
@@ -47,18 +47,25 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
                 wydNotifyService.showWarning('There is nothing to update...');
                 return;
             }
-            if (!vm.passportFront) {
+            if (vm.passportFront) {
                 var mbs = vm.passportFront.size / (1024 * 1024);
                 console.log(mbs);
-                if (vm.passportFront.size >= vm.maxSizeForIdDoucuments) {
-                    msg = 'Passport fron image size should not be more than ' + vm.maxSizeForIdDoucuments;
+                if (mbs >= vm.maxSizeForIdDoucumentsX) {
+                    msg = 'Passport front image size should not be more than ' + vm.maxSizeForIdDoucuments;
+                    wydNotifyService.showError(msg);
                     return;
                 }
             }
             reqData['front'] = vm.passportFront;
 
-            if (!vm.passportBack) {
-
+            if (vm.passportBack) {
+                var mbs = vm.passportBack.size / (1024 * 1024);
+                console.log(mbs);
+                if (mbs >= vm.maxSizeForIdDoucumentsX) {
+                    msg = 'Passport Back image size should not be more than ' + vm.maxSizeForIdDoucuments;
+                    wydNotifyService.showError(msg);
+                    return;
+                }
             }
             reqData['back'] = vm.passportBack;
         }
@@ -68,45 +75,60 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
                 return;
             }
             if (vm.nricFront) {
-                reqData['front'] = vm.nricFront;
+                var mbs = vm.nricFront.size / (1024 * 1024);
+                console.log(mbs);
+                if (mbs >= vm.maxSizeForIdDoucumentsX) {
+                    msg = 'NRIC front image size should not be more than ' + vm.maxSizeForIdDoucuments;
+                    wydNotifyService.showError(msg);
+                    return;
+                }
             }
+            reqData['front'] = vm.nricFront;
+
             if (vm.nricBack) {
-                reqData['back'] = vm.nricBack;
+                var mbs = vm.nricBack.size / (1024 * 1024);
+                console.log(mbs);
+                if (mbs >= vm.maxSizeForIdDoucumentsX) {
+                    msg = 'NRIC back image size should not be more than ' + vm.maxSizeForIdDoucuments;
+                    wydNotifyService.showError(msg);
+                    return;
+                }
             }
+            reqData['back'] = vm.nricBack;
         }
         //if (vm.signature) {
         //    reqData['signature'] = vm.signature;
         //}
 
         $log.info(reqData);
-        // Upload.upload({
-        //     url: path,
-        //     method: 'PUT',
-        //     headers: {'api-key': $rootScope.sessionId},
-        //     transformRequest: angular.identity,
-        //     data: reqData
-        // }).then(function (res) {
-        //     $log.debug(res);
-        //     wydNotifyService.showSuccess('Images Uploaded Successfully...');
-        //     approve();
-        // }, function (res) {
-        //     $log.debug(res);
-        //     $log.error('Error Status: ' + res.status);
-        //     wydNotifyService.showError('image Upload failed. ' + res.description);
-        // }, function (evt) {
-        //     $log.info(evt);
-        //     var pp = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-        //     if (vm.customer.idType == 'Passport') {
-        //         vm.passportFront.progress = pp;
-        //         vm.passportBack.progress = pp;
-        //     }
-        //     if (vm.customer.idType == 'NRIC') {
-        //         vm.nricFront.progress = pp;
-        //         vm.nricBack.progress = pp;
-        //     }
-        //     //vm.signature.progress = pp;
-        //     //$log.info('Progress: ' + pp + '% ');
-        // });
+        Upload.upload({
+            url: path,
+            method: 'PUT',
+            headers: {'api-key': $rootScope.sessionId},
+            transformRequest: angular.identity,
+            data: reqData
+        }).then(function (res) {
+            $log.debug(res);
+            wydNotifyService.showSuccess('Images Uploaded Successfully...');
+            approve();
+        }, function (res) {
+            $log.debug(res);
+            $log.error('Error Status: ' + res.status);
+            wydNotifyService.showError('image Upload failed. ' + res.description);
+        }, function (evt) {
+            $log.info(evt);
+            var pp = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+            if (vm.customer.idType == 'Passport') {
+                vm.passportFront.progress = pp;
+                vm.passportBack.progress = pp;
+            }
+            if (vm.customer.idType == 'NRIC') {
+                vm.nricFront.progress = pp;
+                vm.nricBack.progress = pp;
+            }
+            //vm.signature.progress = pp;
+            //$log.info('Progress: ' + pp + '% ');
+        });
 
         $log.info('update finished...');
     }
@@ -133,7 +155,9 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         $log.info('init started...');
 
         vm.minSizeForIdDoucuments = '500KB';
-        vm.maxSizeForIdDoucuments = '1MB';
+        vm.minSizeForIdDoucumentsX = 500;
+        vm.maxSizeForIdDoucuments = '6MB';
+        vm.maxSizeForIdDoucumentsX = 6;
 
         vm.customers = storageService.getCustomers();
         vm.customer = sessionService.currentCustomer;

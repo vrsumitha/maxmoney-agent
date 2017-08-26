@@ -98,8 +98,7 @@
             <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.passportBack.$dirty && vm.form.passportBack.$invalid), 'has-success' : (vm.form.passportBack.$dirty && vm.form.passportBack.$valid) }">
                 <label for="passportBack" class="control-label">Passport Back <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="passportBack" placeholder="" aria-describedby="passportBackHelpBlock"
-                       name="passportBack" ng-model="vm.passportBack" accept="image/*" ngf-select
-                       xng-required="vm.customer.idType == 'Passport'" ngf-max-size="{{vm.maxSizeForIdDocuments}}" ngf-model-invalid="vm.passportBackError">
+                       name="passportBack" ng-model="vm.passportBack" accept="image/*" ngf-select>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.passportBack.$dirty && vm.form.passportBack.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -122,8 +121,7 @@
                  ng-class="{ 'has-error' : (vm.form.nricFront.$dirty && vm.form.nricFront.$invalid), 'has-success' : (vm.form.nricFront.$dirty && vm.form.nricFront.$valid) }">
                 <label for="nricFront" class="control-label">NRIC Front <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="nricFront" placeholder="" aria-describedby="nricFrontHelpBlock"
-                       name="nricFront" ng-model="vm.nricFront" ngf-select
-                       xng-required="vm.customer.idType == 'NRIC'" accept="image/*" ngf-max-size="{{vm.maxSizeForIdDocuments}}" ngf-model-invalid="vm.nricFrontError">
+                       name="nricFront" ng-model="vm.nricFront" ngf-select>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.nricFront.$dirty && vm.form.nricFront.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -146,8 +144,7 @@
                  ng-class="{ 'has-error' : (vm.form.nricBack.$dirty && vm.form.nricBack.$invalid), 'has-success' : (vm.form.nricBack.$dirty && vm.form.nricBack.$valid) }">
                 <label for="nricBack" class="control-label">NRIC Back <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="nricBack" placeholder="" aria-describedby="nricBackHelpBlock"
-                       name="nricBack" ng-model="vm.nricBack" ngf-select
-                       xng-required="vm.customer.idType == 'NRIC'" accept="image/*" ngf-max-size="{{vm.maxSizeForIdDocuments}}" ngf-model-invalid="vm.nricBackError">
+                       name="nricBack" ng-model="vm.nricBack" ngf-select>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.nricBack.$dirty && vm.form.nricBack.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
@@ -168,8 +165,7 @@
             <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.signature.$dirty && vm.form.signature.$invalid), 'has-success' : (vm.form.signature.$dirty && vm.form.signature.$valid) }">
                 <label for="signature" class="control-label">Signature <span class="text-danger">*</span></label>
                 <input type="file" class="form-control" id="signature" placeholder="" aria-describedby="signatureHelpBlock"
-                       name="signature" ng-model="vm.signature" accept="image/*" ngf-select
-                       ngf-max-size="1MB" ngf-model-invalid="vm.signatureError">
+                       name="signature" ng-model="vm.signature" accept="image/*" ngf-select>
                     <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                           ng-if="vm.form.signature.$dirty && vm.form.signature.$invalid"></span>
                     <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
