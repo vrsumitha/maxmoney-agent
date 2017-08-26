@@ -14,6 +14,7 @@ function rootController($log, $rootScope, $scope, $window, sessionService) {
         $window.open(s);
     };
 
+    sessionService.initRoleInfo();
     sessionService.getCountries();
     sessionService.getMalasiyaStates();
     sessionService.getRelationships();
