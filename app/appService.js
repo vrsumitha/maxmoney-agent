@@ -2,7 +2,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
     var basePath = 'sessions', apiBasePath = 'https://api-staging.maxmoney.com/v1';
 
     var service = {
-        context: {},
+        roleInfo: {},
         customers: [],
         countries: [],
         malasiyaStates: [],
@@ -15,12 +15,34 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         currentUser: {}
     };
 
+
     service.getApiBasePath = function () {
         return apiBasePath;
     };
 
     service.setApiBasePath = function (basePath) {
         apiBasePath = basePath;
+    };
+
+    service.initRoleInfo = function() {
+        var obj = {
+            id: 'complianceManager',
+            name: 'Compliance Manager',
+            homePath: '/users'
+        };
+        service.roleInfo[obj.id] = obj;
+        obj = {
+            id: 'maxCddOfficer',
+            name: 'Max CDD Officer',
+            homePath: '/customers/customer'
+        };
+        service.roleInfo[obj.id] = obj;
+        obj = {
+            id: 'cddOfficer',
+            name: 'CDD Officer',
+            homePath: '/customers'
+        };
+        service.roleInfo[obj.id] = obj;
     };
 
     function addOrUpdateCache(propName, objectx) {
