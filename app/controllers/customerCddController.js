@@ -150,6 +150,9 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
 
     function init() {
         $log.info('init started...');
+
+        vm.maxSizeForIdDoucuments = '3MB';
+
         vm.customers = storageService.getCustomers();
         vm.customer = sessionService.currentCustomer;
         if (!vm.customer) {
