@@ -29,30 +29,38 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
 
         wydNotifyService.hide();
 
-        var value = vm.sourceOfIncome;
-        if(!value) {
-            wydNotifyService.showError('Please select the source of income.');
-            return;
-        }
-        value = vm.natureOfBusiness;
-        if(!value) {
-            wydNotifyService.showError('Please select the nature of business.');
-            return;
-        }
+        // var value = vm.sourceOfIncome;
+        // if(!value) {
+        //     wydNotifyService.showError('Please select the source of income.');
+        //     return;
+        // }
+        // value = vm.natureOfBusiness;
+        // if(!value) {
+        //     wydNotifyService.showError('Please select the nature of business.');
+        //     return;
+        // }
 
         var path = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
-        var reqData = {'idType': vm.customer.idType};
+        var reqData = {'idType': vm.customer.idType}, msg = null;
         if (vm.customer.idType == 'Passport') {
             if (!vm.passportFront || !vm.passportBack) {
                 wydNotifyService.showWarning('There is nothing to update...');
                 return;
             }
-            if (vm.passportFront) {
-                reqData['front'] = vm.passportFront;
+            if (!vm.passportFront) {
+                var mbs = vm.passportFront.size / (1024 * 1024);
+                console.log(mbs);
+                if (vm.passportFront.size >= vm.maxSizeForIdDoucuments) {
+                    msg = 'Passport fron image size should not be more than ' + vm.maxSizeForIdDoucuments;
+                    return;
+                }
             }
-            if (vm.passportBack) {
-                reqData['back'] = vm.passportBack;
+            reqData['front'] = vm.passportFront;
+
+            if (!vm.passportBack) {
+
             }
+            reqData['back'] = vm.passportBack;
         }
         if (vm.customer.idType == 'NRIC') {
             if (!vm.nricFront || !vm.nricBack) {
@@ -71,60 +79,33 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         //}
 
         $log.info(reqData);
-        Upload.upload({
-            url: path,
-            method: 'PUT',
-            headers: {'api-key': $rootScope.sessionId},
-            transformRequest: angular.identity,
-            data: reqData
-        }).then(function (res) {
-            $log.debug(res);
-            wydNotifyService.showSuccess('Images Uploaded Successfully...');
-            approve();
-        }, function (res) {
-            $log.debug(res);
-            $log.error('Error Status: ' + res.status);
-            wydNotifyService.showError('image Upload failed. ' + res.description);
-        }, function (evt) {
-            $log.info(evt);
-            var pp = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-            if (vm.customer.idType == 'Passport') {
-                vm.passportFront.progress = pp;
-                vm.passportBack.progress = pp;
-            }
-            if (vm.customer.idType == 'NRIC') {
-                vm.nricFront.progress = pp;
-                vm.nricBack.progress = pp;
-            }
-            //vm.signature.progress = pp;
-            //$log.info('Progress: ' + pp + '% ');
-        });
-
-        // var reqData = { 'customerName' : vm.name};
-        // var req = {
-        //     method: 'PUT',
+        // Upload.upload({
         //     url: path,
-        //     headers: { 'api-key' : $rootScope.sessionId},
-        //     params: reqData
-        // };
-
-        //console.log(vm.passportFrontX);
-        // var reqData = new FormData();
-        // reqData.append('front', vm.passportFrontX);
-        // reqData.append('customerName', vm.name);
-        // var req = {
         //     method: 'PUT',
-        //     url: path,
-        //     headers: { 'api-key' : $rootScope.sessionId, 'Content-Type': undefined},
+        //     headers: {'api-key': $rootScope.sessionId},
         //     transformRequest: angular.identity,
         //     data: reqData
-        // };
-
-        // $log.info(req);
-        // $http(req).then(function (res) {
-        //     console.log(res);
+        // }).then(function (res) {
+        //     $log.debug(res);
+        //     wydNotifyService.showSuccess('Images Uploaded Successfully...');
+        //     approve();
         // }, function (res) {
-        //     console.log(res);
+        //     $log.debug(res);
+        //     $log.error('Error Status: ' + res.status);
+        //     wydNotifyService.showError('image Upload failed. ' + res.description);
+        // }, function (evt) {
+        //     $log.info(evt);
+        //     var pp = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        //     if (vm.customer.idType == 'Passport') {
+        //         vm.passportFront.progress = pp;
+        //         vm.passportBack.progress = pp;
+        //     }
+        //     if (vm.customer.idType == 'NRIC') {
+        //         vm.nricFront.progress = pp;
+        //         vm.nricBack.progress = pp;
+        //     }
+        //     //vm.signature.progress = pp;
+        //     //$log.info('Progress: ' + pp + '% ');
         // });
 
         $log.info('update finished...');
@@ -151,7 +132,8 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
     function init() {
         $log.info('init started...');
 
-        vm.maxSizeForIdDoucuments = '3MB';
+        vm.minSizeForIdDoucuments = '500KB';
+        vm.maxSizeForIdDoucuments = '1MB';
 
         vm.customers = storageService.getCustomers();
         vm.customer = sessionService.currentCustomer;
@@ -192,3 +174,30 @@ customerCddController.resolve = {
     }]
 };
 appControllers.controller('customerCddController', customerCddController);
+
+// var reqData = { 'customerName' : vm.name};
+// var req = {
+//     method: 'PUT',
+//     url: path,
+//     headers: { 'api-key' : $rootScope.sessionId},
+//     params: reqData
+// };
+
+//console.log(vm.passportFrontX);
+// var reqData = new FormData();
+// reqData.append('front', vm.passportFrontX);
+// reqData.append('customerName', vm.name);
+// var req = {
+//     method: 'PUT',
+//     url: path,
+//     headers: { 'api-key' : $rootScope.sessionId, 'Content-Type': undefined},
+//     transformRequest: angular.identity,
+//     data: reqData
+// };
+
+// $log.info(req);
+// $http(req).then(function (res) {
+//     console.log(res);
+// }, function (res) {
+//     console.log(res);
+// });
