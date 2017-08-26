@@ -119,6 +119,12 @@ function appConfig($routeProvider, $locationProvider) {
         resolve: userViewController.resolve
     });
 
+    $routeProvider.when('/transfer-rates', {
+        templateUrl: 'app/views/transferRatesList.html',
+        controller: 'transferRatesListController as vm',
+        resolve: transferRatesListController.resolve
+    });
+
     $routeProvider.when('/not-found', {
         templateUrl: 'app/views/notFound.html'
     });

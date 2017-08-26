@@ -1,0 +1,18 @@
+<br/>
+<table class="table table-bordered text-nowrap">
+    <thead>
+    <tr>
+        <td><b>Country</b></td>
+        <td><b>Currency</b></td>
+        <td><b>Transfer Rate</b></td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in vm.currencies">
+        <td>{{ item.country }}</td>
+        <td>{{ item.code }}</td>
+        <td>{{ item.transferRate }}</td>
+    </tr>
+    </tbody>
+    </tbody>
+</table>
