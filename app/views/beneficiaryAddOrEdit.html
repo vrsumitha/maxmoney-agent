@@ -110,7 +110,7 @@
                     <label for="dialingNumber">Phone Number <span class="text-danger">*</span></label>
                     <div class="input-group">
                         <span class="input-group-addon">{{vm.model.dialingCode}}</span>
-                        <input type="text" class="form-control" id="dialingNumber" placeholder="Phone Number" aria-describedby="dialingNumberHelpBlock"
+                        <input type="number" class="form-control" id="dialingNumber" placeholder="Phone Number" aria-describedby="dialingNumberHelpBlock"
                                name="dialingNumber" ng-model="vm.model.dialingNumber"
                                required ng-minlength="9" ng-maxlength="15" input-mask="'mask'" mask-option="{'mask' : '999999999999999'}" input-phone-number>
                     </div>

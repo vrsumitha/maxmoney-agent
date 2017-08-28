@@ -14,6 +14,7 @@ function rootController($log, $rootScope, $scope, $window, sessionService) {
         $window.open(s);
     };
 
+    sessionService.initRoleInfo();
     sessionService.getCountries();
     sessionService.getMalasiyaStates();
     sessionService.getRelationships();
@@ -120,6 +121,11 @@ function appConfig($routeProvider, $locationProvider) {
 
     $routeProvider.when('/not-found', {
         templateUrl: 'app/views/notFound.html'
+    });
+
+    $routeProvider.when('/test-bench', {
+        controller: 'testBenchController as vm',
+        templateUrl: 'app/views/testBench.html'
     });
 
     $routeProvider.otherwise({
