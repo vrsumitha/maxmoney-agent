@@ -122,6 +122,11 @@ function appConfig($routeProvider, $locationProvider) {
         templateUrl: 'app/views/notFound.html'
     });
 
+    $routeProvider.when('/test-bench', {
+        controller: 'testBenchController as vm',
+        templateUrl: 'app/views/testBench.html'
+    });
+
     $routeProvider.otherwise({
         redirectTo: '/not-found'
     });
