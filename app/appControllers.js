@@ -14,6 +14,7 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
         $log.info('reset started...');
 
         vm.form.$setPristine();
+        vm.password = null;
         vm.message = 'Sign In';
 
         $log.info('reset started...');
@@ -35,14 +36,15 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
                     $log.info('Current Session Id : ' + $rootScope.sessionId);
                     $log.info('Current User Id    : ' + $rootScope.session.username);
                     $log.info('Current User Role  : ' + $rootScope.session.role);
-
                     var obj = sessionService.roleInfo[$rootScope.session.role];
                     if(obj) {
                         $rootScope.homePath = obj.homePath;
                     } else {
                         $rootScope.homePath = '/not-found';
+                        wydNotifyService.showError("This role '" + $rootScope.session.role + "' is not authorized to use this application.");
+                        reset();
+                        return;
                     }
-
                     $log.info('Current Home Path : ' + $rootScope.homePath);
                     $location.path($rootScope.homePath);
                 }, function(res) {
@@ -62,7 +64,7 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
         vm.message = 'Sign In';
 
         if(window.location.hostname == 'localhost') {
-            vm.userId = 'cdd@maxmoney.com';
+            vm.userId = 'maxcdd@maxmoney.com';
             //vm.password = 'moos';
             //$timeout(signIn, 2000);
         }
@@ -328,20 +330,21 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
     }
 
     function createBeneficiaryBankAccount(reqBnk) {
-        $log.info('create beneficiary bank account...');
-        $log.info(reqBnk);
+        $log.debug('create beneficiary bank account...');
+        $log.debug(reqBnk);
         sessionService.createBeneficiaryBankAccount(vm.model.id, reqBnk).then(function (res) {
-            $log.info(res);
+            $log.debug(res);
             vm.resModel = res.data;
             $uibModalInstance.close(vm.resModel);
         });
     }
 
     function updateBeneficiary(reqBen, reqBnk) {
-        $log.info('update beneficiary...');
-        $log.info(reqBen);
+        $log.debug('update beneficiary...');
+        $log.debug(reqBen);
         sessionService.updateBeneficiary(vm.model.id, reqBen).then(function (res) {
-            $log.info(res);
+            $log.debug(res);
+            vm.resModel = res.data;
             if (vm.payBy == 'BD') {
                 deleteAndUpdateBeneficiaryBankAccount(reqBnk);
             } else {
@@ -353,7 +356,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
     function deleteAndUpdateBeneficiaryBankAccount(reqBnk) {
         $log.info('delete beneficiary bank account...');
         sessionService.deleteBeneficiaryBankAccount(vm.model.id, {index: 1}).then(function (res) {
-            $log.info(res);
+            $log.debug(res);
             createBeneficiaryBankAccount(reqBnk);
         });
     }
