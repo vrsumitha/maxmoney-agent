@@ -44,7 +44,7 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         var reqData = {'idType': vm.customer.idType}, msg = null;
         if (vm.customer.idType == 'Passport') {
             if (!vm.passportFront || !vm.passportBack) {
-                wydNotifyService.showWarning('There is nothing to update...');
+                wydNotifyService.showWarning('Image Missing ...');
                 return;
             }
             if (vm.passportFront) {
@@ -71,7 +71,7 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         }
         if (vm.customer.idType == 'NRIC') {
             if (!vm.nricFront || !vm.nricBack) {
-                wydNotifyService.showWarning('There is nothing to update...');
+                wydNotifyService.showWarning('Image Missing...');
                 return;
             }
             if (vm.nricFront) {
