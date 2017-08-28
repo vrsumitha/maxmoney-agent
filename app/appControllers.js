@@ -26,20 +26,26 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
 
         vm.message = 'Sign In';
         var params = {userId: vm.userId, password: vm.password};
+        if(params.userId.indexOf("@") === -1) {
+            params.userId = params.userId + '@maxmoney.com';
+        }
         sessionService.signIn(params).then(function (res) {
             if (res.status > 199) {
                 sessionService.getCurrentSession().then(function (res) {
                     $log.info('Current Session Id : ' + $rootScope.sessionId);
                     $log.info('Current User Id    : ' + $rootScope.session.username);
                     $log.info('Current User Role  : ' + $rootScope.session.role);
-
-                    var obj = sessionService.roleInfo[$rootScope.session.role];
-                    if(obj) {
-                        $rootScope.homePath = obj.homePath;
-                    } else {
-                        $rootScope.homePath = '/not-found';
+                    var path = '/not-found';
+                    if ($rootScope.session.role == 'complianceManager') {
+                        path = '/users'; // user listing
                     }
-
+                    if ($rootScope.session.role == 'maxCddOfficer') {
+                        path = '/customers/customer'; // customer registration
+                    }
+                    if ($rootScope.session.role == 'cddOfficer') {
+                        path = '/customers'; // customer listing
+                    }
+                    $rootScope.homePath = path;
                     $log.info('Current Home Path : ' + $rootScope.homePath);
                     $location.path($rootScope.homePath);
                 }, function(res) {
