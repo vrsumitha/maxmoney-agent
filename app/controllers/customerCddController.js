@@ -44,27 +44,57 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         var reqData = {'idType': vm.customer.idType};
         if (vm.customer.idType == 'Passport') {
             if (!vm.passportFront || !vm.passportBack) {
-                wydNotifyService.showWarning('There is nothing to update...');
+                wydNotifyService.showWarning('Image Missing ...');
                 return;
             }
             if (vm.passportFront) {
-                reqData['front'] = vm.passportFront;
+                var mbs = vm.passportFront.size / (1024 * 1024);
+                console.log(mbs);
+                if (mbs >= vm.maxSizeForIdDoucumentsX) {
+                    msg = 'Passport front image size should not be more than ' + vm.maxSizeForIdDoucuments;
+                    wydNotifyService.showError(msg);
+                    return;
+                }
             }
+            reqData['front'] = vm.passportFront;
+
             if (vm.passportBack) {
-                reqData['back'] = vm.passportBack;
+                var mbs = vm.passportBack.size / (1024 * 1024);
+                console.log(mbs);
+                if (mbs >= vm.maxSizeForIdDoucumentsX) {
+                    msg = 'Passport Back image size should not be more than ' + vm.maxSizeForIdDoucuments;
+                    wydNotifyService.showError(msg);
+                    return;
+                }
             }
+            reqData['back'] = vm.passportBack;
         }
         if (vm.customer.idType == 'NRIC') {
             if (!vm.nricFront || !vm.nricBack) {
-                wydNotifyService.showWarning('There is nothing to update...');
+                wydNotifyService.showWarning('Image Missing...');
                 return;
             }
             if (vm.nricFront) {
-                reqData['front'] = vm.nricFront;
+                var mbs = vm.nricFront.size / (1024 * 1024);
+                console.log(mbs);
+                if (mbs >= vm.maxSizeForIdDoucumentsX) {
+                    msg = 'NRIC front image size should not be more than ' + vm.maxSizeForIdDoucuments;
+                    wydNotifyService.showError(msg);
+                    return;
+                }
             }
+            reqData['front'] = vm.nricFront;
+
             if (vm.nricBack) {
-                reqData['back'] = vm.nricBack;
+                var mbs = vm.nricBack.size / (1024 * 1024);
+                console.log(mbs);
+                if (mbs >= vm.maxSizeForIdDoucumentsX) {
+                    msg = 'NRIC back image size should not be more than ' + vm.maxSizeForIdDoucuments;
+                    wydNotifyService.showError(msg);
+                    return;
+                }
             }
+            reqData['back'] = vm.nricBack;
         }
         //if (vm.signature) {
         //    reqData['signature'] = vm.signature;
