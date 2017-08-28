@@ -296,6 +296,7 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
     function init() {
         $log.info('init started...');
 
+        $rootScope.customerConvertBackUrl = '/customers/customer';
         vm.customer = {};
 
         vm.beneficiaryLabel = 'Add';
@@ -327,6 +328,7 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
             console.log($routeParams.id);
 
             vm.isEdit = true;
+            $rootScope.customerConvertBackUrl = '/customers';
             //var model = _.find(sessionService.customers, function (item) {
             //    return item.idNo === $routeParams.id
             //});
