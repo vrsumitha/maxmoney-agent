@@ -118,6 +118,12 @@ function appConfig($routeProvider, $locationProvider) {
         resolve: userViewController.resolve
     });
 
+    $routeProvider.when('/order-details', {
+        templateUrl: 'app/views/orderDetails.html',
+        controller: 'orderDetailsController as vm',
+        resolve: orderDetailsController.resolve
+    });
+
     $routeProvider.when('/not-found', {
         templateUrl: 'app/views/notFound.html'
     });
