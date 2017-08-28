@@ -77,7 +77,7 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
                 }).then(
                     function () {
                         $scope.$apply(function () {
-                            $location.path($rootScope.customerConvertBackUrl);
+                            $location.path($rootScope.homePath);
                         });
                     }
                 );
