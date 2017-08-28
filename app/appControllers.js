@@ -62,7 +62,7 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
         vm.message = 'Sign In';
 
         if(window.location.hostname == 'localhost') {
-            vm.userId = 'kamilcm@maxmoney.com';
+            vm.userId = 'cdd@maxmoney.com';
             //vm.password = 'moos';
             //$timeout(signIn, 2000);
         }
@@ -83,7 +83,7 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
 signInController.$inject = ['$log', '$rootScope', '$scope', 'wydNotifyService', 'storageService', 'sessionService', '$location', '$timeout'];
 appControllers.controller('signInController', signInController);
 
-function signOutController($log, $rootScope, $scope, sessionService, $sessionStroage, $location) {
+function signOutController($log, $rootScope, $scope, sessionService, $sessionStorage, $location) {
     var cmpId = 'signOutController', cmpName = 'Sign Out';
     $log.info(cmpId + ' started ...');
 
@@ -96,7 +96,7 @@ function signOutController($log, $rootScope, $scope, sessionService, $sessionStr
         $rootScope.session = null;
         $rootScope.sessionId = null;
         $rootScope.homePath = '/sign-in';
-        $sessionStroage.$reset();
+        $sessionStorage.$reset();
     }
 
     sessionService.signOut().then(function (res) {

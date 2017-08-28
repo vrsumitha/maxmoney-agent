@@ -1,4 +1,4 @@
-function customerCddController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $http, Upload, $location) {
+function customerCddController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $http, Upload, $location, $sessionStorage) {
     var cmpId = 'customerCddController', cmpName = 'CDD';
     $log.info(cmpId + ' started ...');
 
@@ -148,6 +148,15 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         $log.info('approve finished...');
     }
 
+    function cancel() {
+        sessionService.currentCustomer = null;
+        $rootScope.session = null;
+        $rootScope.sessionId = null;
+        $rootScope.homePath = '/sign-in';
+        $sessionStorage.$reset();
+        $location.path($rootScope.homePath);
+    }
+
     function init() {
         $log.info('init started...');
         vm.customers = storageService.getCustomers();
@@ -173,14 +182,15 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         uiState: uiState,
         onCustomerChange: onCustomerChange,
         save: save,
-        approve: approve
+        approve: approve,
+        cancel: cancel
     });
 
     init();
 
     $log.info(cmpId + 'finished...');
 }
-customerCddController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$http', 'Upload', '$location'];
+customerCddController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$http', 'Upload', '$location', '$sessionStorage'];
 customerCddController.resolve = {
     '_session': ['sessionService', function (sessionService) {
         //sessionService.switchOffAutoComplete();
