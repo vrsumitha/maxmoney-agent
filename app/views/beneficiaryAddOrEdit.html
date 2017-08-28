@@ -112,7 +112,12 @@
                         <span class="input-group-addon">{{vm.model.dialingCode}}</span>
                         <input type="number" class="form-control" id="dialingNumber" placeholder="Phone Number" aria-describedby="dialingNumberHelpBlock"
                                name="dialingNumber" ng-model="vm.model.dialingNumber"
+                               required ng-minlength="9" ng-maxlength="15">
+                        <!--
+                        <input type="number" class="form-control" id="dialingNumber" placeholder="Phone Number" aria-describedby="dialingNumberHelpBlock"
+                               name="dialingNumber" ng-model="vm.model.dialingNumber"
                                required ng-minlength="9" ng-maxlength="15" input-mask="'mask'" mask-option="{'mask' : '999999999999999'}" input-phone-number>
+                        -->
                     </div>
                     <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                           ng-if="vm.form2.dialingNumber.$dirty && vm.form2.dialingNumber.$invalid"></span>
