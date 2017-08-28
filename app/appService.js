@@ -222,12 +222,37 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
-    service.updateBeneficiary = function (id, params) {
+    service.updateBeneficiaryX = function (id, params) {
         var path = apiBasePath + '/beneficiaries/' + id;
         var req = {
             method: 'PUT',
             url: path,
             params: params
+        };
+        $log.info(req);
+        var deferred = $q.defer();
+        $http(req).then(function (res) {
+            deferred.resolve(res);
+        }, function (res) {
+            deferred.reject(res);
+        });
+        return deferred.promise;
+    };
+
+    service.updateBeneficiary = function (id, params) {
+        var path = apiBasePath + '/beneficiaries/' + id;
+        var req = {
+            method: 'PUT',
+            url: path,
+            headers: {'api-key': $rootScope.sessionId, 'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function (obj) {
+                var str = [];
+                for (var p in obj) {
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                }
+                return str.join("&");
+            },
+            data: params
         };
         $log.info(req);
         var deferred = $q.defer();

@@ -4,7 +4,7 @@
         <div class="col-md-4">
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.emailId.$dirty && vm.form.emailId.$invalid), 'has-success' : (vm.form.emailId.$dirty && vm.form.emailId.$valid) }">
-                <label for="emailId">Email Id <span class="text-danger">*</span></label>
+                <label for="emailId" class="control-label">Email Id <span class="text-danger">*</span></label>
                 <input type="email" class="form-control" id="emailId" placeholder="Email Id" aria-describedby="emailIdHelpBlock"
                        name="emailId" ng-model="vm.emailId" autofocus="true" required>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
@@ -25,7 +25,7 @@
         <div class="col-md-4">
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.password.$dirty && vm.form.password.$invalid), 'has-success' : (vm.form.password.$dirty && vm.form.password.$valid) }">
-                <label for="password">Password <span class="text-danger">*</span></label>
+                <label for="password" class="control-label">Password <span class="text-danger">*</span></label>
                 <input type="password" class="form-control" id="password" placeholder="password" aria-describedby="passwordHelpBlock"
                        name="password" ng-model="vm.password"
                        required ng-minlength="5" ng-maxlength="15">
@@ -40,7 +40,7 @@
         <div class="col-md-4">
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.confirmPassword.$dirty && vm.form.confirmPassword.$invalid), 'has-success' : (vm.form.confirmPassword.$dirty && vm.form.confirmPassword.$valid) }">
-                <label for="confirmPassword">Confirm Password <span class="text-danger">*</span></label>
+                <label for="confirmPassword" class="control-label">Confirm Password <span class="text-danger">*</span></label>
                 <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password" aria-describedby="confirmPasswordHelpBlock"
                        name="confirmPassword" ng-model="vm.confirmPassword" required>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="(vm.form.confirmPassword.$dirty && vm.form.confirmPassword.$invalid)"></span>
@@ -76,7 +76,7 @@
             <div class="form-group has-feedback">
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : (vm.form.nationality.$dirty && vm.form.nationality.$invalid), 'has-success' : (vm.form.nationality.$dirty && vm.form.nationality.$valid) }">
-                    <label for="nationality">Nationality <span class="text-danger">*</span></label>
+                    <label for="nationality" class="control-label">Nationality <span class="text-danger">*</span></label>
                     <select id="nationality" name="nationality" aria-describedby="nationalityHelpBlock" placeholder="Choose Nationality"
                             selector options="vm.countries" label-attr="nationality" closeAfterSelection="true"
                             model="vm.nationality" change="vm.onNationalityChangeX(oldValue, newValue)" require="true" >
@@ -91,7 +91,7 @@
         <div class="col-md-4">
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.mobileNo.$dirty && vm.form.mobileNo.$invalid), 'has-success' : (vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid) }">
-                <label for="mobileNo">Mobile Number <span class="text-danger">*</span></label>
+                <label for="mobileNo" class="control-label">Mobile Number <span class="text-danger">*</span></label>
                 <div class="input-group">
                     <div class="input-group-addon">{{vm.dialCode}}</div>
                     <input type="text" class="form-control" id="mobileNo" placeholder="Mobile Number" aria-describedby="mobileNoHelpBlock"
@@ -120,7 +120,7 @@
         <div class="col-md-4">
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.accountType.$dirty && vm.form.accountType.$invalid), 'has-success' : (vm.form.accountType.$dirty && vm.form.accountType.$valid) }">
-                <label for="accountType">Account Type <span class="text-danger">*</span></label>
+                <label for="accountType" class="control-label">Account Type <span class="text-danger">*</span></label>
                 <select class="form-control" id="accountType" aria-describedby="accountTypeHelpBlock"
                         name="accountType" ng-model="vm.accountType" ng-change="vm.onAccountTypeChange()">
                     <option value="personal" >Personal</option>
@@ -135,7 +135,7 @@
         <div class="col-md-4">
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.idType.$dirty && vm.form.idType.$invalid), 'has-success' : (vm.form.idType.$dirty && vm.form.idType.$valid) }">
-                <label for="idType">ID Type <span class="text-danger">*</span></label>
+                <label for="idType" class="control-label">ID Type <span class="text-danger">*</span></label>
                 <select class="form-control" id="idType" aria-describedby="idTypeHelpBlock" placeholder="Country"
                         name="idType" ng-model="vm.idType"
                         ng-change="vm.onIdTypeChange()">
@@ -291,7 +291,7 @@
             <div class="form-group has-feedback">
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : (vm.form.companyType.$dirty && vm.form.companyType.$invalid), 'has-success' : (vm.form.companyType.$dirty && vm.form.companyType.$valid) }">
-                    <label for="companyType">Company Type <span class="text-danger">*</span></label>
+                    <label for="companyType" class="control-label">Company Type <span class="text-danger">*</span></label>
                     <select class="form-control" id="companyType" aria-describedby="companyTypeHelpBlock"
                             name="companyType" ng-model="vm.companyType" ng-required="vm.accountType != 'personal'">
                         <option value="company">Company</option>
@@ -349,7 +349,7 @@
             <div class="form-group has-feedback">
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : (vm.form.city.$dirty && vm.form.city.$invalid), 'has-success' : (vm.form.city.$dirty && vm.form.city.$valid) }">
-                    <label for="city">City <span class="text-danger">*</span></label>
+                    <label for="city" class="control-label">City <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="city" placeholder="City" aria-describedby="cityHelpBlock"
                            name="city" ng-model="vm.city"
                            required ng-minlength="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z\s]*$/">
@@ -371,7 +371,7 @@
             <div class="form-group has-feedback">
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : (vm.form.state.$dirty && vm.form.state.$invalid), 'has-success' : (vm.form.state.$dirty && vm.form.state.$valid) }">
-                    <label for="state">State <span class="text-danger">*</span></label>
+                    <label for="state" class="control-label">State <span class="text-danger">*</span></label>
                     <select class="form-control" id="state" aria-describedby="stateHelpBlock"
                             ng-options="item as item for item in vm.malasiyaStates"
                             name="state" ng-model="vm.state" required>
@@ -385,7 +385,7 @@
             <div class="form-group has-feedback">
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : (vm.form.state.$dirty && vm.form.state.$invalid), 'has-success' : (vm.form.state.$dirty && vm.form.state.$valid) }">
-                    <label for="state">State <span class="text-danger">*</span></label>
+                    <label for="state" class="control-label">State <span class="text-danger">*</span></label>
                     <select id="state" name="state" aria-describedby="stateHelpBlock" placeholder="Choose State"
                             selector options="vm.malasiyaStates" label-attr="state" closeAfterSelection="true"
                             model="vm.state" change="vm.onStateChangeX(oldValue, newValue)" require="true">
@@ -421,7 +421,7 @@
             <div class="form-group has-feedback">
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : (vm.form.sourceOfIncome.$dirty && vm.form.sourceOfIncome.$invalid), 'has-success' : (vm.form.sourceOfIncome.$dirty && vm.form.sourceOfIncome.$valid) }">
-                    <label for="sourceOfIncome">Source Of Income <span class="text-danger">*</span></label>
+                    <label for="sourceOfIncome" class="control-label">Source Of Income <span class="text-danger">*</span></label>
                     <select class="form-control" id="sourceOfIncome" name="sourceOfIncome" aria-describedby="sourceOfIncomeHelpBlock" placeholder="Choose Source Of Income"
                             ng-options="item for item in vm.sourceOfIncomes"
                             ng-model="vm.sourceOfIncome" require="true">
@@ -437,7 +437,7 @@
             <div class="form-group has-feedback">
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : (vm.form.natureOfBusiness.$dirty && vm.form.natureOfBusiness.$invalid), 'has-success' : (vm.form.natureOfBusiness.$dirty && vm.form.natureOfBusiness.$valid) }">
-                    <label for="natureOfBusiness">Nature Of Business <span class="text-danger">*</span></label>
+                    <label for="natureOfBusiness" class="control-label">Nature Of Business <span class="text-danger">*</span></label>
                     <select class="form-control" id="natureOfBusiness" name="natureOfBusiness" aria-describedby="natureOfBusinessHelpBlock" placeholder="Choose Nature Of Business"
                             ng-options="item for item in vm.natureOfBusinesses"
                             ng-model="vm.natureOfBusiness" require="true">
