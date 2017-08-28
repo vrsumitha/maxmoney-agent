@@ -13,7 +13,8 @@ function customerListingController($log, $rootScope, $scope, wydNotifyService, s
         vm.customers = [];
 
         if (vm.searchId) {
-            sessionService.getCustomer(vm.searchId).then(function (res) {
+            var id = vm.searchId.toUpperCase();
+            sessionService.getCustomer(id).then(function (res) {
                 sessionService.currentCustomer = res.data;
                 vm.customers = [res.data];
             }, function (res) {
