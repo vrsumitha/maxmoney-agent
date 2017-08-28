@@ -155,7 +155,7 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
         reqCus.email = value;
 
         value = vm.mobileNo;
-        value = value.replace(new RegExp('_', 'g'), ' ').trim();
+        //value = value.replace(new RegExp('_', 'g'), ' ').trim();
         reqCus.mobile = '+6' + value;
 
         if (vm.idType == 'nric') {
