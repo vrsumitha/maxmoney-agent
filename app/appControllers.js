@@ -26,6 +26,9 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
 
         vm.message = 'Sign In';
         var params = {userId: vm.userId, password: vm.password};
+        if(params.userId.indexOf("@") === -1) {
+            params.userId = params.userId + '@maxmoney.com';
+        }
         sessionService.signIn(params).then(function (res) {
             if (res.status > 199) {
                 sessionService.getCurrentSession().then(function (res) {
