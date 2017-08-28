@@ -144,7 +144,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
         if (countryInfo) {
             model.dialingCode = countryInfo.dial_code;
             if (model.mobile.startsWith(countryInfo.dial_code)) {
-                model.dialingNumber = model.mobile.substring(countryInfo.dial_code.length);
+                model.dialingNumber = parseInt(model.mobile.substring(countryInfo.dial_code.length));
             }
             model.agentCountry = _.find(vm.agentCountries, function (item) {
                 return item.country == model.country;
@@ -256,7 +256,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
         reqBen.country = value.country;
 
         value = vm.model.dialingNumber;
-        value = value.replace(new RegExp('_', 'g'), ' ').trim();
+        //value = value.replace(new RegExp('_', 'g'), ' ').trim();
         value = vm.model.dialingCode + value;
         reqBen.mobile = value;
 
