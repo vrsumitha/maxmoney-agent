@@ -46,12 +46,13 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
             }
         });
         modalInstance.result.then(function (result) {
-            $log.info('beneficiary created successfully...');
+            $log.debug('beneficiary created successfully...');
+            $log.debug(result);
             vm.beneficiary = result;
             vm.beneficiaryLabel = 'Edit';
             //loadBeneficiaries();
         }, function () {
-            $log.info('canceled beneficiary creation...');
+            $log.debug('canceled beneficiary creation...');
         });
     }
 
