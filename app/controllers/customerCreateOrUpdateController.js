@@ -270,7 +270,8 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
 
         vm.nationality = vm.countries[1];
 
-        vm.mobileNo = '1234567890';
+        vm.mobileNo = 1234567890;
+        //vm.mobileNo = '1234567890';
         vm.accountType = 'personal';
         vm.idType = 'passport';
         vm.idNoPassport = '123400';
