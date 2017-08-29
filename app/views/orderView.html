@@ -1,0 +1,155 @@
+<br/>
+<div class="form-inline text-center">
+    <div class="form-group">
+        <input class="form-control" type="text" id="searchOrderId" placeholder="Enter Order ID"
+               name="searchOrderId" ng-model="vm.searchOrderId" autofocus="true">
+        &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default" ng-click="vm.search()">Search</button>
+        &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger" ng-click="vm.reset()">Reset</button>
+    </div>
+</div>
+<br/>
+<div class="row table-bordered">
+    <div class="col-md-8  table-bordered">
+       <h4 class="text-center"><b>Order Details</b></h4>
+        <div class="row">
+            <div class="col-md-3">
+                Order ID
+            </div>
+            <div class="col-md-3">
+               <strong>{{vm.model.id}}</strong>
+            </div>
+            <div class="col-md-3">
+                Currency
+            </div>
+            <div class="col-md-3">
+                <strong>{{vm.model.items[0].ccy}}</strong>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-3">
+               Order Date
+            </div>
+            <div class="col-md-3">
+                <strong>{{vm.model.orderDate | date : 'dd - MM - yyyy'}}</strong>
+            </div>
+            <div class="col-md-3">
+                Unit
+            </div>
+            <div class="col-md-3">
+                <strong>-</strong>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-3">
+               PIN
+            </div>
+            <div class="col-md-3">
+                <strong>-</strong>
+            </div>
+            <div class="col-md-3">
+                Rate
+            </div>
+            <div class="col-md-3">
+                <strong>{{vm.model.items[0].rate}}</strong>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-3">
+               Status
+            </div>
+            <div class="col-md-3">
+                <strong>{{vm.model.items[0].status}}</strong>
+            </div>
+            <div class="col-md-3">
+                Fee & Tax
+            </div>
+            <div class="col-md-3">
+                <strong>{{vm.model.items[0].fee + vm.model.items[0].tax}}</strong>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-3">
+                Comment
+            </div>
+            <div class="col-md-3">
+                <strong>{{vm.model.comment}}</strong>
+            </div>
+            <div class="col-md-3">
+                Total
+            </div>
+            <div class="col-md-3">
+                <strong>{{vm.model.items[0].total}}</strong>
+            </div>
+        </div>
+        <br/>
+    </div>
+    <div class="col-md-4 table-bordered">
+        <h4 class="text-center"><b>Payment Details</b></h4>
+        <div class="row">
+            <div class="col-md-6">
+                Status
+            </div>
+            <div class="col-md-6">
+                <strong>{{vm.model.status}}</strong>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                Transaction ID
+            </div>
+            <div class="col-md-6">
+                <strong>{{vm.model.transactionId}}</strong>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                Payment Type
+            </div>
+            <div class="col-md-6">
+                <strong>{{vm.model.paymentType}}</strong>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                Bank Name
+            </div>
+            <div class="col-md-6">
+                <strong>{{vm.model.bankName}}</strong>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                Total Paid
+            </div>
+            <div class="col-md-6">
+                <strong>{{vm.model.totalPaid}}</strong>
+            </div>
+        </div>
+        <br/>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel">
+        Sender Details
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel">
+            Beneficiary Details
+        </div>
+    </div>
+</div>
+
+
+
+<div ng-if="appMode == 'local'"><br/><pre>{{vm.model | json}}</pre></div>

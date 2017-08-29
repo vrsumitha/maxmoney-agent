@@ -63,8 +63,8 @@
                         <li><a href="#!/beneficiaries">Beneficiaries</a></li>
                         -->
                     </li>
-                    <li ng-class="{'active' : (viewName == 'Order Details')}" ng-if="(session && session.role == 'financeManager')">
-                        <a href="#!/order-details">Order Details</a>
+                    <li ng-class="{'active' : (viewName == 'Order Details')}" ng-if="(session && session.role == 'maxCddOfficer')">
+                        <a href="#!/order-view">Order Details</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -158,7 +158,7 @@
 <script src="app/controllers/customerConvertController.js"></script>
 <script src="app/controllers/userListingController.js"></script>
 <script src="app/controllers/userViewController.js"></script>
-<script src="app/controllers/orderDetailsController.js"></script>
+<script src="app/controllers/orderViewController.js"></script>
 <script src="app/appMain.js"></script>
 
 </body>

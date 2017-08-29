@@ -757,6 +757,28 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
+    service.getOrder = function (orderId) {
+        var path = apiBasePath + '/orders/' + orderId;
+        var req = {
+            method: 'GET',
+            headers: {'api-key': $rootScope.sessionId},
+            url: path
+        };
+        //$log.info(req);
+        $log.debug('fetching order by orderId started...');
+        var deferred = $q.defer();
+        $http(req).then(function (res) {
+            //$log.debug(res);
+            $log.debug('fetching order by orderId finished with success.');
+            deferred.resolve(res);
+        }, function (res) {
+            $log.error(res);
+            $log.debug('fetching order by orderId finished with failure.');
+            deferred.reject(res);
+        });
+        return deferred.promise;
+    };
+
     service.switchOffAutoComplete = function () {
         if (document.getElementsByTagName) {
             var inputElements = document.getElementsByTagName('input');
