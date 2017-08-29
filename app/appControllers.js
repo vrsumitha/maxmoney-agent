@@ -62,7 +62,7 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
         vm.message = 'Sign In';
 
         if(window.location.hostname == 'localhost') {
-            vm.userId = 'maxcdd@maxmoney.com';
+            vm.userId = 'cdd@maxmoney.com';
             //vm.password = 'moos';
             //$timeout(signIn, 2000);
         }
@@ -379,3 +379,15 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
 }
 beneficiaryAddOrEditController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$uibModalInstance', 'model', 'country'];
 appControllers.controller('beneficiaryAddOrEditController', beneficiaryAddOrEditController);
+
+function testBenchController($log, $rootScope, $scope, sessionService, $sessionStroage) {
+    var cmpId = 'testBenchController', cmpName = 'Test Bench';
+    $log.info(cmpId + ' started ...');
+
+    $rootScope.viewName = cmpName;
+
+    var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
+
+}
+testBenchController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$sessionStorage'];
+appControllers.controller('testBenchController', testBenchController);

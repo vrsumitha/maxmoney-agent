@@ -15,7 +15,6 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         currentUser: {}
     };
 
-
     service.getApiBasePath = function () {
         return apiBasePath;
     };
