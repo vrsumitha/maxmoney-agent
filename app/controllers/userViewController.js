@@ -101,7 +101,7 @@ function userViewController($log, $rootScope, $scope, wydNotifyService, sessionS
             }).then(
                 function () {
                     $scope.$apply(function () {
-                        $location.path('/users');
+                        $location.path($rootScope.homePath);
                     });
                 }
             );
