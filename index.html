@@ -46,9 +46,6 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <!--
-                    <li ng-class="{'active' : (viewName == 'Home')}"><a href="#!/home">Home</a></li>
-                    -->
                     <li ng-class="{'active' : (viewName == 'Customers')}" ng-if="(session && session.role == 'cddOfficer')">
                         <a href="#!/customers">Customers</a>
                     </li>
@@ -57,11 +54,6 @@
                     </li>
                     <li ng-class="{'active' : (viewName == 'Approve Users')}" ng-if="(session && session.role == 'complianceManager')">
                         <a href="#!/users">Approve User</a>
-                        <!--
-                        <li><a href="#!/cdd">CDD</a></li>
-                        <li><a href="#!/customer-to-user">Customer To User</a></li>
-                        <li><a href="#!/beneficiaries">Beneficiaries</a></li>
-                        -->
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -92,7 +84,7 @@
                         </span>
                     </div>
                     <div class="com-md-8">
-                        &nbsp;<!--<span ng-class="{ 'text-error' : message.type == 'error', 'text-sucess' : message.type == 'success'}">{{message.text}}</span>-->
+                        &nbsp;
                     </div>
                 </div>
             </div>
