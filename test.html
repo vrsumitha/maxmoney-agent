@@ -6,10 +6,15 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>Maxmoney - Test</title>
+    <title>Maxmoney - Agent</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <!-- -->
     <link rel="stylesheet" href="app/simplex/bootstrap.min.css"/>
+
+    <!--
+    <link rel="stylesheet" href="app/paper/bootstrap.min.css"/>
+    -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.8/sweetalert2.min.css"/>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pretty-checkbox/2.2.1/pretty.min.css"/>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/angular-block-ui/0.2.2/angular-block-ui.min.css"/>
@@ -39,13 +44,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="test.html">Test</a>
+                <a class="navbar-brand" href="index.html">Max CDD Console</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <!--
                     <li ng-class="{'active' : (viewName == 'Home')}"><a href="#!/home">Home</a></li>
-                    -->
                 </ul>
             </div>
         </div>
@@ -71,6 +74,7 @@
     </nav>
 
     <div class="container">
+        <br/><br/>
         <x-ng-view></x-ng-view>
     </div>
 
@@ -87,6 +91,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/is_js/0.9.0/is.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.16.2/math.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.4/holder.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.8/sweetalert2.min.js"></script>
@@ -115,16 +120,42 @@
 <script src="modules_manual/wyd_angular/wydCommon.js"></script>
 <script src="modules_manual/wyd_angular/wydNotifyByNgNotify.js"></script>
 <script src="app/appCommon.js"></script>
-<script src="app/storageService.js"></script>
-<script src="app/appService.js"></script>
-<script src="app/appControllers.js"></script>
-<script src="app/controllers/customerListingController.js"></script>
-<script src="app/controllers/customerCreateOrUpdateController.js"></script>
-<script src="app/controllers/customerCddController.js"></script>
-<script src="app/controllers/customerConvertController.js"></script>
-<script src="app/controllers/userListingController.js"></script>
-<script src="app/controllers/userViewController.js"></script>
-<script src="app/appMain.js"></script>
+<script src="app/appTest.js"></script>
+
+<script type="text/ng-template" id="home.html">
+
+    <form name="vm.form" autocomplete=”off” novalidate="true">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group has-feedback"
+                     ng-class="{ 'has-error' : (vm.form.mobileNo.$dirty && vm.form.mobileNo.$invalid), 'has-success' : (vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid) }">
+                    <label for="mobileNo" class="control-label">Mobile Number <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <div class="input-group-addon">+6</div>
+                        <input type="text" class="form-control" id="mobileNo" placeholder="Mobile Number" aria-describedby="mobileNoHelpBlock"
+                               name="mobileNo" ng-model="vm.mobileNo"
+                               required ng-minlength="9" xng-maxlength="15" input-mask="'mask'" mask-option="{'mask':'999999999999999'}" input-phone-number>
+                    </div>
+                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                          ng-if="vm.form.mobileNo.$dirty && vm.form.mobileNo.$invalid"></span>
+                    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                          ng-if="vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid"></span>
+                    <div id="mobileNoHelpBlock" class="help-inline" ng-messages="vm.form.mobileNo.$error" ng-if="vm.form.mobileNo.$dirty">
+                        <span ng-message="required">This is required.</span>
+                        <span ng-message="number">This should be minimum 9 digits</span>
+                        <span ng-message="minlength, maxlength">This should be minimum 9 digits</span>
+                    </div>
+                    <!--
+                    <span ng-show="vm.form.mobileNo.$dirty && vm.form.mobileNo.$valid" class="help-line text-warning">
+                        It must be valid number to receive activation info
+                    </span>
+                    -->
+                </div>
+            </div>
+        </div>
+    </form>
+
+</script>
 
 </body>
 </html>
