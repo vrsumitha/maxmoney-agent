@@ -149,7 +149,7 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
     }
 
     function cancel() {
-        console.log($rootScope.session.role);
+       // console.log($rootScope.session.role);
         if ($rootScope.session.role == 'maxCddOfficer') {
             path = '/customers/customer'; // customer registration
             $location.path(path);

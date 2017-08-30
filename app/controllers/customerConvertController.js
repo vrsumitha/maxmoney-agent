@@ -97,7 +97,7 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
     }
 
     function cancel() {
-        console.log($rootScope.session.role);
+        //console.log($rootScope.session.role);
         if ($rootScope.session.role == 'maxCddOfficer') {
             path = '/customers/customer'; // customer registration
             $location.path(path);
