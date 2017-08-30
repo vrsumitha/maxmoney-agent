@@ -18,6 +18,7 @@ function transferRatesListController($log, $rootScope, $scope, wydNotifyService,
                 cur.code = key.substr(0, 3);
                 cur.country = rates[cur.code + '_country'];
                 cur.transferRate = rates[cur.code + '_tt'];
+                cur.time = rates[cur.code + '_time'];
                 vm.currencies.push(cur);
             }
         });
