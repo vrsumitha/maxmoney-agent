@@ -12,7 +12,7 @@ function orderViewController($log, $rootScope, $scope, wydNotifyService, session
         sessionService.getOrder(vm.searchOrderId).then(function(res) {
             _.assign(vm.model, res.data);
             $log.debug(vm.model);
-            console.log(vm.model.receipts);
+           // console.log(vm.model.orderRiskProfile.riskProfile.cdd.postalCode);
         }, function(res) {
             wydNotifyService.showError("Order Id '" + vm.searchOrderId + "' doesn't exist...");
         });
@@ -26,7 +26,7 @@ function orderViewController($log, $rootScope, $scope, wydNotifyService, session
         console.log('init started...');
 
         vm.model = {};
-        vm.searchOrderId = '6321-6278-7858';
+        vm.searchOrderId = '4861-8037-1209';
 
         console.log('init finished...');
     }

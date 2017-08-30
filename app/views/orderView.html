@@ -1,16 +1,21 @@
 <br/>
 <div class="form-inline text-center">
     <div class="form-group">
+        <strong>Order Id : </strong>
+        &nbsp;&nbsp;&nbsp;
         <input class="form-control" type="text" id="searchOrderId" placeholder="Enter Order ID"
                name="searchOrderId" ng-model="vm.searchOrderId" autofocus="true">
-        &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default" ng-click="vm.search()">Search</button>
-        &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger" ng-click="vm.reset()">Reset</button>
+        &nbsp;&nbsp;&nbsp;
+        <button type="button" class="btn btn-default" ng-click="vm.search()">Search</button>
+        &nbsp;&nbsp;&nbsp;
+        <button type="button" class="btn btn-danger" ng-click="vm.reset()">Reset</button>
     </div>
 </div>
 <br/>
-<div class="row table-bordered">
-    <div class="col-md-8  table-bordered">
-       <h4 class="text-center"><b>Order Details</b></h4>
+<div class="row">
+    <div class="col-md-8">
+        <h4 class="text-center"><b>Order Details</b></h4>
+        <hr/>
         <div class="row">
             <div class="col-md-3">
                 Order ID
@@ -37,7 +42,7 @@
                 Unit
             </div>
             <div class="col-md-3">
-                <strong>-</strong>
+                <strong>{{vm.model.items[0].value}}</strong>
             </div>
         </div>
         <br/>
@@ -46,7 +51,7 @@
                PIN
             </div>
             <div class="col-md-3">
-                <strong>-</strong>
+                <strong>{{vm.model.orderRiskProfile.riskProfile.cdd.postalCode}}</strong>
             </div>
             <div class="col-md-3">
                 Rate
@@ -61,7 +66,8 @@
                Status
             </div>
             <div class="col-md-3">
-                <strong>{{vm.model.items[0].status}}</strong>
+                <!--<strong>{{vm.model.items[0].status}}</strong>-->
+                <strong>{{vm.model.customerStatus}}</strong>
             </div>
             <div class="col-md-3">
                 Fee & Tax
@@ -87,14 +93,15 @@
         </div>
         <br/>
     </div>
-    <div class="col-md-4 table-bordered">
+    <div class="col-md-4">
         <h4 class="text-center"><b>Payment Details</b></h4>
+        <hr/>
         <div class="row">
             <div class="col-md-6">
                 Status
             </div>
             <div class="col-md-6">
-                <strong>{{vm.model.status}}</strong>
+                <strong>{{vm.model.receipts[1].status}}</strong>
             </div>
         </div>
         <br/>
@@ -139,17 +146,132 @@
 <br/>
 <div class="row">
     <div class="col-md-6">
-        <div class="panel">
-        Sender Details
+        <div class="panel panel-info">
+            <div class="panel-heading">Sender Details</div>
+            <div class="panel-body">
+                <div class="row">
+                   <div class="col-md-6">
+                       Sender Name
+                   </div>
+                   <div class="col-md-6">
+                       <strong>{{vm.model.customerName}}</strong>
+                   </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-6">
+                        ID No
+                    </div>
+                    <div class="col-md-6">
+                        <strong>-</strong>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-6">
+                       Mobile
+                    </div>
+                    <div class="col-md-6">
+                        <strong>{{vm.model.orderRiskProfile.riskProfile.cdd.phone}}</strong>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-6">
+                        Email ID
+                    </div>
+                    <div class="col-md-6">
+                        <strong>{{vm.model.username}}</strong>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-6">
+                        Address
+                    </div>
+                    <div class="col-md-6">
+                        <strong>{{vm.model.orderRiskProfile.riskProfile.cdd.address}}</strong>
+                    </div>
+                </div>
+                <br/>
+            </div>
         </div>
     </div>
     <div class="col-md-6">
-        <div class="panel">
-            Beneficiary Details
+        <div class="panel panel-info">
+            <div class="panel-heading">Beneficiary Details</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        Beneficiary Name
+                    </div>
+                    <div class="col-md-6">
+                        <strong>{{vm.model.beneficiary}}</strong>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-6">
+                        Beneficiary Mobile
+                    </div>
+                    <div class="col-md-6">
+                        <strong>-</strong>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-6">
+                       Address
+                    </div>
+                    <div class="col-md-6">
+                        <strong>-</strong>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-6">
+                        Country
+                    </div>
+                    <div class="col-md-6">
+                        <strong>{{vm.model.orderRiskProfile.beneficiaryCountry}}</strong>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-6">
+                        Bank Name
+                    </div>
+                    <div class="col-md-6">
+                        <strong>-</strong>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-6">
+                       Account Number
+                    </div>
+                    <div class="col-md-6">
+                        <strong>{{vm.model.beneficiaryBankAccount}}</strong>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-6">
+                       Branch
+                    </div>
+                    <div class="col-md-6">
+                        <strong>-</strong>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-
+<div class="row">
+    <div class="col-md-12">
+        <button type="button" class="btn btn-primary pull-right" ng-click="vm.resend()">Resend</button>
+    </div>
+</div>
 
 <div ng-if="appMode == 'local'"><br/><pre>{{vm.model | json}}</pre></div>
