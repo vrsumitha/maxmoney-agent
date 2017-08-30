@@ -103,9 +103,3 @@ appDirectives.directive('fileModel', ['$parse', function ($parse) {
         }
     };
 }]);
-
-// console.log('Frontend Hostname : ' + window.location.hostname);
-// if (window.location.hostname == 'www.maxmoney.com') {
-//     apiBasePath = 'https://api.maxmoney.com/v1';
-// }
-// console.log('Backend URL : ' + apiBasePath);

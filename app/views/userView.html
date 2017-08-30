@@ -134,20 +134,23 @@
         </div>
         <hr/>
         <div class="row">
-            <div class="col-md-12 text-center">
-                <button type="button" class="btn btn-primary" ng-click="vm.updateStatus('active')">
-                    Approve
-                </button>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="button" class="btn btn-danger" ng-click="vm.updateStatus('removed')">
-                    Reject
-                </button>
-                <!--
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="button" class="btn btn-warning" ng-click="vm.updateStatus('revisit')">
-                    Revisit
-                </button>
-                -->
+            <div class="col-md-12">
+                <a class="btn btn-default pull-left" href="#!/users">Cancel</a>
+                <span class="pull-right">
+                    <button type="button" class="btn btn-danger" ng-click="vm.updateStatus('removed')" ng-if="vm.model.status != 'active'">
+                        Reject
+                    </button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="button" class="btn btn-primary" ng-click="vm.updateStatus('active')" ng-if="vm.model.status != 'active'">
+                        Approve
+                    </button>
+                    <!--
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="button" class="btn btn-warning" ng-click="vm.updateStatus('revisit')" ng-if="vm.model.status != 'active'">
+                        Revisit
+                    </button>
+                    -->
+                </span>
             </div>
         </div>
     </div>
