@@ -149,7 +149,7 @@ function appInit($log, $rootScope, $location, $sessionStorage, sessionService) {
 
     console.log(window.location);
     $log.info('Hostname : ' + window.location.hostname);
-    if (window.location.hostname == 'www.maxmoney.com') {
+    if (window.location.hostname.indexOf('maxmoney.com') > -1) {
         sessionService.setApiBasePath('https://api.maxmoney.com/v1');
     }
     $log.info('Backend URL : ' + sessionService.getApiBasePath());
@@ -169,10 +169,9 @@ function appInit($log, $rootScope, $location, $sessionStorage, sessionService) {
     }
     $log.info('Start Path : ' + path);
     $location.path(path);
-    
+
     $log.info('Initialization finished...');
 }
 app.run(['$log', '$rootScope', '$location', '$sessionStorage', 'sessionService', appInit]);
 
-//fix for issue-32 - automatic production backend point detection technique implemented
 
