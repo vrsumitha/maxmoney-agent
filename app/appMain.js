@@ -136,7 +136,7 @@ function appConfig($routeProvider, $locationProvider) {
 };
 app.config(appConfig);
 
-function appInit($log, $rootScope, $location, $sessionStorage) {
+function appInit($log, $rootScope, $location, $sessionStorage, sessionService) {
     $log.info('Initialization started...');
 
     if (window.location.hostname == 'localhost') {
@@ -146,6 +146,14 @@ function appInit($log, $rootScope, $location, $sessionStorage) {
 
     }
     $log.info('App Mode : ' + $rootScope.appMode);
+
+    console.log(window.location);
+    $log.info('Hostname : ' + window.location.hostname);
+    if (window.location.hostname.indexOf('maxmoney.com') > -1) {
+        sessionService.setApiBasePath('https://api.maxmoney.com/v1');
+    }
+    $log.info('Backend URL : ' + sessionService.getApiBasePath());
+
 
     $rootScope.sessionId = $sessionStorage.sessionId;
     if($rootScope.sessionId) {
@@ -164,6 +172,6 @@ function appInit($log, $rootScope, $location, $sessionStorage) {
 
     $log.info('Initialization finished...');
 }
-app.run(['$log', '$rootScope', '$location', '$sessionStorage', appInit]);
+app.run(['$log', '$rootScope', '$location', '$sessionStorage', 'sessionService', appInit]);
 
 
