@@ -27,7 +27,7 @@
                 Currency
             </div>
             <div class="col-md-3">
-                <strong>{{vm.model.items[0].ccy}}</strong>
+                <strong>{{vm.model.items[0].name}} ({{vm.model.items[0].ccy}})</strong>
             </div>
         </div>
         <br/>
@@ -42,7 +42,7 @@
                 Unit
             </div>
             <div class="col-md-3">
-                <strong>{{vm.model.items[0].value}}</strong>
+                <strong>{{vm.model.items[0].value| number : fractionSize}}</strong>
             </div>
         </div>
         <br/>
@@ -51,7 +51,7 @@
                PIN
             </div>
             <div class="col-md-3">
-                <strong>{{vm.model.orderRiskProfile.riskProfile.cdd.postalCode}}</strong>
+                <strong> </strong>
             </div>
             <div class="col-md-3">
                 Rate
@@ -67,7 +67,7 @@
             </div>
             <div class="col-md-3">
                 <!--<strong>{{vm.model.items[0].status}}</strong>-->
-                <strong>{{vm.model.customerStatus}}</strong>
+                <strong>{{vm.model.status}}</strong>
             </div>
             <div class="col-md-3">
                 Fee & Tax
@@ -110,7 +110,7 @@
                 Transaction ID
             </div>
             <div class="col-md-6">
-                <strong>{{vm.model.transactionId}}</strong>
+                <strong>{{vm.model.receipts[1].transactionId}}</strong>
             </div>
         </div>
         <br/>
@@ -119,7 +119,7 @@
                 Payment Type
             </div>
             <div class="col-md-6">
-                <strong>{{vm.model.paymentType}}</strong>
+                <strong>{{vm.model.receipts[1].paymentType}}</strong>
             </div>
         </div>
         <br/>
@@ -128,7 +128,7 @@
                 Bank Name
             </div>
             <div class="col-md-6">
-                <strong>{{vm.model.bankName}}</strong>
+                <strong>{{vm.model.receipts[1].bankName}}</strong>
             </div>
         </div>
         <br/>
@@ -137,7 +137,7 @@
                 Total Paid
             </div>
             <div class="col-md-6">
-                <strong>{{vm.model.totalPaid}}</strong>
+                <strong>{{vm.model.receipts[1].totalPaid}}</strong>
             </div>
         </div>
         <br/>
@@ -160,10 +160,10 @@
                 <br/>
                 <div class="row">
                     <div class="col-md-6">
-                        ID No
+                        Email ID
                     </div>
                     <div class="col-md-6">
-                        <strong>-</strong>
+                        <strong>{{vm.model.username}}</strong>
                     </div>
                 </div>
                 <br/>
@@ -178,10 +178,10 @@
                 <br/>
                 <div class="row">
                     <div class="col-md-6">
-                        Email ID
+                       Nationality
                     </div>
                     <div class="col-md-6">
-                        <strong>{{vm.model.username}}</strong>
+                        <strong>{{vm.model.orderRiskProfile.riskProfile.cdd.nationality}}</strong>
                     </div>
                 </div>
                 <br/>
@@ -206,7 +206,7 @@
                         Beneficiary Name
                     </div>
                     <div class="col-md-6">
-                        <strong>{{vm.model.beneficiary}}</strong>
+                        <strong>{{vm.model.beneficiary.name}}</strong>
                     </div>
                 </div>
                 <br/>
@@ -215,7 +215,7 @@
                         Beneficiary Mobile
                     </div>
                     <div class="col-md-6">
-                        <strong>-</strong>
+                        <strong>{{vm.model.beneficiary.mobile}}</strong>
                     </div>
                 </div>
                 <br/>
@@ -224,7 +224,7 @@
                        Address
                     </div>
                     <div class="col-md-6">
-                        <strong>-</strong>
+                        <strong>{{vm.model.beneficiary.address}}</strong>
                     </div>
                 </div>
                 <br/>
@@ -233,7 +233,7 @@
                         Country
                     </div>
                     <div class="col-md-6">
-                        <strong>{{vm.model.orderRiskProfile.beneficiaryCountry}}</strong>
+                        <strong>{{vm.model.beneficiary.country}}</strong>
                     </div>
                 </div>
                 <br/>
@@ -242,7 +242,7 @@
                         Bank Name
                     </div>
                     <div class="col-md-6">
-                        <strong>-</strong>
+                        <strong>{{vm.model.beneficiary.bankAccounts[1].name}}</strong>
                     </div>
                 </div>
                 <br/>
@@ -251,7 +251,7 @@
                        Account Number
                     </div>
                     <div class="col-md-6">
-                        <strong>{{vm.model.beneficiaryBankAccount}}</strong>
+                        <strong>{{vm.model.beneficiary.bankAccounts[1].acctNo}}</strong>
                     </div>
                 </div>
                 <br/>
@@ -260,7 +260,7 @@
                        Branch
                     </div>
                     <div class="col-md-6">
-                        <strong>-</strong>
+                        <strong>{{vm.model.beneficiary.bankAccounts[1].branch}}</strong>
                     </div>
                 </div>
             </div>
@@ -270,8 +270,8 @@
 
 <div class="row">
     <div class="col-md-12">
-        <button type="button" class="btn btn-primary pull-right" ng-click="vm.resend()">Resend</button>
+        <button type="button" class="btn btn-primary pull-right" ng-click="vm.resend()" disabled>Resend</button>
     </div>
 </div>
 
-<div ng-if="appMode == 'local'"><br/><pre>{{vm.model | json}}</pre></div>
+<!--<div ng-if="appMode == 'local'"><br/><pre>{{vm.model | json}}</pre></div>-->

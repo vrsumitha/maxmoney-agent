@@ -9,10 +9,11 @@ function orderViewController($log, $rootScope, $scope, wydNotifyService, session
 
     function search() {
         wydNotifyService.hide();
+
         sessionService.getOrder(vm.searchOrderId).then(function(res) {
+            console.log(vm.searchOrderId);
             _.assign(vm.model, res.data);
             $log.debug(vm.model);
-           // console.log(vm.model.orderRiskProfile.riskProfile.cdd.postalCode);
         }, function(res) {
             wydNotifyService.showError("Order Id '" + vm.searchOrderId + "' doesn't exist...");
         });
@@ -20,13 +21,14 @@ function orderViewController($log, $rootScope, $scope, wydNotifyService, session
 
     function reset() {
         vm.searchOrderId = '';
+        vm.model = {};
     }
 
     function init() {
         console.log('init started...');
 
         vm.model = {};
-        vm.searchOrderId = '4861-8037-1209';
+        vm.searchOrderId = '1997-5632-8503';
 
         console.log('init finished...');
     }
