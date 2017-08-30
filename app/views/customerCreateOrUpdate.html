@@ -176,7 +176,7 @@
                 </div>
             </div>
             -->
-            <!-- type3 -->
+            <!-- type3
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.dob.$dirty && vm.form.dob.$invalid), 'has-success' : (vm.form.dob.$dirty && vm.form.dob.$valid) }">
                 <label for="dob" class="control-label">DOB (dd-mm-yyyy) <span class="text-danger">*</span></label>
@@ -192,6 +192,22 @@
                       ng-if="vm.form.dob.$dirty && vm.form.dob.$invalid"></span>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.dob.$dirty && vm.form.dob.$valid"></span>
+                <div id="dobHelpBlock" class="help-inline" ng-messages="vm.form.dob.$error" ng-if="vm.form.dob.$dirty">
+                    <span ng-message="required">This is required.</span>
+                    <span ng-message="date">This should be valid date.</span>
+                    <span ng-message="min">This should be before {{vm.dobMax}}</span>
+                    <span ng-message="max">This should be after {{vm.dobMin}}</span>
+                </div>
+            </div>
+            -->
+            <!-- type4 -->
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error' : (vm.form.dob.$dirty && vm.form.dob.$invalid), 'has-success' : (vm.form.dob.$dirty && vm.form.dob.$valid) }">
+                <label for="dob" class="control-label">DOB (dd-mm-yyyy) <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="dob" placeholder="Date Of Birth" aria-describedby="dobHelpBlock"
+                       name="dob" ng-model="vm.dob" ng-change="vm.onDobChange()" required input-mask="{'alias' : 'dd-mm-yyyy'}">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="vm.form.dob.$dirty && vm.form.dob.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="vm.form.dob.$dirty && vm.form.dob.$valid"></span>
                 <div id="dobHelpBlock" class="help-inline" ng-messages="vm.form.dob.$error" ng-if="vm.form.dob.$dirty">
                     <span ng-message="required">This is required.</span>
                     <span ng-message="date">This should be valid date.</span>
