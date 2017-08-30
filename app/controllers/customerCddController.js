@@ -149,12 +149,17 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
     }
 
     function cancel() {
-        sessionService.currentCustomer = null;
-        $rootScope.session = null;
-        $rootScope.sessionId = null;
-        $rootScope.homePath = '/sign-in';
-        $sessionStorage.$reset();
-        $location.path($rootScope.homePath);
+        console.log($rootScope.session.role);
+        if ($rootScope.session.role == 'maxCddOfficer') {
+            path = '/customers/customer'; // customer registration
+            $location.path(path);
+            return
+        }
+        if ($rootScope.session.role == 'cddOfficer') {
+            path = '/customers'; // customer listing
+            $location.path(path);
+            return;
+        }
     }
 
     function init() {
