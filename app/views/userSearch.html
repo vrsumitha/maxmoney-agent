@@ -8,30 +8,290 @@
         &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default" ng-click="vm.reset()">Reset</button>
     </div>
 </div>
+<hr/>
+<div class="row">
+    <div class="col-md-2">
+        Name
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.fullName}}</strong>
+    </div>
+    <div class="col-md-2">
+        Email Id
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.email}}</strong>
+    </div>
+    <div class="col-md-2">
+        Id No
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.idNo}}</strong>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-2">
+        Id Type
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.idType}}</strong>
+    </div>
+    <div class="col-md-2">
+        Date Of Birth
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.cdd.DOB | date : 'dd - MMM - yyyy' }}</strong>
+    </div>
+    <div class="col-md-2">
+       Address
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.cdd.address}}</strong>
+    </div>
+</div>
 <br/>
-<table class="table table-bordered text-nowrap" ng-show="vm.model.length != 0">
-    <thead>
-    <tr>
-        <td><b>Username/Email</b></td>
-        <td><b>Id Type</b></td>
-        <td><b>Id No.</b></td>
-        <td><b>Name</b></td>
-        <td><b>Mobile</b></td>
-        <td><b>Nationality</b></td>
-        <td><b>Role</b></td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="item in vm.model">
-        <td>{{ item.email }}</td>
-        <td>{{ item.idType }}</td>
-        <td>{{ item.idNo }}</td>
-        <td>{{ item.name }}</td>
-        <td>{{ item.mobile }}</td>
-        <td>{{ item.riskProfile.cdd.nationality }}</td>
-        <td>{{ item.role }}</td>
-    </tr>
-    </tbody>
-</table>
+<div class="row">
+    <div class="col-md-2">
+        City
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.cdd.city}}</strong>
+    </div>
+    <div class="col-md-2">
+        Country
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.cdd.country}}</strong>
+    </div>
+    <div class="col-md-2">
+        Country Code
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.cdd.countryCode}}</strong>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-2">
+        Is Completed
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.cdd.isCompleted}}</strong>
+    </div>
+    <div class="col-md-2">
+        Is NonResident
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.cdd.isNonResident}}</strong>
+    </div>
+    <div class="col-md-2">
+        Is PEP
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.cdd.isPEP}}</strong>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-2">
+        Nationality
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.cdd.nationality}}</strong>
+    </div>
+    <div class="col-md-2">
+        Nationality Country
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.cdd.nationalityCountry}}</strong>
+    </div>
+    <div class="col-md-2">
+        Organization
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.cdd.organization}}</strong>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-2">
+        Phone
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.cdd.phone}}</strong>
+    </div>
+    <div class="col-md-2">
+        State
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.cdd.state}}</strong>
+    </div>
+    <div class="col-md-2">
+        Postal Code
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.cdd.postalCode}}</strong>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-2">
+        Comment
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.comment}}</strong>
+    </div>
+    <div class="col-md-2">
+        Company Name
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.companyName}}</strong>
+    </div>
+    <div class="col-md-2">
+        Company Type
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.companyType}}</strong>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-2">
+        Created Time
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.created | date: 'medium'}}</strong>
+    </div>
+    <div class="col-md-2">
+        Created By
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.createdBy}}</strong>
+    </div>
+    <div class="col-md-2">
+        Customer Type
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.customerType}}</strong>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-2">
+        Id Expiry
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.idExpiry | date: 'DD/MM/YYYY'}}</strong>
+    </div>
+    <div class="col-md-2">
+        MaxMoney Id
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.maxMoneyId}}</strong>
+    </div>
+    <div class="col-md-2">
+        Risk Category
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskCategory}}</strong>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-2">
+        Income Source
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.edd.incomeSource}}</strong>
+    </div>
+    <div class="col-md-2">
+        isCompleted
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.edd.isCompleted}}</strong>
+    </div>
+    <div class="col-md-2">
+        Nature Of Business
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.edd.natureOfBusiness}}</strong>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-2">
+        Transaction Amount Per Day
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.transactionAmountPerDay}}</strong>
+    </div>
+    <div class="col-md-2">
+        Transaction Amount Per Month
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.transactionAmountPerMonth}}</strong>
+    </div>
+    <div class="col-md-2">
+        Transaction Branches Per Month
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskProfile.transactionBranchesPerMonth}}</strong>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-2">
+        Risk Score
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.riskScore}}</strong>
+    </div>
+    <div class="col-md-2">
+        Role
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.role}}</strong>
+    </div>
+    <div class="col-md-2">
+       Status
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.status}}</strong>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-2">
+        Type
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.type}}</strong>
+    </div>
+    <div class="col-md-2">
+        Updated Time
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.updated | date: 'medium'}}</strong>
+    </div>
+    <div class="col-md-2">
+        Updated By
+    </div>
+    <div class="col-md-2">
+        <strong>{{vm.model.updatedBy}}</strong>
+    </div>
+</div>
+<br/>
+<div class="pull-right">
+    <button type="button" class="btn btn-default" ng-click="vm.resendSms()">Resend SMS</button>
+    &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default" ng-click="vm.addBeneficiary()" disabled>Add Beneficiary</button>
+</div>
 
-<div ng-if="appMode == 'local'"><br/><pre>{{vm.model | json}}</pre></div>
+
+
+
+
+
+
+
+<!--<div ng-if="appMode == 'local'"><br/><pre>{{vm.model | json}}</pre></div>-->

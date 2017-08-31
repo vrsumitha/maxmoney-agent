@@ -24,24 +24,28 @@ function userSearchController($log, $rootScope, $scope, wydNotifyService, storag
 
         if(vm.searchId && vm.searchId.trim() != '') {
             sessionService.getUser(vm.searchId).then(function(res) {
-                vm.model = [res.data];
+                _.assign(vm.model, res.data);
+                console.log(vm.model);
             }, function(res) {
                 wydNotifyService.showError(res.data.message);
                 vm.model = {};
             });
-        } else {
-            sessionService.getUsers().then(function (res) {
-                vm.model = res.data.users;
-            });
         }
-
         $log.info('Search finished...');
+    }
+
+    function resendSms() {
+        $log.info('resendSms started...');
+
+
+        $log.info('resendSms finished...');
     }
 
     function init() {
         $log.info('init started...');
 
         vm.model = {};
+        vm.searchId = 'vteial@gmail.com';
 
         $log.info('init finished...');
     }
@@ -49,7 +53,8 @@ function userSearchController($log, $rootScope, $scope, wydNotifyService, storag
     angular.extend(this, {
         uiState: uiState,
         search: search,
-        reset: reset
+        reset: reset,
+        resendSms: resendSms
     });
 
     init();
