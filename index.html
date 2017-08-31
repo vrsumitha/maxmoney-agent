@@ -58,6 +58,9 @@
                     <li ng-class="{'active' : (viewName == 'Transfer Rates')}" ng-if="(session && session.role == 'maxCddOfficer')">
                         <a href="#!/transfer-rates">Transfer Rates</a>
                     </li>
+                    <li ng-class="{'active' : (viewName == 'User Search')}" ng-if="((session && session.role == 'complianceManager') || (session && session.role == 'maxCddOfficer'))">
+                        <a href="#!/user-search">User Search</a>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-class="{'active' : (viewName == 'Sign In')}" ng-hide="(sessionId)">
@@ -149,6 +152,7 @@
 <script src="app/controllers/userListingController.js"></script>
 <script src="app/controllers/userViewController.js"></script>
 <script src="app/controllers/transferRatesListController.js"></script>
+<script src="app/controllers/userSearchController.js"></script>
 <script src="app/appMain.js"></script>
 
 </body>

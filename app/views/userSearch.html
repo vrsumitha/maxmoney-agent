@@ -1,0 +1,37 @@
+<br/>
+<div class="form-inline text-center">
+    <div class="form-group">
+        <strong>IC/Passport No : </strong>&nbsp;&nbsp;&nbsp;
+        <input class="form-control" type="text" id="searchId" placeholder="Search user by Id"
+               name="searchId" ng-model="vm.searchId" autofocus="true">
+        &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default" ng-click="vm.search()">Search</button>
+        &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default" ng-click="vm.reset()">Reset</button>
+    </div>
+</div>
+<br/>
+<table class="table table-bordered text-nowrap" ng-show="vm.model.length != 0">
+    <thead>
+    <tr>
+        <td><b>Username/Email</b></td>
+        <td><b>Id Type</b></td>
+        <td><b>Id No.</b></td>
+        <td><b>Name</b></td>
+        <td><b>Mobile</b></td>
+        <td><b>Nationality</b></td>
+        <td><b>Role</b></td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in vm.model">
+        <td>{{ item.email }}</td>
+        <td>{{ item.idType }}</td>
+        <td>{{ item.idNo }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.mobile }}</td>
+        <td>{{ item.riskProfile.cdd.nationality }}</td>
+        <td>{{ item.role }}</td>
+    </tr>
+    </tbody>
+</table>
+
+<div ng-if="appMode == 'local'"><br/><pre>{{vm.model | json}}</pre></div>
