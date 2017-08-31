@@ -29,7 +29,6 @@ function orderViewController($log, $rootScope, $scope, wydNotifyService, session
 
         vm.model = {};
        // vm.searchOrderId = '1997-5632-8503';
-
         console.log('init finished...');
     }
 
