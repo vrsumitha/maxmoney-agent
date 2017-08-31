@@ -14,6 +14,7 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
         $log.info('reset started...');
 
         vm.form.$setPristine();
+        vm.password = null;
         vm.message = 'Sign In';
 
         $log.info('reset started...');
@@ -26,23 +27,24 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
 
         vm.message = 'Sign In';
         var params = {userId: vm.userId, password: vm.password};
+        if(params.userId.indexOf("@") === -1) {
+            params.userId = params.userId + '@maxmoney.com';
+        }
         sessionService.signIn(params).then(function (res) {
             if (res.status > 199) {
                 sessionService.getCurrentSession().then(function (res) {
                     $log.info('Current Session Id : ' + $rootScope.sessionId);
                     $log.info('Current User Id    : ' + $rootScope.session.username);
                     $log.info('Current User Role  : ' + $rootScope.session.role);
-                    var path = '/not-found';
-                    if ($rootScope.session.role == 'complianceManager') {
-                        path = '/users'; // user listing
+                    var obj = sessionService.roleInfo[$rootScope.session.role];
+                    if(obj) {
+                        $rootScope.homePath = obj.homePath;
+                    } else {
+                        $rootScope.homePath = '/not-found';
+                        wydNotifyService.showError("This role '" + $rootScope.session.role + "' is not authorized to use this application.");
+                        reset();
+                        return;
                     }
-                    if ($rootScope.session.role == 'maxCddOfficer') {
-                        path = '/customers/customer'; // customer registration
-                    }
-                    if ($rootScope.session.role == 'cddOfficer') {
-                        path = '/customers'; // customer listing
-                    }
-                    $rootScope.homePath = path;
                     $log.info('Current Home Path : ' + $rootScope.homePath);
                     $location.path($rootScope.homePath);
                 }, function(res) {
@@ -62,7 +64,7 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
         vm.message = 'Sign In';
 
         if(window.location.hostname == 'localhost') {
-            vm.userId = 'cdd@maxmoney.com';
+            vm.userId = 'maxcdd@maxmoney.com';
             //vm.password = 'moos';
             //$timeout(signIn, 2000);
         }
@@ -83,7 +85,7 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
 signInController.$inject = ['$log', '$rootScope', '$scope', 'wydNotifyService', 'storageService', 'sessionService', '$location', '$timeout'];
 appControllers.controller('signInController', signInController);
 
-function signOutController($log, $rootScope, $scope, sessionService, $sessionStorage, $location) {
+function signOutController($log, $rootScope, $scope, sessionService, $sessionStroage, $location) {
     var cmpId = 'signOutController', cmpName = 'Sign Out';
     $log.info(cmpId + ' started ...');
 
@@ -96,7 +98,7 @@ function signOutController($log, $rootScope, $scope, sessionService, $sessionSto
         $rootScope.session = null;
         $rootScope.sessionId = null;
         $rootScope.homePath = '/sign-in';
-        $sessionStorage.$reset();
+        $sessionStroage.$reset();
     }
 
     sessionService.signOut().then(function (res) {
@@ -142,7 +144,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
         if (countryInfo) {
             model.dialingCode = countryInfo.dial_code;
             if (model.mobile.startsWith(countryInfo.dial_code)) {
-                model.dialingNumber = model.mobile.substring(countryInfo.dial_code.length);
+                model.dialingNumber = parseInt(model.mobile.substring(countryInfo.dial_code.length));
             }
             model.agentCountry = _.find(vm.agentCountries, function (item) {
                 return item.country == model.country;
@@ -254,7 +256,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
         reqBen.country = value.country;
 
         value = vm.model.dialingNumber;
-        value = value.replace(new RegExp('_', 'g'), ' ').trim();
+        //value = value.replace(new RegExp('_', 'g'), ' ').trim();
         value = vm.model.dialingCode + value;
         reqBen.mobile = value;
 
@@ -328,20 +330,21 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
     }
 
     function createBeneficiaryBankAccount(reqBnk) {
-        $log.info('create beneficiary bank account...');
-        $log.info(reqBnk);
+        $log.debug('create beneficiary bank account...');
+        $log.debug(reqBnk);
         sessionService.createBeneficiaryBankAccount(vm.model.id, reqBnk).then(function (res) {
-            $log.info(res);
+            $log.debug(res);
             vm.resModel = res.data;
             $uibModalInstance.close(vm.resModel);
         });
     }
 
     function updateBeneficiary(reqBen, reqBnk) {
-        $log.info('update beneficiary...');
-        $log.info(reqBen);
+        $log.debug('update beneficiary...');
+        $log.debug(reqBen);
         sessionService.updateBeneficiary(vm.model.id, reqBen).then(function (res) {
-            $log.info(res);
+            $log.debug(res);
+            vm.resModel = res.data;
             if (vm.payBy == 'BD') {
                 deleteAndUpdateBeneficiaryBankAccount(reqBnk);
             } else {
@@ -353,7 +356,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
     function deleteAndUpdateBeneficiaryBankAccount(reqBnk) {
         $log.info('delete beneficiary bank account...');
         sessionService.deleteBeneficiaryBankAccount(vm.model.id, {index: 1}).then(function (res) {
-            $log.info(res);
+            $log.debug(res);
             createBeneficiaryBankAccount(reqBnk);
         });
     }
@@ -379,3 +382,15 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
 }
 beneficiaryAddOrEditController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$uibModalInstance', 'model', 'country'];
 appControllers.controller('beneficiaryAddOrEditController', beneficiaryAddOrEditController);
+
+function testBenchController($log, $rootScope, $scope, sessionService, $sessionStroage) {
+    var cmpId = 'testBenchController', cmpName = 'Test Bench';
+    $log.info(cmpId + ' started ...');
+
+    $rootScope.viewName = cmpName;
+
+    var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
+
+}
+testBenchController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$sessionStorage'];
+appControllers.controller('testBenchController', testBenchController);

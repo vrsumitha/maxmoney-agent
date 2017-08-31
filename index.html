@@ -10,6 +10,9 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="app/simplex/bootstrap.min.css"/>
+    <!--
+    <link rel="stylesheet" href="app/paper/bootstrap.min.css"/>
+    -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.8/sweetalert2.min.css"/>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pretty-checkbox/2.2.1/pretty.min.css"/>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/angular-block-ui/0.2.2/angular-block-ui.min.css"/>
@@ -49,7 +52,7 @@
                     <li ng-class="{'active' : (viewName == 'Customers')}" ng-if="(session && session.role == 'cddOfficer')">
                         <a href="#!/customers">Customers</a>
                     </li>
-                    <li ng-class="{'active' : (viewName == 'Sign Up')}" ng-if="(session && session.role == 'maxCddOfficer')">
+                    <li ng-class="{'active' : (viewName == 'Create Customer')}" ng-if="(session && session.role == 'maxCddOfficer')">
                         <a href="#!/customers/customer">Customer Registration</a>
                     </li>
                     <li ng-class="{'active' : (viewName == 'Approve Users')}" ng-if="(session && session.role == 'complianceManager')">
@@ -97,6 +100,7 @@
     </nav>
 
     <div class="container">
+        <br/>
         <x-ng-view></x-ng-view>
     </div>
 
@@ -113,6 +117,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/is_js/0.9.0/is.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.16.2/math.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.4/holder.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.8/sweetalert2.min.js"></script>

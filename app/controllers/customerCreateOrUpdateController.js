@@ -46,12 +46,13 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
             }
         });
         modalInstance.result.then(function (result) {
-            $log.info('beneficiary created successfully...');
+            $log.debug('beneficiary created successfully...');
+            $log.debug(result);
             vm.beneficiary = result;
             vm.beneficiaryLabel = 'Edit';
             //loadBeneficiaries();
         }, function () {
-            $log.info('canceled beneficiary creation...');
+            $log.debug('canceled beneficiary creation...');
         });
     }
 
@@ -155,8 +156,8 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
         reqCus.email = value;
 
         value = vm.mobileNo;
-        value = value.replace(new RegExp('_', 'g'), ' ').trim();
-        reqCus.mobile = '+6' + value;
+        //value = value.replace(new RegExp('_', 'g'), ' ').trim();
+        reqCus.mobile = '+60' + value;
 
         if (vm.idType == 'nric') {
             value = vm.idNoNric;
@@ -269,7 +270,8 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
 
         vm.nationality = vm.countries[1];
 
-        vm.mobileNo = '1234567890';
+        vm.mobileNo = 1234567890;
+        //vm.mobileNo = '1234567890';
         vm.accountType = 'personal';
         vm.idType = 'passport';
         vm.idNoPassport = '123400';
@@ -296,7 +298,6 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
     function init() {
         $log.info('init started...');
 
-        $rootScope.customerConvertBackUrl = '/customers/customer';
         vm.customer = {};
 
         vm.beneficiaryLabel = 'Add';
@@ -328,7 +329,6 @@ function customerCreateOrUpdateController($log, $rootScope, $scope, _session, wy
             console.log($routeParams.id);
 
             vm.isEdit = true;
-            $rootScope.customerConvertBackUrl = '/customers';
             //var model = _.find(sessionService.customers, function (item) {
             //    return item.idNo === $routeParams.id
             //});
