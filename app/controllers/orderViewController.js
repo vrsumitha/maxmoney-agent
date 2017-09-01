@@ -11,7 +11,6 @@ function orderViewController($log, $rootScope, $scope, wydNotifyService, session
         wydNotifyService.hide();
 
         sessionService.getOrder(vm.searchOrderId).then(function(res) {
-            console.log(vm.searchOrderId);
             _.assign(vm.model, res.data);
             $log.debug(vm.model);
         }, function(res) {
@@ -25,11 +24,11 @@ function orderViewController($log, $rootScope, $scope, wydNotifyService, session
     }
 
     function init() {
-        console.log('init started...');
+        $log.info('init started...');
 
         vm.model = {};
        // vm.searchOrderId = '1997-5632-8503';
-        console.log('init finished...');
+        $log.info('init finished...');
     }
 
     angular.extend(this, {
