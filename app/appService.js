@@ -42,6 +42,12 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
             homePath: '/customers'
         };
         service.roleInfo[obj.id] = obj;
+        obj = {
+            id: 'financeManager',
+            name: 'Finance Manager',
+            homePath: '/order-view'
+        };
+        service.roleInfo[obj.id] = obj;
     };
 
     function addOrUpdateCache(propName, objectx) {
