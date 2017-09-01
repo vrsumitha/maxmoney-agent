@@ -77,6 +77,12 @@ function appConfig($routeProvider, $locationProvider) {
         controller: 'signOutController as vm'
     });
 
+    $routeProvider.when('/locations', {
+        templateUrl: 'app/views/locationList.html',
+        controller: 'locationListController as vm',
+        resolve: locationListController.resolve
+    });
+
     $routeProvider.when('/customers', {
         templateUrl: 'app/views/customerListing.html',
         controller: 'customerListingController as vm',
