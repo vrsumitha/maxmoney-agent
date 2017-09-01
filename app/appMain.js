@@ -14,6 +14,7 @@ function rootController($log, $rootScope, $scope, $window, sessionService) {
         $window.open(s);
     };
 
+    $scope.isNavCollapsed = true;
     sessionService.initRoleInfo();
     sessionService.getCountries();
     sessionService.getMalasiyaStates();
