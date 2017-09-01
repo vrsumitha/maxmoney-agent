@@ -1,4 +1,4 @@
-function customerConvertController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $http, $location) {
+function customerConvertController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $http, $location, $sessionStorage) {
     var cmpId = 'customerConvertController', cmpName = 'Create Customer';
     $log.info(cmpId + ' started ...');
 
@@ -96,6 +96,20 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
         $log.debug('update user info finished...');
     }
 
+    function cancel() {
+        //console.log($rootScope.session.role);
+        if ($rootScope.session.role == 'maxCddOfficer') {
+            path = '/customers/customer'; // customer registration
+            $location.path(path);
+            return
+        }
+        if ($rootScope.session.role == 'cddOfficer') {
+            path = '/customers'; // customer listing
+            $location.path(path);
+            return;
+        }
+    }
+
     function init() {
         $log.info('init started...');
         vm.customers = storageService.getCustomers();
@@ -113,14 +127,15 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
         uiState: uiState,
         onCustomerChange: onCustomerChange,
         validateCustomer: validateCustomer,
-        convertCustomer: convertCustomer
+        convertCustomer: convertCustomer,
+        cancel: cancel
     });
 
     init();
 
     $log.info(cmpId + 'finished...');
 }
-customerConvertController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$http', '$location'];
+customerConvertController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$http', '$location', '$sessionStorage'];
 customerConvertController.resolve = {
     '_session': ['sessionService', function (sessionService) {
         //sessionService.switchOffAutoComplete();

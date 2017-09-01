@@ -1,0 +1,25 @@
+<br/>
+<div class="row">
+    <div class="col-md-3">&nbsp;</div>
+    <div class="col-md-6 col-sm-12">
+        <table class="table table-bordered text-nowrap">
+            <thead>
+            <tr>
+                <td><b>Country</b></td>
+                <td><b>Currency</b></td>
+                <td><b>Transfer Rate</b></td>
+                <td><b>Updated Time</b></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in vm.currencies">
+                <td>{{ item.country }}</td>
+                <td>{{ item.code }}</td>
+                <td>{{ item.transferRate }}</td>
+                <td>{{ item.time | date:'dd-MM-yyyy hh:mm:ss a' }}</td>
+            </tr>
+            </tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
