@@ -61,12 +61,12 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-class="{'active' : (viewName == 'Sign In')}" ng-hide="(sessionId)">
+                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Sign In')}" ng-hide="(sessionId)">
                         <a href="#!/sign-in">
                             Sign In
                         </a>
                     </li>
-                    <li ng-class="{'active' : (viewName == 'Sign Out')}" ng-show="(sessionId)">
+                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Sign Out')}" ng-show="(sessionId)">
                         <a href="#!/sign-out">
                             Sign Out
                         </a>
