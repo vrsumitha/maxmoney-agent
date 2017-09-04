@@ -86,7 +86,7 @@ function locationListController($log, $rootScope, $scope, wydNotifyService, sess
     function init() {
         $log.info('init started...');
 
-        vm.itemSize = 50;
+        vm.itemSize = 100;
         vm.pageNo = 0;
         vm.itemCount = 0;
         vm.itemEnd = vm.itemSize;

@@ -25,8 +25,8 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
 
     service.initRoleInfo = function() {
         var obj = {
-            id: 'admin',
-            name: 'Administrator',
+            id: 'financeManager',
+            name: 'Finance Manager',
             homePath: '/locations'
         };
         service.roleInfo[obj.id] = obj;

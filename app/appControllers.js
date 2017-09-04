@@ -64,8 +64,8 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
         vm.message = 'Sign In';
 
         if(window.location.hostname == 'localhost') {
-            vm.userId = 'sa@maxmoney.com';
-            vm.password = 'MaxMoney@2016';
+            vm.userId = 'kamilfm@maxmoney.com';
+            vm.password = 'moos';
             //$timeout(signIn, 2000);
         }
 
