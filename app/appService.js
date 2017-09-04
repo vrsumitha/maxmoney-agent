@@ -479,11 +479,11 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
     };
 
     service.createCustomer = function (params) {
-        params.api_key = $rootScope.sessionId;
         var path = apiBasePath + '/customers';
         var req = {
             method: 'POST',
             url: path,
+            headers: {'api-key': $rootScope.sessionId},
             params: params
         };
         //$log.info(req);
