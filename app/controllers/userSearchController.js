@@ -1,4 +1,4 @@
-function userSearchController($log, $rootScope, $scope, wydNotifyService, storageService, sessionService, $location, $timeout) {
+function userSearchController($log, $rootScope, $scope, wydNotifyService, sessionService, $http) {
     var cmpId = 'userSearchController', cmpName = 'User Search';
     $log.info(cmpId + ' started ...');
 
@@ -6,9 +6,6 @@ function userSearchController($log, $rootScope, $scope, wydNotifyService, storag
 
     var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
 
-    function onSignIn() {
-
-    }
     function reset() {
         $log.info('reset started...');
 
@@ -17,6 +14,7 @@ function userSearchController($log, $rootScope, $scope, wydNotifyService, storag
 
         $log.info('reset started...');
     }
+
     function search() {
         $log.info('Search started...');
 
@@ -37,6 +35,20 @@ function userSearchController($log, $rootScope, $scope, wydNotifyService, storag
     function resendSms() {
         $log.info('resendSms started...');
 
+        var path = sessionService.getApiBasePath() + '/users/' + vm.model.email + '/resend-welcome-message';
+        var req = {
+            method: 'POST',
+            url: path,
+            headers: {'api-key': $rootScope.sessionId}
+        };
+        //$log.info(req);
+        $http(req).then(function (res) {
+            $log.debug(res);
+            wydNotifyService.showSuccess('Successfully SMS sent.');
+        }, function (res) {
+            $log.error(res);
+            wydNotifyService.showError(res.data.message);
+        });
 
         $log.info('resendSms finished...');
     }
@@ -61,5 +73,5 @@ function userSearchController($log, $rootScope, $scope, wydNotifyService, storag
 
     $log.info(cmpId + 'finished...');
 }
-userSearchController.$inject = ['$log', '$rootScope', '$scope', 'wydNotifyService', 'storageService', 'sessionService', '$location', '$timeout'];
+userSearchController.$inject = ['$log', '$rootScope', '$scope', 'wydNotifyService', 'sessionService', '$http'];
 appControllers.controller('userSearchController', userSearchController);

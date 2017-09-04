@@ -281,10 +281,13 @@
         <strong>{{vm.model.updatedBy}}</strong>
     </div>
 </div>
-<br/>
-<div class="pull-right">
-    <button type="button" class="btn btn-default" ng-click="vm.resendSms()">Resend SMS</button>
-    &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default" ng-click="vm.addBeneficiary()" disabled>Add Beneficiary</button>
+<hr/>
+<div class="row">
+    <div class="col-md-12">
+        <button type="button" class="btn btn-primary pull-right" ng-click="vm.resendSms()">Resend SMS</button>
+        &nbsp;&nbsp;&nbsp;
+        <button type="button" class="btn btn-default pull-left" ng-click="vm.addBeneficiary()" disabled>Add Beneficiary</button>
+    </div>
 </div>
 
 <div ng-if="appMode == 'local'"><br/><pre>{{vm.model | json}}</pre></div>
