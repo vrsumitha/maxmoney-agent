@@ -10,7 +10,7 @@ function orderViewController($log, $rootScope, $scope, wydNotifyService, session
     function search() {
         wydNotifyService.hide();
 
-        sessionService.getOrder(vm.searchOrderId).then(function(res) {
+        sessionService.getOrderByKey(vm.searchOrderId).then(function(res) {
             _.assign(vm.model, res.data);
             $log.debug(vm.model);
         }, function(res) {

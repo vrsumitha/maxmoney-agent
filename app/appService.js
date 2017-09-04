@@ -763,7 +763,8 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
-    service.getOrder = function (orderId) {
+    service.getOrderByKey = function (orderId) {
+        //var path = apiBasePath + '/orders/fetch-by-key/' + orderId;
         var path = apiBasePath + '/orders/' + orderId;
         var req = {
             method: 'GET',
@@ -784,6 +785,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         });
         return deferred.promise;
     };
+
 
     service.switchOffAutoComplete = function () {
         if (document.getElementsByTagName) {
