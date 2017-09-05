@@ -14,6 +14,15 @@ function rootController($log, $rootScope, $scope, $window, sessionService) {
         $window.open(s);
     };
 
+    $scope.closeMenu = function() {
+        //console.log('isNavCollapsed : ' + $scope.isNavCollapsed);
+        if(!$scope.isNavCollapsed) {
+            $scope.isNavCollapsed = true;
+        }
+        //console.log('isNavCollapsed : ' + $scope.isNavCollapsed);
+    };
+
+    $scope.isNavCollapsed = true;
     sessionService.initRoleInfo();
     sessionService.getCountries();
     sessionService.getMalasiyaStates();
