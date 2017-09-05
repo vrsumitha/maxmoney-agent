@@ -15,6 +15,7 @@ function locationListController($log, $rootScope, $scope, wydNotifyService, sess
     function submit() {
         vm.pageNo = 0;
         vm.itemEnd = vm.itemSize;
+        vm.itemActive = 0;
         vm.message = 'Activated Locations\n';
         fetchLocations();
     }
@@ -35,7 +36,7 @@ function locationListController($log, $rootScope, $scope, wydNotifyService, sess
         };
         // $log.info(req);
         $http(req).then(function (res) {
-            $log.debug(res);
+           // $log.debug(res);
             $log.debug('fetch locations finished with success.');
             vm.items = res.data.locations;
             vm.itemEnd = res.data.end;
@@ -51,7 +52,11 @@ function locationListController($log, $rootScope, $scope, wydNotifyService, sess
     }
 
     function makeActive() {
-        _.forEach(vm.items, function(item) {
+        console.log('itemEnd: ' + vm.itemEnd + ' itemTotal: ' + vm.itemTotal + ' itemCount: ' + vm.itemCount + ' itemLength: ' + vm.items.length);
+        if (vm.itemCount <= vm.items.length && vm.itemEnd <= vm.itemTotal) {
+            fetchLocations();
+        }
+        _.forEach(vm.items, function (item) {
             //console.log(item);
             var path = sessionService.getApiBasePath() + '/locations/' + item.code;
             var req = {
@@ -65,18 +70,18 @@ function locationListController($log, $rootScope, $scope, wydNotifyService, sess
                     }
                     return str.join("&");
                 },
-                data: {'status' : 'active'}
+                data: {'status': 'active'}
             };
             // $log.info(req);
             $http(req).then(function (res) {
                 $log.debug(res);
                 vm.itemCount++;
-                vm.itemActive = vm.itemEnd - vm.itemSize + vm.itemCount;
-                vm.itemInactive--;
-                vm.message += res.data.name + ' ( ' + res.data.code + ' )\n';
-                if(vm.itemCount === vm.items.length && vm.itemEnd <= vm.itemTotal) {
-                    fetchLocations();
+                //vm.itemActive = vm.itemEnd - vm.itemSize + vm.itemCount;
+                if (vm.itemInactive > 0) {
+                    vm.itemInactive--;
+                    vm.itemActive++;
                 }
+                vm.message += res.data.name + ' ( ' + res.data.code + ' )\n';
             }, function (res) {
                 $log.error(res);
             });

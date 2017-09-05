@@ -33,7 +33,7 @@
         Made active <strong>{{vm.itemActive}}</strong> of <strong>{{vm.itemTotal}}</strong>
         &nbsp;&nbsp;&nbsp;
         <button type="button" class="btn btn-primary" ng-click="vm.makeActive()"
-                ng-disabled="vm.itemEnd >= vm.itemTotal">
+                ng-disabled="vm.itemInactive == 0">
             Make Next Set Active
         </button>
     </div>
