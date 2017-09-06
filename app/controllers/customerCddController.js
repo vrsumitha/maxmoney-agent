@@ -29,17 +29,18 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
 
         wydNotifyService.hide();
 
-        var value = vm.sourceOfIncome;
-        if (!value) {
-            wydNotifyService.showError('Please select the source of income.');
-            return;
+        if ($rootScope.session.role != 'cddOfficer') {
+            var value = vm.sourceOfIncome;
+            if (!value) {
+                wydNotifyService.showError('Please select the source of income.');
+                return;
+            }
+            value = vm.natureOfBusiness;
+            if (!value) {
+                wydNotifyService.showError('Please select the nature of business.');
+                return;
+            }
         }
-        value = vm.natureOfBusiness;
-        if (!value) {
-            wydNotifyService.showError('Please select the nature of business.');
-            return;
-        }
-
         var path = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
         var reqData = {'idType': vm.customer.idType}, msg = null;
         if (vm.customer.idType == 'Passport') {
@@ -138,9 +139,11 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
 
         sessionService.approve(vm.customer.idNo).then(function (res) {
             $log.debug(res);
-            sessionService.currentCustomer.sourceOfIncomeX = vm.sourceOfIncome;
-            sessionService.currentCustomer.natureOfBusinessX = vm.natureOfBusiness;
-            console.log(sessionService.currentCustomer);
+            if ($rootScope.session.role != 'cddOfficer') {
+                sessionService.currentCustomer.sourceOfIncomeX = vm.sourceOfIncome;
+                sessionService.currentCustomer.natureOfBusinessX = vm.natureOfBusiness;
+                console.log(sessionService.currentCustomer);
+            }
             wydNotifyService.showSuccess('Successfully approved...');
             $location.path('/customers/customer/' + vm.customer.idNo + '/convert');
         }, function (res) {
@@ -171,7 +174,11 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         vm.minSizeForIdDoucumentsX = 500;
         vm.maxSizeForIdDoucuments = '6MB';
         vm.maxSizeForIdDoucumentsX = 6;
-
+        vm.hideRow = true;
+        if ($rootScope.session.role == 'cddOfficer') {
+            console.log('121221asaassa');
+            vm.hideRow = false;
+        }
         vm.customers = storageService.getCustomers();
         vm.customer = sessionService.currentCustomer;
         if (!vm.customer) {
