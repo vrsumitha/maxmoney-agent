@@ -17,10 +17,10 @@
 
                     <div class="form-group has-feedback"
                          ng-class="{ 'has-error' : (vm.form.userId.$dirty && vm.form.userId.$invalid), 'has-success' : (vm.form.userId.$dirty && vm.form.userId.$valid) }">
-                        <label for="userId">User Id <span class="text-danger">*</span></label>
+                        <!--<label for="userId">User Id <span class="text-danger">*</span></label>-->
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input type="text" class="form-control" id="userId" placeholder="User Id" aria-describedby="userIdHelpBlock"
+                            <input type="text" class="form-control" id="userId" placeholder="User Id *" aria-describedby="userIdHelpBlock"
                                    name="userId" ng-model="vm.userId" autofocus="true" required>
                         </div>
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
@@ -34,10 +34,10 @@
 
                     <div class="form-group has-feedback"
                          ng-class="{ 'has-error' : (vm.form.password.$dirty && vm.form.password.$invalid), 'has-success' : (vm.form.password.$dirty && vm.form.password.$valid) }">
-                        <label for="password">Password <span class="text-danger">*</span></label>
+                        <!--<label for="password">Password <span class="text-danger">*</span></label>-->
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input type="password" class="form-control" id="password" placeholder="Password" aria-describedby="passwordHelpBlock"
+                            <input type="password" class="form-control" id="password" placeholder="Password *" aria-describedby="passwordHelpBlock"
                                    name="password" ng-model="vm.password" autofocus="true" required>
                         </div>
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
