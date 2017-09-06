@@ -175,6 +175,7 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         vm.maxSizeForIdDoucuments = '6MB';
         vm.maxSizeForIdDoucumentsX = 6;
         vm.hideRow = true;
+
         if ($rootScope.session.role == 'cddOfficer') {
             vm.hideRow = false;
         }
