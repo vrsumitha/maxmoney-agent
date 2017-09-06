@@ -16,6 +16,11 @@ function customerListingController($log, $rootScope, $scope, wydNotifyService, s
             sessionService.getCustomer(vm.searchId.toUpperCase()).then(function (res) {
                 sessionService.currentCustomer = res.data;
                 vm.customers = [res.data];
+                if ($rootScope.session.role == 'maxCddOfficer' && res.data.status != 'Unapproved') {
+                    res.data.urlSuffix = 'convert';
+                } else {
+                    res.data.urlSuffix = 'cdd';
+                }
             }, function (res) {
                 wydNotifyService.showError(res.data.message);
             });
