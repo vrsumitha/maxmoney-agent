@@ -176,7 +176,6 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         vm.maxSizeForIdDoucumentsX = 6;
         vm.hideRow = true;
         if ($rootScope.session.role == 'cddOfficer') {
-            console.log('121221asaassa');
             vm.hideRow = false;
         }
         vm.customers = storageService.getCustomers();
