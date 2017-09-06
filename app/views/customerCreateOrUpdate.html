@@ -22,7 +22,7 @@
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : (vm.form.nationality.$dirty && vm.form.nationality.$invalid), 'has-success' : (vm.form.nationality.$dirty && vm.form.nationality.$valid) }">
                     <!--<label for="nationality" class="control-label">Nationality <span class="text-danger">*</span></label>-->
-                    <select id="nationality" name="nationality" aria-describedby="nationalityHelpBlock" placeholder="Choose Nationality *"
+                    <select id="nationality" name="nationality" aria-describedby="nationalityHelpBlock" placeholder=" ** Nationality ***"
                             selector options="vm.countries" label-attr="nationality" closeAfterSelection="true"
                             model="vm.nationality" change="vm.onNationalityChangeX(oldValue, newValue)" require="true" disable="vm.isEdit">
                     </select>
@@ -345,7 +345,7 @@
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : (vm.form.state.$dirty && vm.form.state.$invalid), 'has-success' : (vm.form.state.$dirty && vm.form.state.$valid) }">
                     <!--<label for="state" class="control-label">State <span class="text-danger">*</span></label>-->
-                    <select id="state" name="state" aria-describedby="stateHelpBlock" placeholder="Choose State *"
+                    <select id="state" name="state" aria-describedby="stateHelpBlock" placeholder=" ** State ***"
                             selector options="vm.malasiyaStates" label-attr="state" closeAfterSelection="true"
                             model="vm.state" change="vm.onStateChangeX(oldValue, newValue)" require="true">
                     </select>
