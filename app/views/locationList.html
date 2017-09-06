@@ -1,0 +1,46 @@
+<br/>
+<div class="form-inline text-center">
+    <div class="form-group">
+        <strong>Country : </strong>
+        &nbsp;&nbsp;&nbsp;
+        <select class="form-control" id="country"
+                name="country" ng-model="vm.agentCountry"
+                ng-options="item as item.country for item in vm.agentCountries">
+        </select>
+        &nbsp;&nbsp;&nbsp;
+        <strong>Type : </strong>
+        &nbsp;&nbsp;&nbsp;
+        <select class="form-control" id="type"
+                name="type" ng-model="vm.agentType">
+            <option value="BRANCH">Branch</option>
+            <option value="BANK">Bank</option>
+            <option value="PICK_UP_SPOT">Pick Up Spot</option>
+        </select>
+        &nbsp;&nbsp;&nbsp;
+        <button type="button" class="btn btn-default" ng-click="vm.submit()">Submit</button>
+    </div>
+</div>
+<hr/>
+<div class="row">
+    <div class="col-md-6">
+        Country : <strong>{{vm.agentCountry.country}}</strong>
+        &nbsp;&nbsp;&nbsp;
+        Type : <strong>{{vm.agentType}}</strong>
+        &nbsp;&nbsp;&nbsp;
+        Total Inactive : <strong>{{vm.itemInactive}}</strong>
+    </div>
+    <div class="col-md-6 text-right">
+        Made active <strong>{{vm.itemActive}}</strong> of <strong>{{vm.itemTotal}}</strong>
+        &nbsp;&nbsp;&nbsp;
+        <button type="button" class="btn btn-primary" ng-click="vm.makeActive()"
+                ng-disabled="vm.itemInactive == 0">
+            Make Next Set Active
+        </button>
+    </div>
+</div>
+<br/>
+<div>
+    <textarea class="form-control" ng-model="vm.message" readonly style="height:350px"></textarea>
+</div>
+
+<div ng-if="appMode == 'local'"><br/><pre>{{vm.items | json}}</pre></div>
