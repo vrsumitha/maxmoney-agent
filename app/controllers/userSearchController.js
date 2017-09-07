@@ -21,7 +21,7 @@ function userSearchController($log, $rootScope, $scope, wydNotifyService, sessio
         wydNotifyService.hide();
 
         if(vm.searchId && vm.searchId.trim() != '') {
-            sessionService.getUser(vm.searchId).then(function(res) {
+            sessionService.getUserByIdentificationDocumentId(vm.searchId).then(function(res) {
                 _.assign(vm.model, res.data);
                 console.log(vm.model);
             }, function(res) {
@@ -37,7 +37,7 @@ function userSearchController($log, $rootScope, $scope, wydNotifyService, sessio
 
         var path = sessionService.getApiBasePath() + '/users/' + vm.model.email + '/resend-welcome-message';
         var req = {
-            method: 'POST',
+            method: 'GET',
             url: path,
             headers: {'api-key': $rootScope.sessionId}
         };
