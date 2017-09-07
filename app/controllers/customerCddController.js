@@ -1,4 +1,4 @@
-function customerCddController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $http, Upload, $location, $sessionStorage) {
+function customerCddController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $uibModal, $http, Upload, $location, $sessionStorage) {
     var cmpId = 'customerCddController', cmpName = 'CDD';
     $log.info(cmpId + ' started ...');
 
@@ -16,6 +16,35 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
     $scope.$on('session:natureOfBusinesses', function (event, data) {
         vm.natureOfBusinesses = sessionService.natureOfBusinesses;
     });
+    function addOrEditBeneficiary() {
+        var bnyModel = vm.beneficiary.id == 'NA' ? null : vm.beneficiary;
+        var modalInstance = $uibModal.open({
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'app/views/beneficiaryAddOrEdit.html',
+            controller: 'beneficiaryAddOrEditController',
+            controllerAs: 'vm',
+            size: 'lg',
+            resolve: {
+                model: function () {
+                    //sessionService.switchOffAutoComplete();
+                    return bnyModel;
+                },
+                country: function () {
+                    return null;
+                }
+            }
+        });
+        modalInstance.result.then(function (result) {
+            $log.debug('beneficiary created successfully...');
+            $log.debug(result);
+            vm.beneficiary = result;
+            vm.beneficiaryLabel = 'Edit';
+            //loadBeneficiaries();
+        }, function () {
+            $log.debug('canceled beneficiary creation...');
+        });
+    }
 
     function onCustomerChange() {
         sessionService.getCustomer(vm.customer.idNo).then(function (res) {
@@ -172,6 +201,9 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         vm.maxSizeForIdDoucuments = '6MB';
         vm.maxSizeForIdDoucumentsX = 6;
 
+        vm.beneficiaryLabel = 'Add';
+        vm.beneficiary = {id: 'NA'};
+
         vm.customers = storageService.getCustomers();
         vm.customer = sessionService.currentCustomer;
         if (!vm.customer) {
@@ -193,6 +225,7 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
 
     angular.extend(this, {
         uiState: uiState,
+        addOrEditBeneficiary: addOrEditBeneficiary,
         onCustomerChange: onCustomerChange,
         save: save,
         approve: approve,
@@ -203,7 +236,7 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
 
     $log.info(cmpId + 'finished...');
 }
-customerCddController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$http', 'Upload', '$location', '$sessionStorage'];
+customerCddController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService','$uibModal', '$http', 'Upload', '$location', '$sessionStorage'];
 customerCddController.resolve = {
     '_session': ['sessionService', function (sessionService) {
         //sessionService.switchOffAutoComplete();

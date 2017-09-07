@@ -1,10 +1,40 @@
-function customerConvertController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $http, $location, $sessionStorage) {
+function customerConvertController($log, $rootScope, $scope, _session, wydNotifyService, storageService, $uibModal, sessionService, $http, $location, $sessionStorage) {
     var cmpId = 'customerConvertController', cmpName = 'Create Customer';
     $log.info(cmpId + ' started ...');
 
     $rootScope.viewName = cmpName;
 
     var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
+
+    function addOrEditBeneficiary() {
+        var bnyModel = vm.beneficiary.id == 'NA' ? null : vm.beneficiary;
+        var modalInstance = $uibModal.open({
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'app/views/beneficiaryAddOrEdit.html',
+            controller: 'beneficiaryAddOrEditController',
+            controllerAs: 'vm',
+            size: 'lg',
+            resolve: {
+                model: function () {
+                    //sessionService.switchOffAutoComplete();
+                    return bnyModel;
+                },
+                country: function () {
+                    return null;
+                }
+            }
+        });
+        modalInstance.result.then(function (result) {
+            $log.debug('beneficiary created successfully...');
+            $log.debug(result);
+            vm.beneficiary = result;
+            vm.beneficiaryLabel = 'Edit';
+            //loadBeneficiaries();
+        }, function () {
+            $log.debug('canceled beneficiary creation...');
+        });
+    }
 
     function onCustomerChange() {
         sessionService.getCustomer(vm.customer.idNo).then(function (res) {
@@ -112,6 +142,10 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
 
     function init() {
         $log.info('init started...');
+
+        vm.beneficiaryLabel = 'Add';
+        vm.beneficiary = {id: 'NA'};
+
         vm.customers = storageService.getCustomers();
         vm.customer = sessionService.currentCustomer;
         if (!vm.customer) {
@@ -125,6 +159,7 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
 
     angular.extend(this, {
         uiState: uiState,
+        addOrEditBeneficiary: addOrEditBeneficiary,
         onCustomerChange: onCustomerChange,
         validateCustomer: validateCustomer,
         convertCustomer: convertCustomer,
@@ -135,7 +170,7 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
 
     $log.info(cmpId + 'finished...');
 }
-customerConvertController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$http', '$location', '$sessionStorage'];
+customerConvertController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', '$uibModal', 'sessionService', '$http', '$location', '$sessionStorage'];
 customerConvertController.resolve = {
     '_session': ['sessionService', function (sessionService) {
         //sessionService.switchOffAutoComplete();
