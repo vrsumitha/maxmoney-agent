@@ -92,7 +92,9 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
 
     function updateUserInfo() {
         $log.debug('update user info started...');
-        sessionService.updateSourceOfIncomeAndNatureOfBusinessForUser(vm.customer.email, vm.customer.sourceOfIncomeX, vm.customer.natureOfBusinessX);
+        if ($rootScope.session.role != 'cddOfficer') {
+            sessionService.updateSourceOfIncomeAndNatureOfBusinessForUser(vm.customer.email, vm.customer.sourceOfIncomeX, vm.customer.natureOfBusinessX);
+        }
         $log.debug('update user info finished...');
     }
 
