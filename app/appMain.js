@@ -140,6 +140,12 @@ function appConfig($routeProvider, $locationProvider) {
         resolve: transferRatesListController.resolve
     });
 
+    $routeProvider.when('/user-search', {
+        templateUrl: 'app/views/userSearch.html',
+        controller: 'userSearchController as vm',
+        resolve: userSearchController.resolve
+    });
+
     $routeProvider.when('/not-found', {
         templateUrl: 'app/views/notFound.html'
     });

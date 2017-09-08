@@ -1,0 +1,184 @@
+<br/>
+<div class="form-inline text-center">
+    <div class="form-group">
+        <strong>IC/Passport No : </strong>&nbsp;&nbsp;&nbsp;
+        <input class="form-control" type="text" id="searchId" placeholder="Search user by Id"
+               name="searchId" ng-model="vm.searchId" autofocus="true">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" class="btn btn-default" ng-click="vm.search()">Search</button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" class="btn btn-default" ng-click="vm.reset()">Reset</button>
+    </div>
+</div>
+<hr/>
+
+<div class="row col-md-12">
+    <div class="col-md-1 col-sm-1">&nbsp;</div>
+    <div class="col-md-4 userpid">
+        <h4><strong>Customer Type : &nbsp; {{vm.model.customerType}}</strong></h4>
+    </div>
+    <div class="col-md-3 userpid">
+        <h4><strong>PID : &nbsp; {{vm.model.maxMoneyId}}</strong></h4>
+    </div>
+    <div class="col-md-3 userpid">
+        <h4><strong>Status : &nbsp;{{vm.model.status}}</strong></h4>
+    </div>
+</div>
+
+<div class="row col-md-12 userbrheight">&nbsp;</div>
+
+<div class="row col-md-12">
+    <div class="col-md-1 col-sm-1">&nbsp;</div>
+    <div class="col-md-2 userviewlabel">
+        Name
+    </div>
+    <div class="col-md-3 userviewfield">
+        <strong>{{vm.model.fullName}}</strong>
+    </div>
+    <div class="col-md-2 userviewlabel">
+        Email Id
+    </div>
+    <div class="col-md-3 userviewfield">
+        <strong>{{vm.model.email}}</strong>
+    </div>
+</div>
+
+<div class="row col-md-12 userbrheight">&nbsp;</div>
+
+<div class="row col-md-12">
+    <div class="col-md-1 col-sm-1">&nbsp;</div>
+    <div class="col-md-2 userviewlabel">
+        Id Type
+    </div>
+    <div class="col-md-3 userviewfield">
+        <strong>{{vm.model.idType}}</strong>
+    </div>
+    <div class="col-md-2 userviewlabel">
+        Id No
+    </div>
+    <div class="col-md-3 userviewfield">
+        <strong>{{vm.model.idNo}}</strong>
+    </div>
+</div>
+
+<div class="row col-md-12 userbrheight">&nbsp;</div>
+
+<div class="row col-md-12">
+    <div class="col-md-1 col-sm-1">&nbsp;</div>
+    <div class="col-md-2 userviewlabel">
+        Date Of Birth
+    </div>
+    <div class="col-md-3 userviewfield">
+        <strong>{{vm.model.riskProfile.cdd.DOB | date : 'dd - MMM - yyyy' }}</strong>
+    </div>
+    <div class="col-md-2 userviewlabel">
+        Address
+    </div>
+    <div class="col-md-3 userviewfield">
+        <strong>{{vm.model.riskProfile.cdd.address}}</strong>
+    </div>
+</div>
+
+<div class="row col-md-12 userbrheight">&nbsp;</div>
+
+<div class="row col-md-12">
+    <div class="col-md-1 col-sm-1">&nbsp;</div>
+    <div class="col-md-2 userviewlabel">
+        City
+    </div>
+    <div class="col-md-3 userviewfield">
+        <strong>{{vm.model.riskProfile.cdd.city}}</strong>
+    </div>
+    <div class="col-md-2 userviewlabel">
+        Country
+    </div>
+    <div class="col-md-3 userviewfield">
+        <strong>{{vm.model.riskProfile.cdd.country}}</strong>
+    </div>
+</div>
+
+<div class="row col-md-12 userbrheight">&nbsp;</div>
+
+<div class="row col-md-12">
+    <div class="col-md-1 col-sm-1">&nbsp;</div>
+    <div class="col-md-2 userviewlabel">
+        Nationality
+    </div>
+    <div class="col-md-3 userviewfield">
+        <strong>{{vm.model.riskProfile.cdd.nationality}}</strong>
+    </div>
+    <div class="col-md-2 userviewlabel">
+        Phone
+    </div>
+    <div class="col-md-3 userviewfield">
+        <strong>{{vm.model.riskProfile.cdd.phone}}</strong>
+    </div>
+</div>
+
+<div class="row col-md-12 userbrheight">&nbsp;</div>
+
+<div class="row col-md-12">
+    <div class="col-md-1 col-sm-1">&nbsp;</div>
+    <div class="col-md-2 userviewlabel">
+        State
+    </div>
+    <div class="col-md-3 userviewfield">
+        <strong>{{vm.model.riskProfile.cdd.state}}</strong>
+    </div>
+    <div class="col-md-2 userviewlabel">
+        Postal Code
+    </div>
+    <div class="col-md-3 userviewfield">
+        <strong>{{vm.model.riskProfile.cdd.postalCode}}</strong>
+    </div>
+</div>
+
+<div class="row col-md-12 userbrheight">&nbsp;</div>
+
+<div class="row col-md-12">
+    <div class="col-md-1 col-sm-1">&nbsp;</div>
+    <div class="col-md-2 userviewlabel">
+        Company Name
+    </div>
+    <div class="col-md-3 userviewfield">
+        <strong>{{vm.model.companyName}}</strong>
+    </div>
+    <div class="col-md-2 userviewlabel">
+        Company Type
+    </div>
+    <div class="col-md-3 userviewfield">
+        <strong>{{vm.model.companyType}}</strong>
+    </div>
+</div>
+
+<div class="row col-md-12 userbrheight">&nbsp;</div>
+
+<div class="row col-md-12">
+    <div class="col-md-1 col-sm-1">&nbsp;</div>
+    <div class="col-md-2 userviewlabel">
+        Income Source
+    </div>
+    <div class="col-md-3 userviewfield">
+        <strong>{{vm.model.riskProfile.edd.incomeSource}}</strong>
+    </div>
+    <div class="col-md-2 userviewlabel">
+        Nature Of Business
+    </div>
+    <div class="col-md-3 userviewfield">
+        <strong>{{vm.model.riskProfile.edd.natureOfBusiness}}</strong>
+    </div>
+</div>
+
+<div class="row col-md-12">&nbsp;</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <button type="button" class="btn btn-primary pull-right" ng-click="vm.resendSms()">Resend SMS</button>
+        &nbsp;&nbsp;&nbsp;
+
+        <!-- <button type="button" class="btn btn-default pull-left" ng-click="vm.addBeneficiary()" disabled>Add Beneficiary</button> -->
+    </div>
+</div>
+
+
+<div ng-if="appMode == 'local'"><br/><pre>{{vm.model | json}}</pre></div>

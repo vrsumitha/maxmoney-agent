@@ -763,6 +763,27 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         });
         return deferred.promise;
     };
+    service.getUserByIdentificationDocumentId = function (userId) {
+        var path = apiBasePath + '/users/identification-document/' + userId;
+        var req = {
+            method: 'GET',
+            headers: {'api-key': $rootScope.sessionId},
+            url: path
+        };
+        //$log.info(req);
+        $log.debug('fetching user by identification document id started...');
+        var deferred = $q.defer();
+        $http(req).then(function (res) {
+            //$log.debug(res);
+            $log.debug('fetching user by identification document id finished with success.');
+            deferred.resolve(res);
+        }, function (res) {
+            $log.error(res);
+            $log.debug('fetching user by identification document id finished with failure.');
+            deferred.reject(res);
+        });
+        return deferred.promise;
+    };
 
     service.switchOffAutoComplete = function () {
         if (document.getElementsByTagName) {
