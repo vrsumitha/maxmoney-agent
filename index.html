@@ -46,9 +46,6 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li ng-class="{'active' : (viewName == 'Location Management')}" ng-if="(session && session.role == 'financeManager')">
-                        <a href="#!/locations">Locations</a>
-                    </li>
                     <li ng-class="{'active' : (viewName == 'Customers')}" ng-if="(session && session.role == 'cddOfficer')">
                         <a href="#!/customers">Customers</a>
                     </li>
@@ -60,6 +57,9 @@
                     </li>
                     <li ng-class="{'active' : (viewName == 'Transfer Rates')}" ng-if="(session && session.role == 'maxCddOfficer')">
                         <a href="#!/transfer-rates">Transfer Rates</a>
+                    </li>
+                    <li ng-class="{'active' : (viewName == 'User Search')}" ng-if="((session && session.role == 'complianceManager') || (session && session.role == 'maxCddOfficer'))">
+                        <a href="#!/user-search">User Search</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -152,6 +152,7 @@
 <script src="app/controllers/userListingController.js"></script>
 <script src="app/controllers/userViewController.js"></script>
 <script src="app/controllers/transferRatesListController.js"></script>
+<script src="app/controllers/userSearchController.js"></script>
 <script src="app/controllers/locationListController.js"></script>
 <script src="app/appMain.js"></script>
 
