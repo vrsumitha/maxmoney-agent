@@ -57,7 +57,6 @@ function userSearchController($log, $rootScope, $scope, wydNotifyService, sessio
         $log.info('init started...');
 
         vm.model = {};
-        vm.searchId = 'vteial@gmail.com';
 
         $log.info('init finished...');
     }
