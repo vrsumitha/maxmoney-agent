@@ -383,6 +383,62 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
 beneficiaryAddOrEditController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$uibModalInstance', 'model', 'country'];
 appControllers.controller('beneficiaryAddOrEditController', beneficiaryAddOrEditController);
 
+function resendSmsController($log, $rootScope, $scope, sessionService, $uibModalInstance, model) {
+    var cmpId = 'resendSmsController', cmpName = 'Resend SMS';
+    $log.info(cmpId + ' started ...');
+
+    var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
+
+    vm.title = 'Resend SMS';
+
+    if (model) {
+        vm.model = model;
+    }
+    $log.debug(vm.model);
+
+    function cancel() {
+        $uibModalInstance.dismiss('cancel');
+    }
+
+    function sendSms() {
+        //wydNotifyService.hide();
+
+        var path = sessionService.getApiBasePath() + '/users/' + vm.model.email + '/resend-welcome-message';
+        var req = {
+            method: 'GET',
+            url: path,
+            headers: {'api-key': $rootScope.sessionId}
+        };
+        //$log.info(req);
+        $http(req).then(function (res) {
+            $log.debug(res);
+            $uibModalInstance.dismiss('cancel');
+            wydNotifyService.showSuccess('Successfully SMS sent.');
+        }, function (res) {
+            $log.error(res);
+            wydNotifyService.showError(res.data.message);
+        });
+    }
+
+    function init() {
+        $log.info('init started...');
+
+        $log.info('init finished...');
+    }
+
+    angular.extend(this, {
+        uiState: uiState,
+        cancel: cancel,
+        sendSms: sendSms
+    });
+
+    init();
+
+    $log.info(cmpId + 'finished...');
+}
+resendSmsController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$uibModalInstance', 'model'];
+appControllers.controller('resendSmsController', resendSmsController);
+
 function testBenchController($log, $rootScope, $scope, sessionService, $sessionStroage) {
     var cmpId = 'testBenchController', cmpName = 'Test Bench';
     $log.info(cmpId + ' started ...');
