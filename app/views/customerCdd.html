@@ -73,6 +73,18 @@
     </div>
 
     <div class="row">
+        <div class="col-md-4">
+            <div><strong>Front</strong></div>
+            <div><img ng-src="{{vm.customer.imageFrontUrl}}" alt="Front" class="img-thumbnail" style="width: 350px; height: 200px"></div>
+        </div>
+
+        <div class="col-md-4">
+            <div><strong>Back</strong></div>
+            <div><img ng-src="{{vm.customer.imageBackUrl}}" alt="Back" class="img-thumbnail" style="width: 350px; height: 200px"></div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
         <div class="col-md-4" ng-if="vm.customer.idType == 'Passport'">
             <div><img ng-show="vm.form.passportFront.$valid" ngf-thumbnail="vm.passportFront" class="img-thumbnail" style="width: 250px; height: 200px"></div>
             <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.passportFront.$dirty && vm.form.passportFront.$invalid), 'has-success' : (vm.form.passportFront.$dirty && vm.form.passportFront.$valid) }">
@@ -114,7 +126,6 @@
             </div>
         </div>
 
-  <!--  <div class="row" ng-if="vm.customer.idType == 'NRIC'"> -->
         <div class="col-md-4" ng-if="vm.customer.idType == 'NRIC'">
             <div><img ng-show="vm.form.nricFront.$valid" ngf-thumbnail="vm.nricFront" class="img-thumbnail" style="width: 250px; height: 200px"></div>
             <div class="form-group has-feedback"
@@ -136,6 +147,7 @@
                 </div>
             </div>
         </div>
+
 
         <div class="col-md-4" ng-if="vm.customer.idType == 'NRIC'">
             <!--  <div><img ng-src="{{vm.nricFrontImage}}" class="img-thumbnail"></div> -->

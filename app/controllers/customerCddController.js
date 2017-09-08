@@ -24,6 +24,33 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         });
     }
 
+    function computeImageUrls() {
+        if (vm.customer.images.Front) {
+            var imgUrl = sessionService.getApiBasePath() + '/customers/';
+            imgUrl += vm.customer.idNo + '/images/';
+            imgUrl += vm.customer.images.Front;
+            imgUrl += '?api-key=' + $rootScope.sessionId;
+            vm.customer.imageFrontUrl = imgUrl;
+            console.log(vm.customer.imageFrontUrl);
+        }
+        if (vm.customer.images.Back) {
+            var imgUrl = sessionService.getApiBasePath() + '/customers/';
+            imgUrl += vm.customer.idNo + '/images/';
+            imgUrl += vm.customer.images.Back;
+            imgUrl += '?api-key=' + $rootScope.sessionId;
+            vm.customer.imageBackUrl = imgUrl;
+            console.log(vm.customer.imageBackUrl);
+        }
+        //if (vm.customer.images.Signature) {
+        //    var imgUrl = sessionService.getApiBasePath() + '/customers/';
+        //    imgUrl += vm.customer.idNo + '/images/';
+        //    imgUrl += vm.customer.images.Signature;
+        //    imgUrl += '?api-key=' + $rootScope.sessionId;
+        //    vm.customer.imageSignatureUrl = imgUrl;
+        //    console.log(vm.customer.imageSignatureUrl);
+        //}
+    }
+
     function save() {
         $log.info('update started...');
 
@@ -186,6 +213,7 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         if (_.keys(vm.natureOfBusinesses).length === 0) {
             sessionService.getNatureOfBusinesses();
         }
+        computeImageUrls();
 
         console.log(vm.customer);
         $log.info('init finished...');
