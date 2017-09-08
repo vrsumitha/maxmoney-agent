@@ -182,7 +182,7 @@
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : (vm.form2.bankName.$dirty && vm.form2.bankName.$invalid), 'has-success' : (vm.form2.bankName.$dirty && vm.form2.bankName.$valid) }">
                     <label for="bankName">Bank Name <span class="text-danger">*</span></label>
-                    <select id="bankName" name="bankName" aria-describedby="bankNameHelpBlock" placeholder="Choose Bank *"
+                    <select id="bankName" name="bankName" aria-describedby="bankNameHelpBlock" placeholder="Choose Bank *    "
                             selector options="vm.payoutAgentBanks" label-attr="name" closeAfterSelection="true"
                             model="vm.model.bankAccount.payoutAgent" change="onPayoutAgentChangeX()" require="vm.payBy == 'BD'">
                     </select>
