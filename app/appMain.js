@@ -14,6 +14,15 @@ function rootController($log, $rootScope, $scope, $window, sessionService) {
         $window.open(s);
     };
 
+    $scope.closeMenu = function() {
+        //console.log('isNavCollapsed : ' + $scope.isNavCollapsed);
+        if(!$scope.isNavCollapsed) {
+            $scope.isNavCollapsed = true;
+        }
+        //console.log('isNavCollapsed : ' + $scope.isNavCollapsed);
+    };
+
+    $scope.isNavCollapsed = true;
     sessionService.initRoleInfo();
     sessionService.getCountries();
     sessionService.getMalasiyaStates();
@@ -75,6 +84,12 @@ function appConfig($routeProvider, $locationProvider) {
     $routeProvider.when('/sign-out', {
         templateUrl: 'app/views/signOut.html',
         controller: 'signOutController as vm'
+    });
+
+    $routeProvider.when('/locations', {
+        templateUrl: 'app/views/locationList.html',
+        controller: 'locationListController as vm',
+        resolve: locationListController.resolve
     });
 
     $routeProvider.when('/customers', {

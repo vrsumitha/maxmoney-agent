@@ -24,15 +24,15 @@
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
-                <label for="name" class="control-label">Full Name <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="name" placeholder="Full Name"
+                <!--<label for="name" class="control-label">Full Name <span class="text-danger">*</span></label>-->
+                <input type="text" class="form-control" id="name" placeholder="Full Name *"
                        name="name" ng-model="vm.customer.customerName" required readonly>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label for="idNo" class="control-label">IC/Passport No. <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="idNo" placeholder="NRIC Number"
+                <!--<label for="idNo" class="control-label">IC/Passport No. <span class="text-danger">*</span></label>-->
+                <input type="text" class="form-control" id="idNo" placeholder="NRIC Number *"
                        name="idNo" ng-model="vm.customer.idNo" required readonly>
             </div>
         </div>
@@ -43,8 +43,8 @@
             <div class="form-group has-feedback">
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : (vm.form.sourceOfIncome.$dirty && vm.form.sourceOfIncome.$invalid), 'has-success' : (vm.form.sourceOfIncome.$dirty && vm.form.sourceOfIncome.$valid) }">
-                    <label for="sourceOfIncome">Source Of Income <span class="text-danger">*</span></label>
-                    <select class="form-control" id="sourceOfIncome" name="sourceOfIncome" aria-describedby="sourceOfIncomeHelpBlock" placeholder="Choose Source Of Income"
+                    <!--<label for="sourceOfIncome">Source Of Income <span class="text-danger">*</span></label>-->
+                    <select class="form-control" id="sourceOfIncome" name="sourceOfIncome" aria-describedby="sourceOfIncomeHelpBlock" placeholder="Choose Source Of Income *"
                             ng-options="item for item in vm.sourceOfIncomes"
                             ng-model="vm.sourceOfIncome" require="true">
                     </select>
@@ -59,8 +59,8 @@
             <div class="form-group has-feedback">
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : (vm.form.natureOfBusiness.$dirty && vm.form.natureOfBusiness.$invalid), 'has-success' : (vm.form.natureOfBusiness.$dirty && vm.form.natureOfBusiness.$valid) }">
-                    <label for="natureOfBusiness">Nature Of Business <span class="text-danger">*</span></label>
-                    <select class="form-control" id="natureOfBusiness" name="natureOfBusiness" aria-describedby="natureOfBusinessHelpBlock" placeholder="Choose Nature Of Business"
+                    <!--<label for="natureOfBusiness">Nature Of Business <span class="text-danger">*</span></label>-->
+                    <select class="form-control" id="natureOfBusiness" name="natureOfBusiness" aria-describedby="natureOfBusinessHelpBlock" placeholder="Choose Nature Of Business *"
                             ng-options="item for item in vm.natureOfBusinesses"
                             ng-model="vm.natureOfBusiness" require="true">
                     </select>
@@ -76,8 +76,8 @@
         <div class="col-md-4" ng-if="vm.customer.idType == 'Passport'">
             <div><img ng-show="vm.form.passportFront.$valid" ngf-thumbnail="vm.passportFront" class="img-thumbnail" style="width: 250px; height: 200px"></div>
             <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.passportFront.$dirty && vm.form.passportFront.$invalid), 'has-success' : (vm.form.passportFront.$dirty && vm.form.passportFront.$valid) }">
-                <label for="passportFront" class="control-label">Passport Front <span class="text-danger">*</span></label>
-                <input type="file" class="form-control" id="passportFront" placeholder="" aria-describedby="passportFrontHelpBlock"
+                <!--<label for="passportFront" class="control-label">Passport Front <span class="text-danger">*</span></label>-->
+                <input type="file" class="form-control" id="passportFront" placeholder="Passport Front *" aria-describedby="passportFrontHelpBlock"
                        name="passportFront" ng-model="vm.passportFront" accept="image/*" ngf-select>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.passportFront.$dirty && vm.form.passportFront.$invalid"></span>
@@ -96,8 +96,8 @@
         <div class="col-md-4" ng-if="vm.customer.idType == 'Passport'">
             <div><img ng-show="vm.form.passportBack.$valid" ngf-thumbnail="vm.passportBack" class="img-thumbnail" style="width: 250px; height: 200px"></div>
             <div class="form-group has-feedback" ng-class="{ 'has-error' : (vm.form.passportBack.$dirty && vm.form.passportBack.$invalid), 'has-success' : (vm.form.passportBack.$dirty && vm.form.passportBack.$valid) }">
-                <label for="passportBack" class="control-label">Passport Back <span class="text-danger">*</span></label>
-                <input type="file" class="form-control" id="passportBack" placeholder="" aria-describedby="passportBackHelpBlock"
+                <!--<label for="passportBack" class="control-label">Passport Back <span class="text-danger">*</span></label>-->
+                <input type="file" class="form-control" id="passportBack" placeholder="Passport Back *" aria-describedby="passportBackHelpBlock"
                        name="passportBack" ng-model="vm.passportBack" accept="image/*" ngf-select>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.passportBack.$dirty && vm.form.passportBack.$invalid"></span>
@@ -119,8 +119,8 @@
             <div><img ng-show="vm.form.nricFront.$valid" ngf-thumbnail="vm.nricFront" class="img-thumbnail" style="width: 250px; height: 200px"></div>
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.nricFront.$dirty && vm.form.nricFront.$invalid), 'has-success' : (vm.form.nricFront.$dirty && vm.form.nricFront.$valid) }">
-                <label for="nricFront" class="control-label">NRIC Front <span class="text-danger">*</span></label>
-                <input type="file" class="form-control" id="nricFront" placeholder="" aria-describedby="nricFrontHelpBlock"
+                <!--<label for="nricFront" class="control-label">NRIC Front <span class="text-danger">*</span></label>-->
+                <input type="file" class="form-control" id="nricFront" placeholder="NRIC Front *" aria-describedby="nricFrontHelpBlock"
                        name="nricFront" ng-model="vm.nricFront" ngf-select>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.nricFront.$dirty && vm.form.nricFront.$invalid"></span>
@@ -142,8 +142,8 @@
             <div><img ng-show="vm.form.nricBack.$valid" ngf-thumbnail="vm.nricBack" class="img-thumbnail" style="width: 250px; height: 200px"></div>
             <div class="form-group has-feedback"
                  ng-class="{ 'has-error' : (vm.form.nricBack.$dirty && vm.form.nricBack.$invalid), 'has-success' : (vm.form.nricBack.$dirty && vm.form.nricBack.$valid) }">
-                <label for="nricBack" class="control-label">NRIC Back <span class="text-danger">*</span></label>
-                <input type="file" class="form-control" id="nricBack" placeholder="" aria-describedby="nricBackHelpBlock"
+                <!--<label for="nricBack" class="control-label">NRIC Back <span class="text-danger">*</span></label>-->
+                <input type="file" class="form-control" id="nricBack" placeholder="NRIC Back" aria-describedby="nricBackHelpBlock"
                        name="nricBack" ng-model="vm.nricBack" ngf-select>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                       ng-if="vm.form.nricBack.$dirty && vm.form.nricBack.$invalid"></span>

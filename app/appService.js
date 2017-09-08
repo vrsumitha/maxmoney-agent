@@ -25,6 +25,12 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
 
     service.initRoleInfo = function() {
         var obj = {
+            id: 'financeManager',
+            name: 'Finance Manager',
+            homePath: '/locations'
+        };
+        service.roleInfo[obj.id] = obj;
+        obj = {
             id: 'complianceManager',
             name: 'Compliance Manager',
             homePath: '/users'
@@ -483,6 +489,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         var req = {
             method: 'POST',
             url: path,
+            headers: {'api-key': $rootScope.sessionId},
             params: params
         };
         //$log.info(req);
