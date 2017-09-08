@@ -383,7 +383,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
 beneficiaryAddOrEditController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$uibModalInstance', 'model', 'country'];
 appControllers.controller('beneficiaryAddOrEditController', beneficiaryAddOrEditController);
 
-function resendSmsController($log, $rootScope, $scope, sessionService, $uibModalInstance, model) {
+function resendSmsController($log, $rootScope, $scope, sessionService, $uibModalInstance, model, http, wydNotifyService) {
     var cmpId = 'resendSmsController', cmpName = 'Resend SMS';
     $log.info(cmpId + ' started ...');
 
@@ -410,7 +410,7 @@ function resendSmsController($log, $rootScope, $scope, sessionService, $uibModal
             headers: {'api-key': $rootScope.sessionId}
         };
         //$log.info(req);
-        $http(req).then(function (res) {
+        http(req).then(function (res) {
             $log.debug(res);
             $uibModalInstance.dismiss('cancel');
             wydNotifyService.showSuccess('Successfully SMS sent.');
@@ -436,7 +436,7 @@ function resendSmsController($log, $rootScope, $scope, sessionService, $uibModal
 
     $log.info(cmpId + 'finished...');
 }
-resendSmsController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$uibModalInstance', 'model'];
+resendSmsController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$uibModalInstance', 'model', 'http', 'wydNotifyService'];
 appControllers.controller('resendSmsController', resendSmsController);
 
 function testBenchController($log, $rootScope, $scope, sessionService, $sessionStroage) {

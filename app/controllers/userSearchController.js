@@ -44,8 +44,11 @@ function userSearchController($log, $rootScope, $scope, wydNotifyService, sessio
                 model: function () {
                     return vm.model;
                 },
-                country: function () {
-                    return null;
+                http: function () {
+                    return $http;
+                },
+                wydNotifyService: function () {
+                    return wydNotifyService;
                 }
             }
         });
