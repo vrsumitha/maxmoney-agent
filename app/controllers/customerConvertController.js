@@ -143,9 +143,6 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
     function init() {
         $log.info('init started...');
 
-        vm.beneficiaryLabel = 'Add';
-        vm.beneficiary = {id: 'NA'};
-
         vm.customers = storageService.getCustomers();
         vm.customer = sessionService.currentCustomer;
         if (!vm.customer) {
@@ -153,7 +150,17 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
             vm.name = vm.customer.customerName;
         }
         onCustomerChange();
+
         console.log(vm.customer);
+
+        if(vm.customer.beneficiaryId) {
+            vm.beneficiaryLabel = 'Edit';
+            vm.beneficiary = {id: vm.customer.beneficiaryId};
+        } else {
+            vm.beneficiaryLabel = 'Add';
+            vm.beneficiary = {id: 'NA'};
+        }
+
         $log.info('init finished...');
     }
 

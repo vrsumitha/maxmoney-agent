@@ -16,6 +16,7 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
     $scope.$on('session:natureOfBusinesses', function (event, data) {
         vm.natureOfBusinesses = sessionService.natureOfBusinesses;
     });
+
     function addOrEditBeneficiary() {
         var bnyModel = vm.beneficiary.id == 'NA' ? null : vm.beneficiary;
         var modalInstance = $uibModal.open({
@@ -201,9 +202,6 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         vm.maxSizeForIdDoucuments = '6MB';
         vm.maxSizeForIdDoucumentsX = 6;
 
-        vm.beneficiaryLabel = 'Add';
-        vm.beneficiary = {id: 'NA'};
-
         vm.customers = storageService.getCustomers();
         vm.customer = sessionService.currentCustomer;
         if (!vm.customer) {
@@ -220,6 +218,16 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         }
 
         console.log(vm.customer);
+       // console.log(vm.customer.beneficiaryId);
+
+        if(vm.customer.beneficiaryId) {
+            vm.beneficiaryLabel = 'Edit';
+            vm.beneficiary = {id: vm.customer.beneficiaryId};
+        } else {
+            vm.beneficiaryLabel = 'Add';
+            vm.beneficiary = {id: 'NA'};
+        }
+
         $log.info('init finished...');
     }
 
