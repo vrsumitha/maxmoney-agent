@@ -75,7 +75,7 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
         $log.info('validate customer started...');
 
         wydNotifyService.hide();
-
+        updateUserInfo();
         var params = {url: 'https://www.maxmoney.com/agent/validate', status: 'Validated'};
         sessionService.validateCustomer(vm.customer.idNo, params).then(function (res) {
             $log.debug(res);
@@ -143,6 +143,7 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
     function init() {
         $log.info('init started...');
 
+        vm.hideAddBeneficiary = true;
         vm.customers = storageService.getCustomers();
         vm.customer = sessionService.currentCustomer;
         if (!vm.customer) {
@@ -153,12 +154,16 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
 
         console.log(vm.customer);
 
-        if(vm.customer.beneficiaryId) {
+        if(vm.customer.beneficiaryId && vm.customer.beneficiaryId != 'NA') {
             vm.beneficiaryLabel = 'Edit';
+            vm.hideAddBeneficiary = true;
             vm.beneficiary = {id: vm.customer.beneficiaryId};
+            sessionService.getBeneficiary (vm.beneficiary.id).then (function (res) {
+                _.assign(vm.beneficiary, res.data);
+                $log.debug(vm.beneficiary);
+            });
         } else {
-            vm.beneficiaryLabel = 'Add';
-            vm.beneficiary = {id: 'NA'};
+            vm.hideAddBeneficiary = false;
         }
 
         $log.info('init finished...');

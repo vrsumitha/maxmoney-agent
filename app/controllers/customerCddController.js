@@ -129,8 +129,13 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         //if (vm.signature) {
         //    reqData['signature'] = vm.signature;
         //}
-
+        console.log(vm.beneficiary.id);
+        value = vm.beneficiary.id;
+        if(value && value != 'NA') {
+            reqData.beneficiaryId = value;
+        }
         $log.info(reqData);
+
         Upload.upload({
             url: path,
             method: 'PUT',
@@ -220,9 +225,13 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         console.log(vm.customer);
        // console.log(vm.customer.beneficiaryId);
 
-        if(vm.customer.beneficiaryId) {
+        if(vm.customer.beneficiaryId && vm.customer.beneficiaryId != 'NA') {
             vm.beneficiaryLabel = 'Edit';
             vm.beneficiary = {id: vm.customer.beneficiaryId};
+            sessionService.getBeneficiary (vm.customer.beneficiaryId).then (function (res) {
+                _.assign(vm.beneficiary, res.data);
+                $log.debug(vm.beneficiary);
+            });
         } else {
             vm.beneficiaryLabel = 'Add';
             vm.beneficiary = {id: 'NA'};
