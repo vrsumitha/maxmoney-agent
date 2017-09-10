@@ -158,7 +158,7 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
             vm.beneficiaryLabel = 'Edit';
             vm.hideAddBeneficiary = true;
             vm.beneficiary = {id: vm.customer.beneficiaryId};
-            sessionService.getBeneficiary (vm.beneficiary.id).then (function (res) {
+            sessionService.getBeneficiary (vm.beneficiary.id).then(function (res) {
                 _.assign(vm.beneficiary, res.data);
                 $log.debug(vm.beneficiary);
             });
