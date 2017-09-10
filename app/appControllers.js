@@ -400,20 +400,22 @@ function resendSmsController($log, $rootScope, $scope, sessionService, $uibModal
         $uibModalInstance.dismiss('cancel');
     }
 
-    function sendSms() {
-        //wydNotifyService.hide();
+    function updateMobileNumber() {
 
+    }
+
+    function sendSms() {
         var path = sessionService.getApiBasePath() + '/users/' + vm.model.email + '/resend-welcome-message';
         var req = {
-            method: 'GET',
+            method: 'POST',
             url: path,
             headers: {'api-key': $rootScope.sessionId}
         };
         //$log.info(req);
         http(req).then(function (res) {
             $log.debug(res);
-            $uibModalInstance.dismiss('cancel');
-            wydNotifyService.showSuccess('Successfully SMS sent.');
+            $uibModalInstance.dismiss(res);
+            //wydNotifyService.showSuccess('Successfully SMS sent.');
         }, function (res) {
             $log.error(res);
             wydNotifyService.showError(res.data.message);

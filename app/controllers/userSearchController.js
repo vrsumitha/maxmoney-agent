@@ -55,6 +55,7 @@ function userSearchController($log, $rootScope, $scope, wydNotifyService, sessio
         modalInstance.result.then(function (result) {
             $log.debug('sms sent successfully...');
             $log.debug(result);
+            wydNotifyService.showSuccess('Successfully SMS sent.');
         }, function () {
             $log.debug('canceled sms sending...');
         });

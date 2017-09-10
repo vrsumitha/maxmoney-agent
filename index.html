@@ -45,7 +45,24 @@
                 <a class="navbar-brand" href="index.html">Max CDD Console</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav" ng-if="(session && session.role.id == 'admin')">
+                    <li ng-class="{'active' : (viewName == 'Customers')}">
+                        <a href="#!/customers">Customers</a>
+                    </li>
+                    <li ng-class="{'active' : (viewName == 'Create Customer')}">
+                        <a href="#!/customers/customer">Customer Registration</a>
+                    </li>
+                    <li ng-class="{'active' : (viewName == 'Approve Users')}">
+                        <a href="#!/users">Approve User</a>
+                    </li>
+                    <li ng-class="{'active' : (viewName == 'Transfer Rates')}">
+                        <a href="#!/transfer-rates">Transfer Rates</a>
+                    </li>
+                    <li ng-class="{'active' : (viewName == 'User Search')}">
+                        <a href="#!/user-search">User Search</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav" ng-if="(session && session.role.id != 'admin')">
                     <li ng-class="{'active' : (viewName == 'Customers')}" ng-if="(session && session.role == 'cddOfficer')">
                         <a href="#!/customers">Customers</a>
                     </li>

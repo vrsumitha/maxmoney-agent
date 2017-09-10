@@ -763,6 +763,7 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         });
         return deferred.promise;
     };
+
     service.getUserByIdentificationDocumentId = function (userId) {
         var path = apiBasePath + '/users/identification-document/' + userId;
         var req = {
