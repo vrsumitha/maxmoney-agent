@@ -45,7 +45,7 @@
                 <a class="navbar-brand" href="index.html">Max CDD Console</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav" ng-if="(session && session.role.id == 'admin')">
+                <ul class="nav navbar-nav" ng-if="(session && session.role == 'admin')">
                     <li ng-class="{'active' : (viewName == 'Customers')}">
                         <a href="#!/customers">Customers</a>
                     </li>
@@ -62,7 +62,7 @@
                         <a href="#!/user-search">User Search</a>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav" ng-if="(session && session.role.id != 'admin')">
+                <ul class="nav navbar-nav" ng-if="(session && session.role != 'admin')">
                     <li ng-class="{'active' : (viewName == 'Customers')}" ng-if="(session && session.role == 'cddOfficer')">
                         <a href="#!/customers">Customers</a>
                     </li>

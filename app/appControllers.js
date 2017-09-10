@@ -64,9 +64,10 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
         vm.message = 'Sign In';
 
         if(window.location.hostname == 'localhost') {
-            vm.userId = 'kamilcm@maxmoney.com';
-            //vm.password = 'moos';
+            vm.userId = 'sa@maxmoney.com';
+            vm.password = 'MaxMoney@201';
             //$timeout(signIn, 2000);
+            //+60182652122
         }
 
         $log.info('init finished...');
@@ -401,7 +402,16 @@ function resendSmsController($log, $rootScope, $scope, sessionService, $uibModal
     }
 
     function updateMobileNumber() {
-
+       if(vm.mobileNoNew && vm.mobileNoNew.trim() != '') {
+           sessionService.updateUser(vm.model.email, { mobile: vm.mobileNoNew }).then(function (res) {
+               sendSms();
+           },function (res) {
+               $log.error(res);
+               wydNotifyService.showError(res.data.message);
+           });
+       } else {
+           sendSms();
+       }
     }
 
     function sendSms() {
@@ -414,8 +424,8 @@ function resendSmsController($log, $rootScope, $scope, sessionService, $uibModal
         //$log.info(req);
         http(req).then(function (res) {
             $log.debug(res);
-            $uibModalInstance.dismiss(res);
-            //wydNotifyService.showSuccess('Successfully SMS sent.');
+            $uibModalInstance.close(res);
+            wydNotifyService.showSuccess('Successfully SMS sent.');
         }, function (res) {
             $log.error(res);
             wydNotifyService.showError(res.data.message);
@@ -431,7 +441,8 @@ function resendSmsController($log, $rootScope, $scope, sessionService, $uibModal
     angular.extend(this, {
         uiState: uiState,
         cancel: cancel,
-        sendSms: sendSms
+        sendSms: sendSms,
+        updateMobileNumber: updateMobileNumber
     });
 
     init();
