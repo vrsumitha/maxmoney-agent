@@ -25,7 +25,7 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
     }
 
     function computeImageUrls() {
-        if (vm.customer.images.Front) {
+        if (vm.customer.images && vm.customer.images.Front) {
             var imgUrl = sessionService.getApiBasePath() + '/customers/';
             imgUrl += vm.customer.idNo + '/images/';
             imgUrl += vm.customer.images.Front;
@@ -33,7 +33,7 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
             vm.customer.imageFrontUrl = imgUrl;
             console.log(vm.customer.imageFrontUrl);
         }
-        if (vm.customer.images.Back) {
+        if (vm.customer.images && vm.customer.images.Back) {
             var imgUrl = sessionService.getApiBasePath() + '/customers/';
             imgUrl += vm.customer.idNo + '/images/';
             imgUrl += vm.customer.images.Back;
@@ -41,7 +41,7 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
             vm.customer.imageBackUrl = imgUrl;
             console.log(vm.customer.imageBackUrl);
         }
-        //if (vm.customer.images.Signature) {
+        //if (vm.customer.images && vm.customer.images.Signature) {
         //    var imgUrl = sessionService.getApiBasePath() + '/customers/';
         //    imgUrl += vm.customer.idNo + '/images/';
         //    imgUrl += vm.customer.images.Signature;
