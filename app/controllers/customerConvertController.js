@@ -7,7 +7,7 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
     var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
 
     function addOrEditBeneficiary() {
-        var bnyModel = vm.beneficiary.id == 'NA' ? null : vm.beneficiary;
+        var bnyModel = vm.customer.beneficiaryId == 'NA' ? null : vm.beneficiary;
         var modalInstance = $uibModal.open({
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -143,7 +143,6 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
     function init() {
         $log.info('init started...');
 
-        vm.hideAddBeneficiary = true;
         vm.customers = storageService.getCustomers();
         vm.customer = sessionService.currentCustomer;
         if (!vm.customer) {
@@ -156,14 +155,11 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
 
         if(vm.customer.beneficiaryId && vm.customer.beneficiaryId != 'NA') {
             vm.beneficiaryLabel = 'Edit';
-            vm.hideAddBeneficiary = true;
             vm.beneficiary = {id: vm.customer.beneficiaryId};
             sessionService.getBeneficiary (vm.customer.beneficiaryId).then(function (res) {
                 _.assign(vm.beneficiary, res.data);
                 $log.debug(vm.beneficiary);
             });
-        } else {
-            vm.hideAddBeneficiary = false;
         }
 
         $log.info('init finished...');
