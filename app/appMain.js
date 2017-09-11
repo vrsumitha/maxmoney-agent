@@ -14,6 +14,15 @@ function rootController($log, $rootScope, $scope, $window, sessionService) {
         $window.open(s);
     };
 
+    $scope.closeMenu = function() {
+        //console.log('isNavCollapsed : ' + $scope.isNavCollapsed);
+        if(!$scope.isNavCollapsed) {
+            $scope.isNavCollapsed = true;
+        }
+        //console.log('isNavCollapsed : ' + $scope.isNavCollapsed);
+    };
+
+    $scope.isNavCollapsed = true;
     sessionService.initRoleInfo();
     sessionService.getCountries();
     sessionService.getMalasiyaStates();
@@ -77,6 +86,12 @@ function appConfig($routeProvider, $locationProvider) {
         controller: 'signOutController as vm'
     });
 
+    $routeProvider.when('/locations', {
+        templateUrl: 'app/views/locationList.html',
+        controller: 'locationListController as vm',
+        resolve: locationListController.resolve
+    });
+
     $routeProvider.when('/customers', {
         templateUrl: 'app/views/customerListing.html',
         controller: 'customerListingController as vm',
@@ -123,6 +138,12 @@ function appConfig($routeProvider, $locationProvider) {
         templateUrl: 'app/views/transferRatesList.html',
         controller: 'transferRatesListController as vm',
         resolve: transferRatesListController.resolve
+    });
+
+    $routeProvider.when('/user-search', {
+        templateUrl: 'app/views/userSearch.html',
+        controller: 'userSearchController as vm',
+        resolve: userSearchController.resolve
     });
 
     $routeProvider.when('/not-found', {
