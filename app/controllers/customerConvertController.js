@@ -1,4 +1,4 @@
-function customerConvertController($log, $rootScope, $scope, _session, wydNotifyService, storageService, $uibModal, sessionService, $http, $location, $sessionStorage) {
+function customerConvertController($log, $rootScope, $scope, $q, _session, wydNotifyService, storageService, $uibModal, sessionService, $http, $location, $sessionStorage) {
     var cmpId = 'customerConvertController', cmpName = 'Create Customer';
     $log.info(cmpId + ' started ...');
 
@@ -123,7 +123,39 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
     function updateUserInfo() {
         $log.debug('update user info started...');
         sessionService.updateSourceOfIncomeAndNatureOfBusinessForUser(vm.customer.email, vm.customer.sourceOfIncomeX, vm.customer.natureOfBusinessX);
-        $log.debug('update user info finished...');
+        //console.log(vm.customer.beneficiaryId + ' ' + vm.beneficiary.id);
+        //if (!vm.customer.beneficiaryId || vm.customer.beneficiaryId != 'NA' || vm.beneficiary.id) {
+        //
+        //    //sessionService.updateBeneficiaryIdForCustomer(vm.customer.idNo, vm.beneficiary.id);
+        //    //service.updateCustomer = function (params) {
+        //
+        //        var path = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
+        //        var req = {
+        //            method: 'PUT',
+        //            url: path,
+        //            headers: {'api-key': $rootScope.sessionId, 'Content-Type': 'application/x-www-form-urlencoded'},
+        //            transformRequest: function (obj) {
+        //                var str = [];
+        //                for (var p in obj) {
+        //                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        //                }
+        //                return str.join("&");
+        //            },
+        //            data: vm.beneficiary.id
+        //        };
+        //        //$log.info(req);
+        //        var deferred = $q.defer();
+        //        $http(req).then(function (res) {
+        //            $log.debug(res);
+        //            deferred.resolve(res);
+        //            $log.debug('update customer finished with success.');
+        //        }, function (res) {
+        //            deferred.reject(res);
+        //            $log.debug('update customer finished with failure.');
+        //        });
+        //        return deferred.promise;
+        //}
+        //$log.debug('update user info finished...');
     }
 
     function cancel() {
@@ -160,6 +192,9 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
                 _.assign(vm.beneficiary, res.data);
                 $log.debug(vm.beneficiary);
             });
+        }else {
+            vm.beneficiaryLabel = 'Add';
+            vm.beneficiary = {id: 'NA'};
         }
 
         $log.info('init finished...');
@@ -178,7 +213,7 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
 
     $log.info(cmpId + 'finished...');
 }
-customerConvertController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', '$uibModal', 'sessionService', '$http', '$location', '$sessionStorage'];
+customerConvertController.$inject = ['$log', '$rootScope', '$scope', '$q', '_session', 'wydNotifyService', 'storageService', '$uibModal', 'sessionService', '$http', '$location', '$sessionStorage'];
 customerConvertController.resolve = {
     '_session': ['sessionService', function (sessionService) {
         //sessionService.switchOffAutoComplete();
