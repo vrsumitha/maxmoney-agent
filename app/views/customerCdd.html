@@ -43,7 +43,7 @@
             <div class="form-group has-feedback">
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : (vm.form.sourceOfIncome.$dirty && vm.form.sourceOfIncome.$invalid), 'has-success' : (vm.form.sourceOfIncome.$dirty && vm.form.sourceOfIncome.$valid) }">
-                    <!--<label for="sourceOfIncome">Source Of Income <span class="text-danger">*</span></label>-->
+                    <label for="sourceOfIncome">Source Of Income <span class="text-danger">*</span></label>
                     <select class="form-control" id="sourceOfIncome" name="sourceOfIncome" aria-describedby="sourceOfIncomeHelpBlock" placeholder="Choose Source Of Income *"
                             ng-options="item for item in vm.sourceOfIncomes"
                             ng-model="vm.sourceOfIncome" require="true">
@@ -59,7 +59,7 @@
             <div class="form-group has-feedback">
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : (vm.form.natureOfBusiness.$dirty && vm.form.natureOfBusiness.$invalid), 'has-success' : (vm.form.natureOfBusiness.$dirty && vm.form.natureOfBusiness.$valid) }">
-                    <!--<label for="natureOfBusiness">Nature Of Business <span class="text-danger">*</span></label>-->
+                    <label for="natureOfBusiness">Nature Of Business <span class="text-danger">*</span></label>
                     <select class="form-control" id="natureOfBusiness" name="natureOfBusiness" aria-describedby="natureOfBusinessHelpBlock" placeholder="Choose Nature Of Business *"
                             ng-options="item for item in vm.natureOfBusinesses"
                             ng-model="vm.natureOfBusiness" require="true">
