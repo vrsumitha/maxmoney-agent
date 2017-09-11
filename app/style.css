@@ -187,6 +187,8 @@ hr.hr-medium {
     padding-bottom: 2rem;
 }
 
+/* custom */
+
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -198,6 +200,7 @@ input[type=number]::-webkit-outer-spin-button {
 .userviewlabel {
     padding: 8px;
 }
+
 .userviewfield {
     background-color: #f2f2f2;
     border-width: 0px 0px 1px 0px;
@@ -206,11 +209,29 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 8px;
     height: 35px;
 }
+
 .userpid {
     height: 40px;
     text-align: center;
     border: 1px solid;
 }
+
 .userbrheight {
     height: 10px;
+}
+
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.divsms {
+    background: #5B9BD5;
+    text-align: center;
+}
+
+.modtitle {
+    color: white;
+    text-transform: uppercase;
 }

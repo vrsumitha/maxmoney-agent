@@ -1,11 +1,15 @@
 
 <div class="modal-header">
-    <h3 class="modal-title">{{vm.title}}</h3>
+    <div class="row divsms">
+        <div class="col-md-2"><img src="app/img/sms_title_img.png" class="center-block" style="width:40px;height:50px; padding: 15px 0px 0px 0px;"></div>
+        <div class="col-md-10"><h3 class="modal-title modtitle" style="padding: 15px;"><strong>{{vm.title}}</strong></h3></div>
+    </div>
 </div>
 <div class="modal-body">
     <div>
         <div class="row">
             <div class="col-md-12 text-center">
+                <div class="col-md-2"><img src="app/img/phone_img.png" class="center-block" style="width:40px;height:50px; padding: 15px 0px 0px 0px;"></div>
                 <h3>{{vm.model.mobile}}</h3>
             </div>
         </div>
@@ -14,6 +18,7 @@
                 <h3>or</h3>
             </div>
         </div>
+        <br/>
         <div class="row">
             <div class="col-md-12">
                 <input type="text" class="form-control" placeholder="Mobile Number *"

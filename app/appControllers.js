@@ -404,6 +404,7 @@ function resendSmsController($log, $rootScope, $scope, sessionService, $uibModal
     function updateMobileNumber() {
        if(vm.mobileNoNew && vm.mobileNoNew.trim() != '') {
            sessionService.updateUser(vm.model.email, { mobile: vm.mobileNoNew }).then(function (res) {
+               vm.model.mobile = vm.mobileNoNew;
                sendSms();
            },function (res) {
                $log.error(res);
