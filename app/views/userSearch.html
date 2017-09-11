@@ -108,7 +108,7 @@
         <strong>{{vm.model.riskProfile.cdd.nationality}}</strong>
     </div>
     <div class="col-md-2 userviewlabel">
-        Phone
+        Mobile
     </div>
     <div class="col-md-3 userviewfield">
         <strong>{{vm.model.mobile}}</strong>
@@ -173,7 +173,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <button type="button" class="btn btn-primary pull-right" ng-click="vm.resendSms()" ng-disabled="!(vm.model.riskProfile.cdd.phone)">Resend SMS</button>
+        <button type="button" class="btn btn-primary pull-right" ng-click="vm.resendSms()" ng-disabled="!(vm.model.mobile  && (vm.model.status == 'active'))">Resend SMS</button>
     </div>
 </div>
 
