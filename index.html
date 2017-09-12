@@ -47,11 +47,14 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
                 <ul class="nav navbar-nav">
-                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Customers')}" ng-if="(session && session.role == 'cddOfficer')">
-                        <a href="#!/customers">Customers</a>
+                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Location Management')}" ng-if="(session && session.role == 'financeManager')">
+                        <a href="#!/locations">Locations</a>
                     </li>
                     <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Create Customer')}" ng-if="(session && session.role == 'maxCddOfficer')">
                         <a href="#!/customers/customer">Customer Registration</a>
+                    </li>
+                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Customers')}" ng-if="(session && (session.role == 'cddOfficer' || session.role == 'maxCddOfficer'))">
+                        <a href="#!/customers">Customers</a>
                     </li>
                     <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Approve Users')}" ng-if="(session && session.role == 'complianceManager')">
                         <a href="#!/users">Approve User</a>
