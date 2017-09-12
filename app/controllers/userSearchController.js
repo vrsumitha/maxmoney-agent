@@ -1,4 +1,4 @@
-function userSearchController($log, $rootScope, $scope, wydNotifyService, sessionService, $http) {
+function userSearchController($log, $rootScope, $scope, wydNotifyService, sessionService, $http, $uibModal) {
     var cmpId = 'userSearchController', cmpName = 'User Search';
     $log.info(cmpId + ' started ...');
 
@@ -33,24 +33,32 @@ function userSearchController($log, $rootScope, $scope, wydNotifyService, sessio
     }
 
     function resendSms() {
-        $log.info('resendSms started...');
-
-        var path = sessionService.getApiBasePath() + '/users/' + vm.model.email + '/resend-welcome-message';
-        var req = {
-            method: 'GET',
-            url: path,
-            headers: {'api-key': $rootScope.sessionId}
-        };
-        //$log.info(req);
-        $http(req).then(function (res) {
-            $log.debug(res);
-            wydNotifyService.showSuccess('Successfully SMS sent.');
-        }, function (res) {
-            $log.error(res);
-            wydNotifyService.showError(res.data.message);
+        var modalInstance = $uibModal.open({
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'app/views/resendSms.html',
+            controller: 'resendSmsController',
+            controllerAs: 'vm',
+            size: 'sm',
+            resolve: {
+                model: function () {
+                    return vm.model;
+                },
+                http: function () {
+                    return $http;
+                },
+                wydNotifyService: function () {
+                    return wydNotifyService;
+                }
+            }
         });
-
-        $log.info('resendSms finished...');
+        modalInstance.result.then(function (result) {
+            $log.debug('sms sent successfully...');
+           // $log.debug(result);
+            //wydNotifyService.showSuccess('Successfully SMS sent.');
+        }, function () {
+            $log.debug('canceled sms sending...');
+        });
     }
 
     function init() {
@@ -72,5 +80,5 @@ function userSearchController($log, $rootScope, $scope, wydNotifyService, sessio
 
     $log.info(cmpId + 'finished...');
 }
-userSearchController.$inject = ['$log', '$rootScope', '$scope', 'wydNotifyService', 'sessionService', '$http'];
+userSearchController.$inject = ['$log', '$rootScope', '$scope', 'wydNotifyService', 'sessionService', '$http', '$uibModal'];
 appControllers.controller('userSearchController', userSearchController);

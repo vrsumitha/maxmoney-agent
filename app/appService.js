@@ -763,6 +763,34 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         });
         return deferred.promise;
     };
+
+    service.updateUser = function (userId, params) {
+        var path = apiBasePath + '/users/' + userId;
+        var req = {
+            method: 'PUT',
+            url: path,
+            headers: {'api-key': $rootScope.sessionId, 'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function (obj) {
+                var str = [];
+                for (var p in obj) {
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                }
+                return str.join("&");
+            },
+            data: params
+        };
+        //$log.info(req);
+        var deferred = $q.defer();
+        $http(req).then(function (res) {
+            $log.debug(res);
+            deferred.resolve(res);
+        }, function (res) {
+            $log.error(res);
+            deferred.reject(res);
+        });
+        return deferred.promise;
+    };
+
     service.getUserByIdentificationDocumentId = function (userId) {
         var path = apiBasePath + '/users/identification-document/' + userId;
         var req = {

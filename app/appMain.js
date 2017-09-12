@@ -39,6 +39,15 @@ function rootController($log, $rootScope, $scope, $window, sessionService) {
     //     });
     // });
 
+    if($rootScope.appMode == 'local') {
+        var obj = {
+            id: 'admin',
+            name: 'Admin',
+            homePath: '/user-search'
+        };
+        sessionService.roleInfo[obj.id] = obj;
+    }
+
 }
 appControllers.controller('rootController', rootController);
 
