@@ -58,106 +58,109 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
 
         var value = vm.sourceOfIncome;
         if (!value) {
-            wydNotifyService.showError('Please select the source of income.');
+            wydNotifyService.showWarning('Please select the source of income.');
             return;
         }
         value = vm.natureOfBusiness;
         if (!value) {
-            wydNotifyService.showError('Please select the nature of business.');
+            wydNotifyService.showWarning('Please select the nature of business.');
             return;
         }
 
         var path = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
         var reqData = {'idType': vm.customer.idType}, msg = null;
-        if (vm.customer.idType == 'Passport') {
-            if (!vm.passportFront || !vm.passportBack) {
-                wydNotifyService.showWarning('Image Missing ...');
-                return;
-            }
-            if (vm.passportFront) {
-                var mbs = vm.passportFront.size / (1024 * 1024);
-                console.log(mbs);
-                if (mbs >= vm.maxSizeForIdDoucumentsX) {
-                    msg = 'Passport front image size should not be more than ' + vm.maxSizeForIdDoucuments;
-                    wydNotifyService.showError(msg);
-                    return;
-                }
-            }
-            reqData['front'] = vm.passportFront;
 
-            if (vm.passportBack) {
-                var mbs = vm.passportBack.size / (1024 * 1024);
-                console.log(mbs);
-                if (mbs >= vm.maxSizeForIdDoucumentsX) {
-                    msg = 'Passport Back image size should not be more than ' + vm.maxSizeForIdDoucuments;
-                    wydNotifyService.showError(msg);
-                    return;
-                }
-            }
-            reqData['back'] = vm.passportBack;
-        }
-        if (vm.customer.idType == 'NRIC') {
-            if (!vm.nricFront || !vm.nricBack) {
-                wydNotifyService.showWarning('Image Missing...');
-                return;
-            }
-            if (vm.nricFront) {
-                var mbs = vm.nricFront.size / (1024 * 1024);
-                console.log(mbs);
-                if (mbs >= vm.maxSizeForIdDoucumentsX) {
-                    msg = 'NRIC front image size should not be more than ' + vm.maxSizeForIdDoucuments;
-                    wydNotifyService.showError(msg);
-                    return;
-                }
-            }
-            reqData['front'] = vm.nricFront;
-
-            if (vm.nricBack) {
-                var mbs = vm.nricBack.size / (1024 * 1024);
-                console.log(mbs);
-                if (mbs >= vm.maxSizeForIdDoucumentsX) {
-                    msg = 'NRIC back image size should not be more than ' + vm.maxSizeForIdDoucuments;
-                    wydNotifyService.showError(msg);
-                    return;
-                }
-            }
-            reqData['back'] = vm.nricBack;
-        }
-        //if (vm.signature) {
-        //    reqData['signature'] = vm.signature;
-        //}
-
-        $log.info(reqData);
-        Upload.upload({
-            url: path,
-            method: 'PUT',
-            headers: {'api-key': $rootScope.sessionId},
-            transformRequest: angular.identity,
-            data: reqData
-        }).then(function (res) {
-            $log.debug(res);
-            wydNotifyService.showSuccess('Images Uploaded Successfully...');
-            approve();
-        }, function (res) {
-            $log.debug(res);
-            $log.error('Error Status: ' + res.status);
-            wydNotifyService.showError('image Upload failed. ' + res.description);
-        }, function (evt) {
-            $log.info(evt);
-            var pp = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        if (!vm.customer.images) {
             if (vm.customer.idType == 'Passport') {
-                vm.passportFront.progress = pp;
-                vm.passportBack.progress = pp;
+                if (!vm.passportFront || !vm.passportBack) {
+                    wydNotifyService.showWarning('Image Missing ...');
+                    return;
+                }
+                if (vm.passportFront) {
+                    var mbs = vm.passportFront.size / (1024 * 1024);
+                    console.log(mbs);
+                    if (mbs >= vm.maxSizeForIdDoucumentsX) {
+                        msg = 'Passport front image size should not be more than ' + vm.maxSizeForIdDoucuments;
+                        wydNotifyService.showError(msg);
+                        return;
+                    }
+                }
+                reqData['front'] = vm.passportFront;
+
+                if (vm.passportBack) {
+                    var mbs = vm.passportBack.size / (1024 * 1024);
+                    console.log(mbs);
+                    if (mbs >= vm.maxSizeForIdDoucumentsX) {
+                        msg = 'Passport Back image size should not be more than ' + vm.maxSizeForIdDoucuments;
+                        wydNotifyService.showError(msg);
+                        return;
+                    }
+                }
+                reqData['back'] = vm.passportBack;
             }
             if (vm.customer.idType == 'NRIC') {
-                vm.nricFront.progress = pp;
-                vm.nricBack.progress = pp;
-            }
-            //vm.signature.progress = pp;
-            //$log.info('Progress: ' + pp + '% ');
-        });
+                if ((!vm.nricFront || !vm.nricBack) || (!vm.customer.images.Front || !vm.customer.images.Back)) {
+                    wydNotifyService.showWarning('Image Missing...');
+                    return;
+                }
+                if (vm.nricFront) {
+                    var mbs = vm.nricFront.size / (1024 * 1024);
+                    console.log(mbs);
+                    if (mbs >= vm.maxSizeForIdDoucumentsX) {
+                        msg = 'NRIC front image size should not be more than ' + vm.maxSizeForIdDoucuments;
+                        wydNotifyService.showError(msg);
+                        return;
+                    }
+                }
+                reqData['front'] = vm.nricFront;
 
+                if (vm.nricBack) {
+                    var mbs = vm.nricBack.size / (1024 * 1024);
+                    console.log(mbs);
+                    if (mbs >= vm.maxSizeForIdDoucumentsX) {
+                        msg = 'NRIC back image size should not be more than ' + vm.maxSizeForIdDoucuments;
+                        wydNotifyService.showError(msg);
+                        return;
+                    }
+                }
+                reqData['back'] = vm.nricBack;
+            }
+            //if (vm.signature) {
+            //    reqData['signature'] = vm.signature;
+            //}
+
+            $log.info(reqData);
+            Upload.upload({
+                url: path,
+                method: 'PUT',
+                headers: {'api-key': $rootScope.sessionId},
+                transformRequest: angular.identity,
+                data: reqData
+            }).then(function (res) {
+                $log.debug(res);
+                wydNotifyService.showSuccess('Images Uploaded Successfully...');
+                approve();
+            }, function (res) {
+                $log.debug(res);
+                $log.error('Error Status: ' + res.status);
+                wydNotifyService.showError('image Upload failed. ' + res.description);
+            }, function (evt) {
+                $log.info(evt);
+                var pp = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+                if (vm.customer.idType == 'Passport') {
+                    vm.passportFront.progress = pp;
+                    vm.passportBack.progress = pp;
+                }
+                if (vm.customer.idType == 'NRIC') {
+                    vm.nricFront.progress = pp;
+                    vm.nricBack.progress = pp;
+                }
+                //vm.signature.progress = pp;
+                //$log.info('Progress: ' + pp + '% ');
+            });
+        }
         $log.info('update finished...');
+        approve();
     }
 
     function approve() {
