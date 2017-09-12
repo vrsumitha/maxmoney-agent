@@ -41,6 +41,14 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
         //}
     }
 
+    function createCustomer() {
+        if(vm.customer.status == 'Validated') {
+            convertCustomer();
+        } else {
+            validateCustomer();
+        }
+    }
+
     function validateCustomer() {
         $log.info('validate customer started...');
 
@@ -72,7 +80,7 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
                 swal({
                     type: 'success',
                     title: 'Customer Created.',
-                   // text: 'Your MaxMoney Id is ' + res.data.maxMoneyId,
+                    // text: 'Your MaxMoney Id is ' + res.data.maxMoneyId,
                     allowOutsideClick: false
                 }).then(
                     function () {
@@ -96,19 +104,19 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
         $log.debug('update user info finished...');
     }
 
-    function cancel() {
-        //console.log($rootScope.session.role);
-        if ($rootScope.session.role == 'maxCddOfficer') {
-            path = '/customers/customer'; // customer registration
-            $location.path(path);
-            return
-        }
-        if ($rootScope.session.role == 'cddOfficer') {
-            path = '/customers'; // customer listing
-            $location.path(path);
-            return;
-        }
-    }
+    //function cancel() {
+    //    //console.log($rootScope.session.role);
+    //    if ($rootScope.session.role == 'maxCddOfficer') {
+    //        path = '/customers/customer'; // customer registration
+    //        $location.path(path);
+    //        return
+    //    }
+    //    if ($rootScope.session.role == 'cddOfficer') {
+    //        path = '/customers'; // customer listing
+    //        $location.path(path);
+    //        return;
+    //    }
+    //}
 
     function init() {
         $log.info('init started...');
@@ -126,9 +134,7 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
     angular.extend(this, {
         uiState: uiState,
         onCustomerChange: onCustomerChange,
-        validateCustomer: validateCustomer,
-        convertCustomer: convertCustomer,
-        cancel: cancel
+        createCustomer: createCustomer
     });
 
     init();
