@@ -39,6 +39,15 @@ function rootController($log, $rootScope, $scope, $window, sessionService) {
     //     });
     // });
 
+    if($rootScope.appMode == 'local') {
+        var obj = {
+            id: 'admin',
+            name: 'Admin',
+            homePath: '/user-search'
+        };
+        sessionService.roleInfo[obj.id] = obj;
+    }
+
 }
 appControllers.controller('rootController', rootController);
 
@@ -138,6 +147,12 @@ function appConfig($routeProvider, $locationProvider) {
         templateUrl: 'app/views/transferRatesList.html',
         controller: 'transferRatesListController as vm',
         resolve: transferRatesListController.resolve
+    });
+
+    $routeProvider.when('/user-search', {
+        templateUrl: 'app/views/userSearch.html',
+        controller: 'userSearchController as vm',
+        resolve: userSearchController.resolve
     });
 
     $routeProvider.when('/not-found', {

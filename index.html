@@ -6,7 +6,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>Maxmoney - Agent</title>
+    <title>MaxMoney Console</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="app/simplex/bootstrap.min.css"/>
@@ -36,39 +36,43 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"
+                        ng-click="isNavCollapsed = !isNavCollapsed">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Max CDD Console</a>
+                <a class="navbar-brand" href="index.html">Max Console</a>
             </div>
-            <div id="navbar" class="collapse navbar-collapse">
+            <div id="navbar" class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
                 <ul class="nav navbar-nav">
-                    <li ng-class="{'active' : (viewName == 'Location Management')}" ng-if="(session && session.role == 'financeManager')">
+                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Location Management')}" ng-if="(session && session.role == 'financeManager')">
                         <a href="#!/locations">Locations</a>
                     </li>
-                    <li ng-class="{'active' : (viewName == 'Customers')}" ng-if="(session && session.role == 'cddOfficer')">
-                        <a href="#!/customers">Customers</a>
-                    </li>
-                    <li ng-class="{'active' : (viewName == 'Create Customer')}" ng-if="(session && session.role == 'maxCddOfficer')">
+                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Create Customer')}" ng-if="(session && session.role == 'maxCddOfficer')">
                         <a href="#!/customers/customer">Customer Registration</a>
                     </li>
-                    <li ng-class="{'active' : (viewName == 'Approve Users')}" ng-if="(session && session.role == 'complianceManager')">
+                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Customers')}" ng-if="(session && (session.role == 'cddOfficer' || session.role == 'maxCddOfficer'))">
+                        <a href="#!/customers">Customers</a>
+                    </li>
+                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Approve Users')}" ng-if="(session && session.role == 'complianceManager')">
                         <a href="#!/users">Approve User</a>
                     </li>
-                    <li ng-class="{'active' : (viewName == 'Transfer Rates')}" ng-if="(session && session.role == 'maxCddOfficer')">
+                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Transfer Rates')}" ng-if="(session && session.role == 'maxCddOfficer')">
                         <a href="#!/transfer-rates">Transfer Rates</a>
+                    </li>
+                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'User Search')}" ng-if="((session && session.role == 'complianceManager') || (session && session.role == 'maxCddOfficer'))">
+                        <a href="#!/user-search">User Search</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-class="{'active' : (viewName == 'Sign In')}" ng-hide="(sessionId)">
+                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Sign In')}" ng-hide="(sessionId)">
                         <a href="#!/sign-in">
                             Sign In
                         </a>
                     </li>
-                    <li ng-class="{'active' : (viewName == 'Sign Out')}" ng-show="(sessionId)">
+                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Sign Out')}" ng-show="(sessionId)">
                         <a href="#!/sign-out">
                             Sign Out
                         </a>
@@ -83,11 +87,11 @@
                         <br class="my1 py1"/>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <strong>{{viewName}}</strong>
-                        <span class="pull-right" ng-show="(session)">
-                            <strong>{{session.username}}</strong>
-                            &nbsp;/&nbsp;
-                            <strong>{{lodash.capitalize(session.role)}}</strong>
-                        </span>
+                    <span class="pull-right" ng-show="(session)">
+                        <strong>{{session.username}}</strong>
+                        &nbsp;/&nbsp;
+                        <strong>{{lodash.capitalize(session.role)}}</strong>
+                    </span>
                     </div>
                     <div class="com-md-8">
                         &nbsp;
@@ -97,6 +101,7 @@
         </div>
     </nav>
 
+    <br/>
     <div class="container">
         <x-ng-view></x-ng-view>
     </div>
@@ -107,7 +112,7 @@
 
 <footer class="footer ">
     <div class="container">
-        <p class="text-muted">MaxMoney CDD Console</p>
+        <p class="text-muted">MaxMoney Console</p>
     </div>
 </footer>
 
@@ -152,6 +157,7 @@
 <script src="app/controllers/userListingController.js"></script>
 <script src="app/controllers/userViewController.js"></script>
 <script src="app/controllers/transferRatesListController.js"></script>
+<script src="app/controllers/userSearchController.js"></script>
 <script src="app/controllers/locationListController.js"></script>
 <script src="app/appMain.js"></script>
 
