@@ -30,6 +30,7 @@ function customerConvertController($log, $rootScope, $scope, $q, _session, wydNo
             $log.debug(result);
             vm.beneficiary = result;
             vm.beneficiaryLabel = 'Edit';
+            updateBeneficiaryForCustomer();
             //loadBeneficiaries();
         }, function () {
             $log.debug('canceled beneficiary creation...');
@@ -123,39 +124,38 @@ function customerConvertController($log, $rootScope, $scope, $q, _session, wydNo
     function updateUserInfo() {
         $log.debug('update user info started...');
         sessionService.updateSourceOfIncomeAndNatureOfBusinessForUser(vm.customer.email, vm.customer.sourceOfIncomeX, vm.customer.natureOfBusinessX);
-        //console.log(vm.customer.beneficiaryId + ' ' + vm.beneficiary.id);
-        //if (!vm.customer.beneficiaryId || vm.customer.beneficiaryId != 'NA' || vm.beneficiary.id) {
-        //
-        //    //sessionService.updateBeneficiaryIdForCustomer(vm.customer.idNo, vm.beneficiary.id);
-        //    //service.updateCustomer = function (params) {
-        //
-        //        var path = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
-        //        var req = {
-        //            method: 'PUT',
-        //            url: path,
-        //            headers: {'api-key': $rootScope.sessionId, 'Content-Type': 'application/x-www-form-urlencoded'},
-        //            transformRequest: function (obj) {
-        //                var str = [];
-        //                for (var p in obj) {
-        //                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-        //                }
-        //                return str.join("&");
-        //            },
-        //            data: vm.beneficiary.id
-        //        };
-        //        //$log.info(req);
-        //        var deferred = $q.defer();
-        //        $http(req).then(function (res) {
-        //            $log.debug(res);
-        //            deferred.resolve(res);
-        //            $log.debug('update customer finished with success.');
-        //        }, function (res) {
-        //            deferred.reject(res);
-        //            $log.debug('update customer finished with failure.');
-        //        });
-        //        return deferred.promise;
-        //}
-        //$log.debug('update user info finished...');
+        $log.debug('update user info finished...');
+    }
+
+    function updateBeneficiaryForCustomer() {
+        console.log(vm.customer.beneficiaryId + ' ' + vm.beneficiary.id);
+        if (!vm.customer.beneficiaryId || vm.customer.beneficiaryId != 'NA' || vm.beneficiary.id) {
+            var path = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
+            var req = {
+                method: 'PUT',
+                url: path,
+                headers: {'api-key': $rootScope.sessionId, 'Content-Type': 'application/x-www-form-urlencoded'},
+                transformRequest: function (obj) {
+                    var str = [];
+                    for (var p in obj) {
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    }
+                    return str.join("&");
+                },
+                data: vm.beneficiary.id
+            };
+            //$log.info(req);
+            var deferred = $q.defer();
+            $http(req).then(function (res) {
+                $log.debug(res);
+                deferred.resolve(res);
+                $log.debug('update customer finished with success.');
+            }, function (res) {
+                deferred.reject(res);
+                $log.debug('update customer finished with failure.');
+            });
+            return deferred.promise;
+        }
     }
 
     function cancel() {
@@ -184,8 +184,7 @@ function customerConvertController($log, $rootScope, $scope, $q, _session, wydNo
         onCustomerChange();
 
         console.log(vm.customer);
-
-        if(vm.customer.beneficiaryId && vm.customer.beneficiaryId != 'NA') {
+        if(vm.customer.beneficiaryId && vm.customer.beneficiaryId != 'NA' || vm.beneficiary.id) {
             vm.beneficiaryLabel = 'Edit';
             vm.beneficiary = {id: vm.customer.beneficiaryId};
             sessionService.getBeneficiary (vm.customer.beneficiaryId).then(function (res) {
@@ -206,7 +205,8 @@ function customerConvertController($log, $rootScope, $scope, $q, _session, wydNo
         onCustomerChange: onCustomerChange,
         validateCustomer: validateCustomer,
         convertCustomer: convertCustomer,
-        cancel: cancel
+        cancel: cancel,
+        updateBeneficiaryForCustomer: updateBeneficiaryForCustomer
     });
 
     init();
