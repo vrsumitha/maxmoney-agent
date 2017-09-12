@@ -158,9 +158,12 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
                 //vm.signature.progress = pp;
                 //$log.info('Progress: ' + pp + '% ');
             });
+        }else {
+            approve();
         }
+
         $log.info('update finished...');
-        approve();
+
     }
 
     function approve() {
