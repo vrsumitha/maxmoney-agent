@@ -1,4 +1,4 @@
-function customerCddController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $uibModal, $http, Upload, $location, $sessionStorage) {
+function customerCddController($log, $rootScope, $scope, _session, wydNotifyService, storageService, sessionService, $http, Upload, $location, $sessionStorage) {
     var cmpId = 'customerCddController', cmpName = 'CDD';
     $log.info(cmpId + ' started ...');
 
@@ -17,41 +17,38 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         vm.natureOfBusinesses = sessionService.natureOfBusinesses;
     });
 
-    function addOrEditBeneficiary() {
-        var bnyModel = vm.beneficiary.id == 'NA' ? null : vm.beneficiary;
-        var modalInstance = $uibModal.open({
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: 'app/views/beneficiaryAddOrEdit.html',
-            controller: 'beneficiaryAddOrEditController',
-            controllerAs: 'vm',
-            size: 'lg',
-            resolve: {
-                model: function () {
-                    //sessionService.switchOffAutoComplete();
-                    return bnyModel;
-                },
-                country: function () {
-                    return null;
-                }
-            }
-        });
-        modalInstance.result.then(function (result) {
-            $log.debug('beneficiary created successfully...');
-            $log.debug(result);
-            vm.beneficiary = result;
-            vm.beneficiaryLabel = 'Edit';
-            //loadBeneficiaries();
-        }, function () {
-            $log.debug('canceled beneficiary creation...');
-        });
-    }
-
     function onCustomerChange() {
         sessionService.getCustomer(vm.customer.idNo).then(function (res) {
             _.assign(vm.customer, res);
             $log.info(vm.customer);
         });
+    }
+
+    function computeImageUrls() {
+        if (vm.customer.images && vm.customer.images.Front) {
+            var imgUrl = sessionService.getApiBasePath() + '/customers/';
+            imgUrl += vm.customer.idNo + '/images/';
+            imgUrl += vm.customer.images.Front;
+            imgUrl += '?api-key=' + $rootScope.sessionId;
+            vm.customer.imageFrontUrl = imgUrl;
+            console.log(vm.customer.imageFrontUrl);
+        }
+        if (vm.customer.images && vm.customer.images.Back) {
+            var imgUrl = sessionService.getApiBasePath() + '/customers/';
+            imgUrl += vm.customer.idNo + '/images/';
+            imgUrl += vm.customer.images.Back;
+            imgUrl += '?api-key=' + $rootScope.sessionId;
+            vm.customer.imageBackUrl = imgUrl;
+            console.log(vm.customer.imageBackUrl);
+        }
+        //if (vm.customer.images && vm.customer.images.Signature) {
+        //    var imgUrl = sessionService.getApiBasePath() + '/customers/';
+        //    imgUrl += vm.customer.idNo + '/images/';
+        //    imgUrl += vm.customer.images.Signature;
+        //    imgUrl += '?api-key=' + $rootScope.sessionId;
+        //    vm.customer.imageSignatureUrl = imgUrl;
+        //    console.log(vm.customer.imageSignatureUrl);
+        //}
     }
 
     function save() {
@@ -61,111 +58,112 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
 
         var value = vm.sourceOfIncome;
         if (!value) {
-            wydNotifyService.showError('Please select the source of income.');
+            wydNotifyService.showWarning('Please select the source of income.');
             return;
         }
         value = vm.natureOfBusiness;
         if (!value) {
-            wydNotifyService.showError('Please select the nature of business.');
+            wydNotifyService.showWarning('Please select the nature of business.');
             return;
         }
 
         var path = sessionService.getApiBasePath() + '/customers/' + vm.customer.idNo;
         var reqData = {'idType': vm.customer.idType}, msg = null;
-        if (vm.customer.idType == 'Passport') {
-            if (!vm.passportFront || !vm.passportBack) {
-                wydNotifyService.showWarning('Image Missing ...');
-                return;
-            }
-            if (vm.passportFront) {
-                var mbs = vm.passportFront.size / (1024 * 1024);
-                console.log(mbs);
-                if (mbs >= vm.maxSizeForIdDoucumentsX) {
-                    msg = 'Passport front image size should not be more than ' + vm.maxSizeForIdDoucuments;
-                    wydNotifyService.showError(msg);
-                    return;
-                }
-            }
-            reqData['front'] = vm.passportFront;
 
-            if (vm.passportBack) {
-                var mbs = vm.passportBack.size / (1024 * 1024);
-                console.log(mbs);
-                if (mbs >= vm.maxSizeForIdDoucumentsX) {
-                    msg = 'Passport Back image size should not be more than ' + vm.maxSizeForIdDoucuments;
-                    wydNotifyService.showError(msg);
-                    return;
-                }
-            }
-            reqData['back'] = vm.passportBack;
-        }
-        if (vm.customer.idType == 'NRIC') {
-            if (!vm.nricFront || !vm.nricBack) {
-                wydNotifyService.showWarning('Image Missing...');
-                return;
-            }
-            if (vm.nricFront) {
-                var mbs = vm.nricFront.size / (1024 * 1024);
-                console.log(mbs);
-                if (mbs >= vm.maxSizeForIdDoucumentsX) {
-                    msg = 'NRIC front image size should not be more than ' + vm.maxSizeForIdDoucuments;
-                    wydNotifyService.showError(msg);
-                    return;
-                }
-            }
-            reqData['front'] = vm.nricFront;
-
-            if (vm.nricBack) {
-                var mbs = vm.nricBack.size / (1024 * 1024);
-                console.log(mbs);
-                if (mbs >= vm.maxSizeForIdDoucumentsX) {
-                    msg = 'NRIC back image size should not be more than ' + vm.maxSizeForIdDoucuments;
-                    wydNotifyService.showError(msg);
-                    return;
-                }
-            }
-            reqData['back'] = vm.nricBack;
-        }
-        //if (vm.signature) {
-        //    reqData['signature'] = vm.signature;
-        //}
-        console.log(vm.beneficiary.id);
-        value = vm.beneficiary.id;
-        if(value && value != 'NA') {
-            reqData.beneficiaryId = value;
-        }
-        $log.info(reqData);
-
-        Upload.upload({
-            url: path,
-            method: 'PUT',
-            headers: {'api-key': $rootScope.sessionId},
-            transformRequest: angular.identity,
-            data: reqData
-        }).then(function (res) {
-            $log.debug(res);
-            wydNotifyService.showSuccess('Images Uploaded Successfully...');
-            approve();
-        }, function (res) {
-            $log.debug(res);
-            $log.error('Error Status: ' + res.status);
-            wydNotifyService.showError('image Upload failed. ' + res.description);
-        }, function (evt) {
-            $log.info(evt);
-            var pp = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        if (!vm.customer.images) {
             if (vm.customer.idType == 'Passport') {
-                vm.passportFront.progress = pp;
-                vm.passportBack.progress = pp;
+                if (!vm.passportFront || !vm.passportBack) {
+                    wydNotifyService.showWarning('Image Missing ...');
+                    return;
+                }
+                if (vm.passportFront) {
+                    var mbs = vm.passportFront.size / (1024 * 1024);
+                    console.log(mbs);
+                    if (mbs >= vm.maxSizeForIdDoucumentsX) {
+                        msg = 'Passport front image size should not be more than ' + vm.maxSizeForIdDoucuments;
+                        wydNotifyService.showError(msg);
+                        return;
+                    }
+                }
+                reqData['front'] = vm.passportFront;
+
+                if (vm.passportBack) {
+                    var mbs = vm.passportBack.size / (1024 * 1024);
+                    console.log(mbs);
+                    if (mbs >= vm.maxSizeForIdDoucumentsX) {
+                        msg = 'Passport Back image size should not be more than ' + vm.maxSizeForIdDoucuments;
+                        wydNotifyService.showError(msg);
+                        return;
+                    }
+                }
+                reqData['back'] = vm.passportBack;
             }
             if (vm.customer.idType == 'NRIC') {
-                vm.nricFront.progress = pp;
-                vm.nricBack.progress = pp;
+                if ((!vm.nricFront || !vm.nricBack) || (!vm.customer.images.Front || !vm.customer.images.Back)) {
+                    wydNotifyService.showWarning('Image Missing...');
+                    return;
+                }
+                if (vm.nricFront) {
+                    var mbs = vm.nricFront.size / (1024 * 1024);
+                    console.log(mbs);
+                    if (mbs >= vm.maxSizeForIdDoucumentsX) {
+                        msg = 'NRIC front image size should not be more than ' + vm.maxSizeForIdDoucuments;
+                        wydNotifyService.showError(msg);
+                        return;
+                    }
+                }
+                reqData['front'] = vm.nricFront;
+
+                if (vm.nricBack) {
+                    var mbs = vm.nricBack.size / (1024 * 1024);
+                    console.log(mbs);
+                    if (mbs >= vm.maxSizeForIdDoucumentsX) {
+                        msg = 'NRIC back image size should not be more than ' + vm.maxSizeForIdDoucuments;
+                        wydNotifyService.showError(msg);
+                        return;
+                    }
+                }
+                reqData['back'] = vm.nricBack;
             }
-            //vm.signature.progress = pp;
-            //$log.info('Progress: ' + pp + '% ');
-        });
+            //if (vm.signature) {
+            //    reqData['signature'] = vm.signature;
+            //}
+
+            $log.info(reqData);
+            Upload.upload({
+                url: path,
+                method: 'PUT',
+                headers: {'api-key': $rootScope.sessionId},
+                transformRequest: angular.identity,
+                data: reqData
+            }).then(function (res) {
+                $log.debug(res);
+                wydNotifyService.showSuccess('Images Uploaded Successfully...');
+                approve();
+            }, function (res) {
+                $log.debug(res);
+                $log.error('Error Status: ' + res.status);
+                wydNotifyService.showError('image Upload failed. ' + res.description);
+            }, function (evt) {
+                $log.info(evt);
+                var pp = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+                if (vm.customer.idType == 'Passport') {
+                    vm.passportFront.progress = pp;
+                    vm.passportBack.progress = pp;
+                }
+                if (vm.customer.idType == 'NRIC') {
+                    vm.nricFront.progress = pp;
+                    vm.nricBack.progress = pp;
+                }
+                //vm.signature.progress = pp;
+                //$log.info('Progress: ' + pp + '% ');
+            });
+        }else {
+            approve();
+        }
 
         $log.info('update finished...');
+
     }
 
     function approve() {
@@ -221,28 +219,14 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
         if (_.keys(vm.natureOfBusinesses).length === 0) {
             sessionService.getNatureOfBusinesses();
         }
+        computeImageUrls();
 
         console.log(vm.customer);
-       // console.log(vm.customer.beneficiaryId);
-
-        if(vm.customer.beneficiaryId && vm.customer.beneficiaryId != 'NA') {
-            vm.beneficiaryLabel = 'Edit';
-            vm.beneficiary = {id: vm.customer.beneficiaryId};
-            sessionService.getBeneficiary (vm.customer.beneficiaryId).then (function (res) {
-                _.assign(vm.beneficiary, res.data);
-                $log.debug(vm.beneficiary);
-            });
-        } else {
-            vm.beneficiaryLabel = 'Add';
-            vm.beneficiary = {id: 'NA'};
-        }
-
         $log.info('init finished...');
     }
 
     angular.extend(this, {
         uiState: uiState,
-        addOrEditBeneficiary: addOrEditBeneficiary,
         onCustomerChange: onCustomerChange,
         save: save,
         approve: approve,
@@ -253,7 +237,7 @@ function customerCddController($log, $rootScope, $scope, _session, wydNotifyServ
 
     $log.info(cmpId + 'finished...');
 }
-customerCddController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService','$uibModal', '$http', 'Upload', '$location', '$sessionStorage'];
+customerCddController.$inject = ['$log', '$rootScope', '$scope', '_session', 'wydNotifyService', 'storageService', 'sessionService', '$http', 'Upload', '$location', '$sessionStorage'];
 customerCddController.resolve = {
     '_session': ['sessionService', function (sessionService) {
         //sessionService.switchOffAutoComplete();

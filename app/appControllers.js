@@ -64,9 +64,10 @@ function signInController($log, $rootScope, $scope, wydNotifyService, storageSer
         vm.message = 'Sign In';
 
         if(window.location.hostname == 'localhost') {
-            vm.userId = 'cdd@maxmoney.com';
-            vm.password = 'moos';
+            //vm.userId = 'sa@maxmoney.com';
+            //vm.password = 'MaxMoney@201';
             //$timeout(signIn, 2000);
+            //+60182652122
         }
 
         $log.info('init finished...');
@@ -294,7 +295,7 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
             value = vm.model.bankAccount.branch;
             reqBnk.branch = value;
 
-            $log.info(reqBnk);
+            //$log.info(reqBnk);
         }
 
         if (!flag) {
@@ -382,6 +383,75 @@ function beneficiaryAddOrEditController($log, $rootScope, $scope, sessionService
 }
 beneficiaryAddOrEditController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$uibModalInstance', 'model', 'country'];
 appControllers.controller('beneficiaryAddOrEditController', beneficiaryAddOrEditController);
+
+function resendSmsController($log, $rootScope, $scope, sessionService, $uibModalInstance, model, http, wydNotifyService) {
+    var cmpId = 'resendSmsController', cmpName = 'Resend SMS';
+    $log.info(cmpId + ' started ...');
+
+    var vm = this, uiState = {isReady: false, isBlocked: false, isValid: false};
+
+    vm.title = 'Resend SMS';
+
+    if (model) {
+        vm.model = model;
+    }
+    $log.debug(vm.model);
+
+    function cancel() {
+        $uibModalInstance.dismiss('cancel');
+    }
+
+    function updateMobileNumber() {
+       if(vm.mobileNoNew && vm.mobileNoNew.trim() != '') {
+           sessionService.updateUser(vm.model.email, { mobile: vm.mobileNoNew }).then(function (res) {
+               vm.model.mobile = vm.mobileNoNew;
+               sendSms();
+           },function (res) {
+               $log.error(res);
+               wydNotifyService.showError(res.data.message);
+           });
+       } else {
+           sendSms();
+       }
+    }
+
+    function sendSms() {
+        var path = sessionService.getApiBasePath() + '/users/' + vm.model.email + '/resend-welcome-message';
+        var req = {
+            method: 'POST',
+            url: path,
+            headers: {'api-key': $rootScope.sessionId}
+        };
+        //$log.info(req);
+        http(req).then(function (res) {
+            $log.debug(res);
+            $uibModalInstance.close(res);
+            wydNotifyService.showSuccess('Successfully SMS sent.');
+        }, function (res) {
+            $log.error(res);
+            wydNotifyService.showError(res.data.message);
+        });
+    }
+
+    function init() {
+        $log.info('init started...');
+
+        $log.info('init finished...');
+    }
+
+    angular.extend(this, {
+        uiState: uiState,
+        cancel: cancel,
+        sendSms: sendSms,
+        updateMobileNumber: updateMobileNumber
+    });
+
+    init();
+
+    $log.info(cmpId + 'finished...');
+}
+resendSmsController.$inject = ['$log', '$rootScope', '$scope', 'sessionService', '$uibModalInstance', 'model', 'http', 'wydNotifyService'];
+appControllers.controller('resendSmsController', resendSmsController);
 
 function testBenchController($log, $rootScope, $scope, sessionService, $sessionStroage) {
     var cmpId = 'testBenchController', cmpName = 'Test Bench';
