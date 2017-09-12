@@ -158,19 +158,19 @@ function customerConvertController($log, $rootScope, $scope, $q, _session, wydNo
         }
     }
 
-    function cancel() {
-        //console.log($rootScope.session.role);
-        if ($rootScope.session.role == 'maxCddOfficer') {
-            path = '/customers/customer'; // customer registration
-            $location.path(path);
-            return
-        }
-        if ($rootScope.session.role == 'cddOfficer') {
-            path = '/customers'; // customer listing
-            $location.path(path);
-            return;
-        }
-    }
+    //function cancel() {
+    //    //console.log($rootScope.session.role);
+    //    if ($rootScope.session.role == 'maxCddOfficer') {
+    //        path = '/customers/customer'; // customer registration
+    //        $location.path(path);
+    //        return
+    //    }
+    //    if ($rootScope.session.role == 'cddOfficer') {
+    //        path = '/customers'; // customer listing
+    //        $location.path(path);
+    //        return;
+    //    }
+    //}
 
     function init() {
         $log.info('init started...');
