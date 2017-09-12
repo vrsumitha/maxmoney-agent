@@ -166,22 +166,19 @@
         </div>
     </div>
     <br/>
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <span class="pull-left">
-                <!--<button type="button" class="btn btn-default" ng-click="vm.addOrEditBeneficiary()" ng-disabled="!(vm.customer.beneficiaryId && vm.customer.beneficiaryId != 'NA')">-->
-                <button type="button" class="btn btn-default" ng-click="vm.addOrEditBeneficiary()">
-                    {{vm.beneficiaryLabel}} Beneficiary
-                </button>
-            </span>
-            <span class="pull-right">
-                <a class="btn btn-danger" ng-click="vm.cancel()">Cancel</a>
-                &nbsp;&nbsp;&nbsp;
-                <button type="submit" class="btn btn-primary"
-                        ng-click="vm.validateCustomer()">
-                    Create Customer
-                </button>&nbsp;&nbsp;
-            </span>
-        </div>
+    <div class="text-center">
+        <a class="btn btn-danger" ng-href="{{homePath}}">Cancel</a>
+        &nbsp;&nbsp;&nbsp;
+        <button type="submit" class="btn btn-primary"
+                ng-click="vm.createCustomer()">
+            Create Customer
+        </button>&nbsp;&nbsp;
+        <!--
+        <button type="submit" class="btn btn-primary"
+                ng-click="vm.convertCustomer()">
+            Convert
+        </button>
+        -->
     </div>
+
 </form>
