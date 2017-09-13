@@ -45,40 +45,52 @@
                 </button>
                 <a class="navbar-brand" href="index.html">Max Console</a>
             </div>
-            <div id="navbar" class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
-                <ul class="nav navbar-nav">
-                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Location Management')}" ng-if="(session && session.role == 'financeManager')">
-                        <a href="#!/locations">Locations</a>
-                    </li>
-                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Create Customer')}" ng-if="(session && session.role == 'maxCddOfficer')">
-                        <a href="#!/customers/customer">Customer Registration</a>
-                    </li>
-                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Customers')}" ng-if="(session && (session.role == 'cddOfficer' || session.role == 'maxCddOfficer'))">
-                        <a href="#!/customers">Customers</a>
-                    </li>
-                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Approve Users')}" ng-if="(session && session.role == 'complianceManager')">
-                        <a href="#!/users">Approve User</a>
-                    </li>
-                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Transfer Rates')}" ng-if="(session && session.role == 'maxCddOfficer')">
-                        <a href="#!/transfer-rates">Transfer Rates</a>
-                    </li>
-                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'User Search')}" ng-if="((session && session.role == 'complianceManager') || (session && session.role == 'maxCddOfficer'))">
-                        <a href="#!/user-search">User Search</a>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Sign In')}" ng-hide="(sessionId)">
-                        <a href="#!/sign-in">
-                            Sign In
-                        </a>
-                    </li>
-                    <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Sign Out')}" ng-show="(sessionId)">
-                        <a href="#!/sign-out">
-                            Sign Out
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            <ul class="nav navbar-nav" ng-if="(session && session.role == 'admin')">
+                <li ng-class="{'active' : (viewName == 'Customers')}">
+                    <a href="#!/customers">Customers</a>
+                </li>
+                <li ng-class="{'active' : (viewName == 'Create Customer')}">
+                    <a href="#!/customers/customer">Customer Registration</a>
+                </li>
+                <li ng-class="{'active' : (viewName == 'Approve Users')}">
+                    <a href="#!/users">Approve User</a>
+                </li>
+                <li ng-class="{'active' : (viewName == 'Transfer Rates')}">
+                    <a href="#!/transfer-rates">Transfer Rates</a>
+                </li>
+                <li ng-class="{'active' : (viewName == 'User Search')}">
+                    <a href="#!/user-search">User Search</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav" ng-if="(session && session.role != 'admin')">
+                <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Customers')}" ng-if="(session && session.role == 'cddOfficer')">
+                    <a href="#!/customers">Customers</a>
+                </li>
+                <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Create Customer')}" ng-if="(session && session.role == 'maxCddOfficer')">
+                    <a href="#!/customers/customer">Customer Registration</a>
+                </li>
+                <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Approve Users')}" ng-if="(session && session.role == 'complianceManager')">
+                    <a href="#!/users">Approve User</a>
+                </li>
+                <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Transfer Rates')}" ng-if="(session && session.role == 'maxCddOfficer')">
+                    <a href="#!/transfer-rates">Transfer Rates</a>
+                </li>
+                <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'User Search')}" ng-if="((session && session.role == 'complianceManager') || (session && session.role == 'maxCddOfficer'))">
+                    <a href="#!/user-search">User Search</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Sign In')}" ng-hide="(sessionId)">
+                    <a href="#!/sign-in">
+                        Sign In
+                    </a>
+                </li>
+                <li ng-click="closeMenu()" ng-class="{'active' : (viewName == 'Sign Out')}" ng-show="(sessionId)">
+                    <a href="#!/sign-out">
+                        Sign Out
+                    </a>
+                </li>
+            </ul>
         </div>
         <div class="bg-white">
             <div class="container">
