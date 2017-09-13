@@ -232,6 +232,28 @@ function sessionService($rootScope, $log, $http, $q, $filter, $http, $sessionSto
         return deferred.promise;
     };
 
+    service.getBeneficiary = function (id) {
+        var path = apiBasePath + '/beneficiaries/' + id;
+        var req = {
+            method: 'GET',
+            headers: {'api-key': $rootScope.sessionId},
+            url: path
+        };
+        //$log.info(req);
+        $log.debug('fetching beneficiary by id started...');
+        var deferred = $q.defer();
+        $http(req).then(function (res) {
+            $log.debug(res);
+            deferred.resolve(res);
+            $log.debug('fetching beneficiary by id finished with success.');
+        }, function (res) {
+            $log.debug(res);
+            deferred.reject(res);
+            $log.debug('fetching beneficiary by id finished with failure.');
+        });
+        return deferred.promise;
+    };
+
     service.createBeneficiary = function (params) {
         var path = apiBasePath + '/beneficiaries';
         var req = {
