@@ -104,19 +104,19 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
         $log.debug('update user info finished...');
     }
 
-    //function cancel() {
-    //    //console.log($rootScope.session.role);
-    //    if ($rootScope.session.role == 'maxCddOfficer') {
-    //        path = '/customers/customer'; // customer registration
-    //        $location.path(path);
-    //        return
-    //    }
-    //    if ($rootScope.session.role == 'cddOfficer') {
-    //        path = '/customers'; // customer listing
-    //        $location.path(path);
-    //        return;
-    //    }
-    //}
+    function cancel() {
+        //console.log($rootScope.session.role);
+        if ($rootScope.session.role == 'maxCddOfficer') {
+            path = '/customers/customer'; // customer registration
+            $location.path(path);
+            return
+        }
+        if ($rootScope.session.role == 'cddOfficer') {
+            path = '/customers'; // customer listing
+            $location.path(path);
+            return;
+        }
+    }
 
     function init() {
         $log.info('init started...');
@@ -134,7 +134,8 @@ function customerConvertController($log, $rootScope, $scope, _session, wydNotify
     angular.extend(this, {
         uiState: uiState,
         onCustomerChange: onCustomerChange,
-        createCustomer: createCustomer
+        createCustomer: createCustomer,
+        cancel: cancel
     });
 
     init();
